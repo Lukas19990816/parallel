@@ -77,10 +77,10 @@
 * **單一藍牙天線分時多工（TDM）與 ARQ 重傳阻塞**：
   電腦內部通常只有**一顆藍牙晶片與一組 `2.4GHz` 射頻天線**，必須以毫秒級輪流發送封包給耳機 A 與耳機 B。藍牙 A2DP 底層的 L2CAP 協定具有**自動重傳機制（ARQ）**：當其中一隻耳機（例如距離較遠或被身體遮擋的耳機 A）掉封包時，系統藍牙控制器會**暫停發送新封包，優先重傳給耳機 A**。在這幾十毫秒的重傳等待期間，**排在同一個硬體佇列後面的耳機 B 封包也會被一起卡住（Head-of-Line Blocking）**，接著作業系統音訊核心（macOS `coreaudiod` / Windows `WASAPI`）為了防破音會同時拉大安全緩衝區，造成兩邊一起慢半拍。
 
-### 2. 5 年長期維護級別解法：原生深水池・零配置穩態架構 (5-Year Deep Reservoir Architecture)
-在雙人專注工作、自習或閱讀的共享音樂場景中，使用者完全不看影片，對 200~300ms 的絕對延遲完全無感，但對**任何微小的爆音、跳針、或單邊干擾拖垮雙邊零容忍**。
+### 2. 抗干擾緩衝架構設計：原生深水池 (Deep Reservoir Architecture)
+在雙人專注工作、自習或閱讀的共享音樂場景中，使用者對 200~300ms 的絕對播放延遲通常不敏感，但對音訊卡頓、掉訊或單邊干擾引發的連鎖中斷要求較高。
 
-為此，`PARALLEL` 徹底摒棄了複雜脆弱的多模式手動開關，採用大廠級別的**單一高穩健性深水緩衝架構（Single Deep-Reservoir Engine）**：
+為兼顧雙藍牙鏈結的傳輸穩定性，`PARALLEL` 採用單一預載緩衝架構（Deep-Reservoir Buffer Engine）：
 
 ```
                     ┌──────────────────────────────────────────────┐
@@ -187,12 +187,15 @@
 
 ---
 
-## 🛡 資安與零漏洞架構 (Security & Zero-Vulnerability Architecture)
+## 🛡 安全性與隱私設計 (Security & Privacy Design)
 
-* **零執行期相依套件（0 npm Dependencies / 0 CVEs）**：不使用任何第三方 JavaScript 框架或外部 CDN 腳本，徹底杜絕供應鏈攻擊（Supply-Chain Attacks）。
-* **內嵌靜態像素圖示（[`pixelarticons`](https://github.com/halfmage/pixelarticons), MIT License）**：所有圖示皆以純靜態 `<svg><path>` 座標內嵌於 HTML 中，無任何外部網路請求。
-* **嚴格的 `Content-Security-Policy` (CSP)**：於 HTML Header 鎖死 `connect-src 'none'; object-src 'none'; form-action 'none'`，確保頁面無法對外發送任何遙測或追蹤連線。
-* **防範藍牙名稱 DOM XSS**：全面使用 `replaceChildren()`、`new Option()` 與 `textContent` 渲染周遭藍牙設備名稱，絕不使用 `innerHTML`。
+為保障使用者裝置與隱私安全，本專案在架構上落實以下安全實踐：
+
+* **純前端本機運作（100% Local In-Browser）**：所有音訊分流與 DSP 運算皆在瀏覽器內部完成，音訊資料不經過任何後端伺服器。
+* **零外部依賴套件（0 External Dependencies）**：不引用第三方 JavaScript 框架或外部 CDN 腳本，降低第三方軟體供應鏈風險。
+* **靜態內嵌圖示**：所有介面圖示皆以 SVG 座標形式直接內嵌於 HTML 檔案中，避免額外發起未知的外部網路資源請求。
+* **嚴格的內容安全策略（Content-Security-Policy）**：於 HTML 標頭宣告 `connect-src 'none'; object-src 'none'; form-action 'none'`，限制頁面發送非預期的外部連線。
+* **安全 DOM 渲染**：針對作業系統回傳的藍牙裝置名稱，一律採用 `replaceChildren()`、`new Option()` 與 `textContent` 進行轉譯渲染，避免使用 `innerHTML` 以降低 DOM-based XSS 風險。
 
 ---
 

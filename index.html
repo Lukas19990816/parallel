@@ -1562,7 +1562,7 @@
     let isLocalFileMode = false;
     let localFileObjectUrl = null;
     let audioCtx = null;
-    // 5-Year Enterprise Architecture: 250ms deep reservoir absorbs 99.9% of Bluetooth 2.4GHz TDM packet bursts
+    // Resilient Central Reservoir: 250ms buffer absorbs Bluetooth 2.4GHz TDM packet bursts
     const RESERVOIR_BUFFER_SEC = 0.25;
     let reservoirNode = null;
     let gainNodeA = null;
@@ -1709,7 +1709,7 @@
       audioElB.srcObject = null;
 
       const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
-      // 5-Year Enterprise Architecture: 'playback' hint ensures OS audio kernel allocates high-stability ring buffer & high priority audio thread
+      // AudioContext configuration: 'playback' hint ensures OS allocates optimal ring buffer & thread scheduling
       try {
         audioCtx = new AudioCtxClass({ latencyHint: 'playback' });
       } catch (_) {
@@ -1735,7 +1735,7 @@
         source = audioCtx.createMediaStreamSource(audioOnlyStream);
       }
 
-      // Central Deep Reservoir Node (250ms jitter-absorption pool for 5-year Bluetooth resilience)
+      // Central Deep Reservoir Node: absorbs 2.4GHz Bluetooth TDM packet jitter
       reservoirNode = audioCtx.createDelay(1.0);
       reservoirNode.delayTime.setValueAtTime(RESERVOIR_BUFFER_SEC, audioCtx.currentTime);
       source.connect(reservoirNode);
