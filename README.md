@@ -1,5 +1,7 @@
 # 🎛 PARALLEL // 平行聲波
 
+![PARALLEL // 平行聲波 — Dual A2DP Audio Matrix](./og-image.png)
+
 > **Two independent audio paths—bridging headphone latency to share the same world side by side.**
 >
 > **兩條獨立的平行音軌，跨越耳機時差、並肩聽見同一個世界** —— 免安裝、單一 HTML 檔案的雙藍牙耳機音訊分流與毫秒級延遲同步混音台（支援 **繁體中文 / English / 日本語** 三語切換，適用於 macOS、Windows 與 Linux）。

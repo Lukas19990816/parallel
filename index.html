@@ -4,10 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="dark" />
-  <meta name="description" content="PARALLEL (平行聲波): Zero-install Web Audio dual Bluetooth headphone mixer & millisecond delay sync console." />
+  <meta name="theme-color" content="#0b0d10" />
   <!-- Strict Content Security Policy: blocks all external scripts, network requests, and frame injections -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob: data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';" />
-  <title>PARALLEL // 平行聲波 — Dual Headphone Audio Console</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob: data:; manifest-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';" />
+
+  <!-- Primary SEO Metadata -->
+  <title>PARALLEL // 平行聲波 — Dual Bluetooth Headphone Audio Splitter &amp; Sync Console</title>
+  <meta name="title" content="PARALLEL // 平行聲波 — Dual Bluetooth Headphone Audio Splitter &amp; Sync Console" />
+  <meta name="description" content="兩條獨立的平行音軌，跨越耳機時差、並肩聽見同一個世界。免安裝單一 HTML 雙藍牙耳機混音與毫秒級延遲同步控制台（支援 macOS / Windows / Linux Chrome，繁中 / EN / 日本語）。" />
+  <meta name="keywords" content="PARALLEL, 平行聲波, 雙藍牙耳機, macOS 共享音訊, Dual Bluetooth Headphones, Audio Splitter, Bluetooth Latency Sync, Web Audio API, setSinkId, Share Audio Mac, デュアルBluetoothヘッドホン, 音声分配" />
+  <meta name="author" content="PARALLEL Contributors" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://lukas19990816.github.io/parallel/" />
+
+  <!-- Icons & Web App Manifest (Japanese Retro Mechanical Craft) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <!-- Open Graph / Facebook / Line / Discord -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PARALLEL // 平行聲波" />
+  <meta property="og:url" content="https://lukas19990816.github.io/parallel/" />
+  <meta property="og:title" content="PARALLEL // 平行聲波 — 雙軌藍牙耳機分流與時差同步混音台" />
+  <meta property="og:description" content="兩條獨立的平行音軌，跨越耳機時差、並肩聽見同一個世界。Zero-install Web Audio console for sharing music &amp; video across two arbitrary Bluetooth headphones." />
+  <meta property="og:image" content="https://lukas19990816.github.io/parallel/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="714" />
+  <meta property="og:image:alt" content="PARALLEL // 平行聲波 — Japanese Retro Mechanical Dual Headphone Audio Matrix" />
+  <meta property="og:locale" content="zh_TW" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale:alternate" content="ja_JP" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://lukas19990816.github.io/parallel/" />
+  <meta name="twitter:title" content="PARALLEL // 平行聲波 — Dual Headphone Audio Splitter &amp; Sync Console" />
+  <meta name="twitter:description" content="Two independent audio paths—bridging headphone latency to share the same world side by side. Zero-install Web Audio console for macOS, Windows &amp; Linux." />
+  <meta name="twitter:image" content="https://lukas19990816.github.io/parallel/og-image.png" />
+
+  <!-- Structured Data (JSON-LD WebApplication) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PARALLEL // 平行聲波",
+    "alternateName": ["PARALLEL Dual Headphone Deck", "PARALLEL 平行音響デッキ"],
+    "url": "https://lukas19990816.github.io/parallel/",
+    "image": "https://lukas19990816.github.io/parallel/og-image.png",
+    "description": "Zero-install, single-file Web Audio console for sharing music and video across two arbitrary Bluetooth or wired headphones with independent volume and 0-300ms delay compensation.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "macOS, Windows, Linux (Chromium Browsers)",
+    "inLanguage": ["zh-Hant", "en", "ja"],
+    "license": "https://opensource.org/licenses/MIT",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
   <style>
     /* ==========================================================================
        🎨 AI AGENT / VIBE-CODING THEME CUSTOMIZATION VARIABLES
@@ -155,14 +214,24 @@
     }
 
     .brand-badge {
-      background: #0f1217;
+      width: 44px;
+      height: 44px;
+      background: #07080a;
       border: 1px solid var(--border-hi);
-      padding: 8px 10px;
-      border-radius: 4px;
-      color: var(--amber);
+      border-radius: 6px;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    .brand-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .brand-title {
@@ -861,7 +930,7 @@
     <header class="top-rack">
       <div class="brand-block">
         <div class="brand-badge">
-          <svg class="px-icon lg"><use href="#px-sliders"/></svg>
+          <img src="apple-touch-icon.png" alt="PARALLEL Mechanical Emblem" />
         </div>
         <div>
           <div class="brand-title" data-i18n="brandTitle">PARALLEL // 平行聲波</div>

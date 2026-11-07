@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lukas19990816.github.io/parallel/sitemap.xml

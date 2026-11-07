@@ -1,0 +1,23 @@
+{
+  "name": "PARALLEL // 平行聲波 — Dual Headphone Audio Console",
+  "short_name": "PARALLEL",
+  "description": "Two independent audio paths—bridging headphone latency to share the same world side by side.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#050607",
+  "theme_color": "#0b0d10",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
