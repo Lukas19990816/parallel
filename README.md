@@ -89,7 +89,9 @@
 ## 🚀 快速開始 (Quick Start)
 
 ### 方式 A：直接透過 GitHub Pages 線上開啟（0 安裝、最推薦！）
-若本專案已開啟 GitHub Pages，任何使用者只需用 **Google Chrome** 點開網址（`https://<your-username>.github.io/<repo-name>/`）即可直接使用，**完全不需要安裝 Python 或啟動任何本地伺服器**！
+直接使用 **Google Chrome**（或 Edge / Brave / Arc）點開下方公開網址即可立即使用，**完全不需要安裝 Python 或啟動任何本地伺服器**（建議直接加入 Chrome 書籤）：
+
+👉 **Live Demo (GitHub Pages)：[https://lukas19990816.github.io/djm-2bt-dual-headphone-deck/](https://lukas19990816.github.io/djm-2bt-dual-headphone-deck/)**
 
 ### 方式 B：在本地端執行 (Local Execution)
 由於 Chrome 的 `getDisplayMedia` 與 `setSinkId` 安全限制要求頁面必須在 `https://` 或 `http://localhost` 下執行（直接雙擊 `file://` 會被瀏覽器阻擋分頁擷取）：
