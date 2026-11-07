@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Strict Content Security Policy: blocks all external scripts, network requests, and frame injections -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob: data:; connect-src 'none'; object-src 'none'; base-uri 'none';" />
+  <title>DJM-2BT // Dual Bluetooth Headphone DJ Mixer Console</title>
+  <style>
+    /* ==========================================================================
+       🎨 AI AGENT / VIBE-CODING THEME CUSTOMIZATION VARIABLES
+       Want a different aesthetic (e.g. Teenage Engineering Industrial White,
+       Cyberpunk 2077 Neon, 80s Synthwave, or Matcha Dark)?
+       Just ask your coding agent to modify the CSS variables inside :root below!
+       ========================================================================== */
+    :root {
+      /* Deep Black Low-Contrast Hardware Palette */
+      --bg-room: #050607;
+      --chassis: #0b0d10;
+      --chassis-hi: #12151a;
+      --panel: #08090c;
+      --panel-recess: #060709;
+      --border: #181c22;
+      --border-hi: #222730;
+
+      /* Low-contrast eye-care typography */
+      --text-main: #8c95a4;
+      --text-dim: #4c5360;
+      --text-sub: #636b78;
+
+      /* Muted Retro Hardware Phosphor Accents */
+      --amber: #b3834c;
+      --amber-dim: rgba(179, 131, 76, 0.14);
+
+      --sage: #52857c;
+      --sage-dim: rgba(82, 133, 124, 0.14);
+
+      --master: #6c875e;
+      --master-dim: rgba(108, 135, 94, 0.15);
+
+      --rust: #9e4747;
+      --rust-dim: rgba(158, 71, 71, 0.18);
+
+      --mono: "JetBrains Mono", "SF Mono", "Menlo", "Consolas", monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-room);
+      background-image:
+        radial-gradient(circle at 50% 20%, #0d1015 0%, #050607 75%);
+      color: var(--text-main);
+      font-family: var(--sans);
+      min-height: 100vh;
+      padding: 22px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* Pixelarticons inline SVG styling */
+    .px-icon {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      flex-shrink: 0;
+      shape-rendering: crispEdges;
+    }
+
+    .px-icon.lg {
+      width: 22px;
+      height: 22px;
+    }
+
+    /* Main Hardware Console Chassis */
+    .console-chassis {
+      width: 100%;
+      max-width: 1020px;
+      background: linear-gradient(180deg, #0e1014 0%, #0a0b0e 100%);
+      border: 1px solid var(--border-hi);
+      border-radius: 10px;
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.85),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      padding: 18px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Corner Rack Screws */
+    .screw-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2px;
+    }
+
+    .screw {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #07080a;
+      border: 1px solid #1d2128;
+      position: relative;
+    }
+
+    .screw::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 1px;
+      right: 1px;
+      height: 1px;
+      background: #1a1e24;
+      transform: rotate(-35deg);
+    }
+
+    .rack-model {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    /* Top Control & LCD Header Bar */
+    .top-rack {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      background: #0f1217;
+      border: 1px solid var(--border-hi);
+      padding: 8px 10px;
+      border-radius: 4px;
+      color: var(--amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-title {
+      font-family: var(--mono);
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--text-main);
+    }
+
+    .brand-sub {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 3px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Retro LCD Status Screen */
+    .lcd-status {
+      background: #050608;
+      border: 1px solid #191e24;
+      border-radius: 4px;
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
+    }
+
+    .led-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 1px;
+      background: #3a404d;
+    }
+
+    .lcd-status.active {
+      color: var(--master);
+      border-color: rgba(108, 135, 94, 0.35);
+    }
+
+    .lcd-status.active .led-dot {
+      background: var(--master);
+      box-shadow: 0 0 6px var(--master);
+      animation: blink 1.8s infinite steps(2, start);
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    /* Hardware Transport Pad Buttons */
+    .transport-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .hw-btn {
+      appearance: none;
+      background: linear-gradient(180deg, #14181f 0%, #0d1015 100%);
+      border: 1px solid var(--border-hi);
+      border-bottom: 2px solid #060709;
+      color: var(--text-main);
+      padding: 11px 14px;
+      border-radius: 5px;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      transition: all 0.12s ease;
+    }
+
+    .hw-btn:hover {
+      background: #171c24;
+      border-color: #2c3340;
+    }
+
+    .hw-btn:active {
+      transform: translateY(1px);
+    }
+
+    .hw-btn.engage {
+      border-color: rgba(179, 131, 76, 0.45);
+      color: var(--amber);
+      background: linear-gradient(180deg, rgba(179, 131, 76, 0.14) 0%, #0d1015 100%);
+    }
+
+    .hw-btn.engage:hover {
+      background: linear-gradient(180deg, rgba(179, 131, 76, 0.22) 0%, #11151c 100%);
+    }
+
+    .hw-btn.kill {
+      border-color: rgba(158, 71, 71, 0.45);
+      color: var(--rust);
+      background: var(--rust-dim);
+    }
+
+    /* Jukebox Search & Mini-Player Rack */
+    .jukebox-rack {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--amber);
+      border-radius: 6px;
+      padding: 12px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.65);
+    }
+
+    .jukebox-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--text-sub);
+    }
+
+    .jukebox-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .jukebox-input {
+      flex: 1;
+      min-width: 220px;
+      background: #040507;
+      border: 1px solid #1d222b;
+      color: var(--text-main);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      padding: 9px 12px;
+      border-radius: 4px;
+      outline: none;
+      user-select: text;
+    }
+
+    .jukebox-input:focus {
+      border-color: var(--amber);
+    }
+
+    .jukebox-btn {
+      background: #101319;
+      border: 1px solid var(--border-hi);
+      color: var(--text-main);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding: 9px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.12s ease;
+    }
+
+    .jukebox-btn:hover {
+      background: #171c25;
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    .jukebox-btn.sage:hover {
+      border-color: var(--sage);
+      color: var(--sage);
+    }
+
+    /* Main 3-Column DJ Console Grid */
+    .mixer-grid {
+      display: grid;
+      grid-template-columns: 1fr 280px 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 880px) {
+      .mixer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Deck Panels (CH-1 & CH-2) */
+    .deck-unit {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .deck-a {
+      border-top: 2px solid var(--amber);
+    }
+
+    .deck-b {
+      border-top: 2px solid var(--sage);
+    }
+
+    .deck-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    .deck-id {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .deck-a .deck-id { color: var(--amber); }
+    .deck-b .deck-id { color: var(--sage); }
+
+    .pad-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .pad-btn {
+      background: #0c0e12;
+      border: 1px solid var(--border-hi);
+      color: var(--text-sub);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      letter-spacing: 0.05em;
+    }
+
+    .pad-btn:hover {
+      border-color: #323946;
+      color: var(--text-main);
+    }
+
+    .pad-btn.muted {
+      background: var(--rust-dim);
+      border-color: var(--rust);
+      color: #c96969;
+    }
+
+    .pad-btn.soloed {
+      background: var(--amber-dim);
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    /* Retro Jog Wheel / Platter Display */
+    .platter-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--panel-recess);
+      border: 1px solid #13171d;
+      border-radius: 6px;
+      padding: 12px;
+    }
+
+    .jog-wheel {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background:
+        repeating-radial-gradient(circle at center, #0b0d10 0px, #0b0d10 3px, #12161c 4px, #0b0d10 5px);
+      border: 2px solid #1f242d;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .jog-wheel.spinning {
+      animation: spin 4.5s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .jog-marker {
+      position: absolute;
+      top: 5px;
+      width: 3px;
+      height: 8px;
+      border-radius: 1px;
+    }
+
+    .deck-a .jog-marker { background: var(--amber); }
+    .deck-b .jog-marker { background: var(--sage); }
+
+    .jog-center {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #07080a;
+      border: 1px solid #262c36;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .deck-a .jog-center { color: var(--amber); }
+    .deck-b .jog-center { color: var(--sage); }
+
+    .platter-meta {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .meta-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Hardware OLED Sink Selector */
+    select.oled-select {
+      width: 100%;
+      background: #050608;
+      border: 1px solid #1c2129;
+      color: var(--text-main);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      padding: 8px 10px;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .deck-a select.oled-select:focus { border-color: var(--amber); }
+    .deck-b select.oled-select:focus { border-color: var(--sage); }
+
+    /* Fader Modules */
+    .fader-box {
+      background: var(--panel-recess);
+      border: 1px solid #13171c;
+      border-radius: 5px;
+      padding: 11px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .fader-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+    }
+
+    .fader-name {
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .lcd-val {
+      background: #040507;
+      border: 1px solid #171b22;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      color: var(--text-main);
+      min-width: 64px;
+      text-align: right;
+    }
+
+    .deck-a .lcd-val { color: var(--amber); }
+    .deck-b .lcd-val { color: var(--sage); }
+
+    /* Custom Hardware Sliders */
+    .fader-track-wrap {
+      position: relative;
+      padding: 4px 0;
+    }
+
+    input[type="range"].dj-fader {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #040506;
+      border: 1px solid #191d24;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"].dj-fader::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 22px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, #2a303b 0%, #15181f 50%, #252b35 100%);
+      border: 1px solid #454e5e;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+      cursor: grab;
+    }
+
+    .deck-a input[type="range"].dj-fader::-webkit-slider-thumb {
+      border-top: 2px solid var(--amber);
+    }
+
+    .deck-b input[type="range"].dj-fader::-webkit-slider-thumb {
+      border-top: 2px solid var(--sage);
+    }
+
+    .scale-ticks {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      padding: 0 2px;
+    }
+
+    .nudge-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 5px;
+      margin-top: 2px;
+    }
+
+    .mini-btn {
+      background: #0c0e12;
+      border: 1px solid #1c2029;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      padding: 2px 7px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .mini-btn:hover {
+      color: var(--text-main);
+      border-color: #2e3542;
+    }
+
+    /* Center Master Mixer Column */
+    .center-mixer {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--master);
+      border-radius: 6px;
+      padding: 15px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .mixer-title {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: var(--master);
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* CRT Spectrum & Dual VU Meter Display */
+    .crt-display {
+      background: #040507;
+      border: 1px solid #181c23;
+      border-radius: 4px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.95);
+    }
+
+    .vu-meters {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .vu-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+
+    .vu-bars {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(16, 1fr);
+      gap: 2px;
+      height: 8px;
+      background: #080a0d;
+      padding: 1px;
+    }
+
+    .vu-seg {
+      background: #12151b;
+      border-radius: 1px;
+      transition: background 0.05s linear;
+    }
+
+    .vu-seg.on-low { background: #4d7553; }
+    .vu-seg.on-mid { background: #a67c46; }
+    .vu-seg.on-hi  { background: #9e4747; }
+
+    canvas#visualizer {
+      width: 100%;
+      height: 62px;
+      background:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+        #040507;
+      background-size: 12px 12px;
+      border-top: 1px solid #12161c;
+    }
+
+    /* Footer Manual Rack */
+    .manual-rack {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      line-height: 1.65;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .manual-rack strong {
+      color: var(--text-main);
+      font-family: var(--mono);
+      font-weight: 600;
+    }
+
+    .manual-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 2px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .step-tag {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      padding: 1px 6px;
+      background: #101318;
+      border: 1px solid var(--border-hi);
+      color: var(--amber);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Inline Pixelarticons (24x24 grid, MIT License, 0 external network dependencies, 0 vulnerabilities) -->
+  <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="px-headphones" viewBox="0 0 24 24">
+      <path d="M6 4h12v2h2v6h2v8h-6v-8h2V6H6v6h2v8H2v-8h2V6h2V4zm-2 10v4h2v-4H4zm14 0v4h2v-4h-2z"/>
+    </symbol>
+    <symbol id="px-sliders" viewBox="0 0 24 24">
+      <path d="M5 3h2v4h2v2H3V7h2V3zm0 8h2v10H5V11zm6-8h2v10h2v2H9v-2h2V3zm0 14h2v4h-2v-4zm6-14h2v4h2v2h-6V7h2V3zm0 8h2v10h-2V11z"/>
+    </symbol>
+    <symbol id="px-signal" viewBox="0 0 24 24">
+      <path d="M4 6h2v12H4V6zm14 0h2v12h-2V6zM8 9h2v6H8V9zm6 0h2v6h-2V9zm-3 2h2v2h-2v-2z"/>
+    </symbol>
+    <symbol id="px-vol-on" viewBox="0 0 24 24">
+      <path d="M11 4h2v16h-2v-2H9v-2H7v-2H3V10h4V8h2V6h2V4zm5 4h2v2h2v4h-2v2h-2v-2h2v-4h-2V8z"/>
+    </symbol>
+    <symbol id="px-vol-mute" viewBox="0 0 24 24">
+      <path d="M11 4h2v16h-2v-2H9v-2H7v-2H3V10h4V8h2V6h2V4zm5 5h2v2h2V9h2v2h-2v2h2v2h-2v-2h-2v2h-2v-2h2v-2h-2V9z"/>
+    </symbol>
+    <symbol id="px-clock" viewBox="0 0 24 24">
+      <path d="M6 2h12v2h2v2h2v12h-2v2h-2v2H6v-2H4v-2H2V6h2V4h2V2zm0 2v2H4v12h2v2h12v-2h2V6h-2V4H6zm5 3h2v5h4v2h-6V7z"/>
+    </symbol>
+    <symbol id="px-disc" viewBox="0 0 24 24">
+      <path d="M6 3h12v2h2v2h2v10h-2v2h-2v2H6v-2H4v-2H2V7h2V5h2V3zm4 6v2H8v2h2v2h4v-2h2v-2h-2V9h-4z"/>
+    </symbol>
+    <symbol id="px-stop" viewBox="0 0 24 24">
+      <path d="M6 6h12v12H6V6z"/>
+    </symbol>
+  </svg>
+
+  <div class="console-chassis">
+    <!-- Top Chassis Screws -->
+    <div class="screw-row">
+      <div class="screw"></div>
+      <span class="rack-model">DUAL A2DP MATRIX // DJM-2BT MK-II // ZERO-TELEMETRY OPEN SOURCE BUILD</span>
+      <div class="screw"></div>
+    </div>
+
+    <!-- Header Rack -->
+    <header class="top-rack">
+      <div class="brand-block">
+        <div class="brand-badge">
+          <svg class="px-icon lg"><use href="#px-sliders"/></svg>
+        </div>
+        <div>
+          <div class="brand-title">DJM-2BT // DUAL HEADPHONE DECK</div>
+          <div class="brand-sub">LOW-CONTRAST DUAL BLUETOOTH AUDIO SPLITTER &amp; DELAY SYNC CONSOLE</div>
+        </div>
+      </div>
+
+      <div id="statusBadge" class="lcd-status">
+        <span class="led-dot"></span>
+        <span id="statusText">STANDBY // NO AUDIO LINK</span>
+      </div>
+    </header>
+
+    <!-- Transport Pads -->
+    <div class="transport-bar">
+      <button id="btnRefreshDevices" class="hw-btn">
+        <svg class="px-icon"><use href="#px-headphones"/></svg>
+        <span>[1] SCAN BLUETOOTH SINKS (讀取耳機)</span>
+      </button>
+      <button id="btnCaptureTab" class="hw-btn engage">
+        <svg class="px-icon"><use href="#px-signal"/></svg>
+        <span>[2] LINK TAB AUDIO (綁定分頁音源)</span>
+      </button>
+      <button id="btnSyncReset" class="hw-btn" style="display: none;">
+        <svg class="px-icon"><use href="#px-clock"/></svg>
+        <span>[SYNC] FLUSH BUFFER (一鍵消除延遲)</span>
+      </button>
+      <button id="btnStop" class="hw-btn kill" style="display: none;">
+        <svg class="px-icon"><use href="#px-stop"/></svg>
+        <span>[KILL] CUT AUDIO STREAM (停止)</span>
+      </button>
+    </div>
+
+    <!-- Jukebox Search & Side-by-Side Mini Player Controller -->
+    <section class="jukebox-rack">
+      <div class="jukebox-top">
+        <span>JUKEBOX DECK // 直接搜尋點歌（自動固定於同一個側邊迷你窗，首次綁定後換歌免重新共享！）</span>
+        <span id="localTrackStatus" style="color: var(--amber);"></span>
+      </div>
+      <div class="jukebox-row">
+        <input id="jukeboxQuery" class="jukebox-input" type="text" placeholder="輸入歌名、歌手或關鍵字（按 Enter 直接在側邊迷你窗搜尋 YouTube Music）..." />
+        <button id="btnJukeboxYTM" class="jukebox-btn" title="在側邊迷你視窗搜尋 YouTube Music">
+          <svg class="px-icon"><use href="#px-disc"/></svg>
+          <span>YT MUSIC 點歌窗</span>
+        </button>
+        <button id="btnJukeboxYT" class="jukebox-btn" title="在側邊迷你視窗搜尋 YouTube">
+          <svg class="px-icon"><use href="#px-signal"/></svg>
+          <span>YOUTUBE 點歌窗</span>
+        </button>
+        <button id="btnJukeboxSpotify" class="jukebox-btn sage" title="在側邊迷你視窗開啟 Spotify">
+          <svg class="px-icon"><use href="#px-sliders"/></svg>
+          <span>SPOTIFY 點歌窗</span>
+        </button>
+        <label class="jukebox-btn sage" title="免共享螢幕！直接選擇電腦裡的音樂檔雙耳機播放">
+          <svg class="px-icon"><use href="#px-headphones"/></svg>
+          <span>載入本地音樂檔 (免共享)</span>
+          <input id="localFileInput" type="file" accept="audio/*" style="display: none;" />
+        </label>
+      </div>
+      <audio id="localFilePlayer" controls style="display: none; width: 100%; height: 32px; margin-top: 4px;"></audio>
+    </section>
+
+    <!-- 3-Column DJ Console -->
+    <div class="mixer-grid">
+      <!-- DECK A -->
+      <section class="deck-unit deck-a">
+        <div class="deck-header">
+          <div class="deck-id">
+            <svg class="px-icon"><use href="#px-headphones"/></svg>
+            <span>DECK A // CH-01</span>
+          </div>
+          <div class="pad-group">
+            <button id="soloA" class="pad-btn" title="單獨監聽耳機 A">CUE / SOLO</button>
+            <button id="muteA" class="pad-btn">
+              <svg id="muteIconA" class="px-icon"><use href="#px-vol-on"/></svg>
+              <span id="muteTextA">MUTE</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="platter-wrap">
+          <div id="wheelA" class="jog-wheel">
+            <div class="jog-marker"></div>
+            <div class="jog-center">
+              <svg class="px-icon"><use href="#px-disc"/></svg>
+            </div>
+          </div>
+          <div class="platter-meta">
+            <span class="meta-label">OUTPUT SINK ROUTING // A</span>
+            <select id="selectA" class="oled-select">
+              <option value="">-- PRESS [1] SCAN SINKS --</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Gain Fader A -->
+        <div class="fader-box">
+          <div class="fader-head">
+            <span class="fader-name">
+              <svg class="px-icon"><use href="#px-sliders"/></svg>
+              CHANNEL GAIN (獨立音量 A)
+            </span>
+            <span id="volLabelA" class="lcd-val">100%</span>
+          </div>
+          <div class="fader-track-wrap">
+            <input id="volA" class="dj-fader" type="range" min="0" max="150" value="100" />
+          </div>
+          <div class="scale-ticks">
+            <span>-∞</span>
+            <span>50%</span>
+            <span>100% (0dB)</span>
+            <span>150%</span>
+          </div>
+        </div>
+
+        <!-- Delay Fader A -->
+        <div class="fader-box">
+          <div class="fader-head">
+            <span class="fader-name">
+              <svg class="px-icon"><use href="#px-clock"/></svg>
+              SYNC DELAY (藍牙延遲補償 A)
+            </span>
+            <span id="delayLabelA" class="lcd-val">0 ms</span>
+          </div>
+          <div class="fader-track-wrap">
+            <input id="delayA" class="dj-fader" type="range" min="0" max="300" value="0" />
+          </div>
+          <div class="nudge-row">
+            <button class="mini-btn" data-target="delayA" data-delta="-5">-5ms</button>
+            <button class="mini-btn" data-target="delayA" data-delta="0">0ms</button>
+            <button class="mini-btn" data-target="delayA" data-delta="5">+5ms</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CENTER MASTER MIXER -->
+      <section class="center-mixer">
+        <div>
+          <div class="mixer-title">
+            <svg class="px-icon"><use href="#px-signal"/></svg>
+            <span>MASTER MONITOR</span>
+          </div>
+
+          <div class="crt-display" style="margin-top: 10px;">
+            <div class="vu-meters">
+              <div class="vu-row">
+                <span>CH1</span>
+                <div id="vuA" class="vu-bars"></div>
+              </div>
+              <div class="vu-row">
+                <span>CH2</span>
+                <div id="vuB" class="vu-bars"></div>
+              </div>
+            </div>
+            <canvas id="visualizer" width="250" height="62"></canvas>
+          </div>
+        </div>
+
+        <!-- Master Volume -->
+        <div class="fader-box">
+          <div class="fader-head">
+            <span class="fader-name">MASTER LEVEL (總音量)</span>
+            <span id="masterVolLabel" class="lcd-val" style="color: var(--master);">100%</span>
+          </div>
+          <div class="fader-track-wrap">
+            <input id="masterVol" class="dj-fader" type="range" min="0" max="150" value="100" />
+          </div>
+          <div class="scale-ticks">
+            <span>MIN</span>
+            <span>UNITY (100%)</span>
+            <span>MAX</span>
+          </div>
+        </div>
+
+        <!-- DJ Crossfader -->
+        <div class="fader-box">
+          <div class="fader-head">
+            <span class="fader-name">CROSSFADER (A / B 平衡)</span>
+            <span id="xfaderLabel" class="lcd-val">CENTER</span>
+          </div>
+          <div class="fader-track-wrap">
+            <input id="xfader" class="dj-fader" type="range" min="-100" max="100" value="0" />
+          </div>
+          <div class="scale-ticks">
+            <span>&lt; DECK A</span>
+            <span id="xfaderReset" style="cursor:pointer; text-decoration:underline;">[RESET 0]</span>
+            <span>DECK B &gt;</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- DECK B -->
+      <section class="deck-unit deck-b">
+        <div class="deck-header">
+          <div class="deck-id">
+            <svg class="px-icon"><use href="#px-headphones"/></svg>
+            <span>DECK B // CH-02</span>
+          </div>
+          <div class="pad-group">
+            <button id="soloB" class="pad-btn" title="單獨監聽耳機 B">CUE / SOLO</button>
+            <button id="muteB" class="pad-btn">
+              <svg id="muteIconB" class="px-icon"><use href="#px-vol-on"/></svg>
+              <span id="muteTextB">MUTE</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="platter-wrap">
+          <div id="wheelB" class="jog-wheel">
+            <div class="jog-marker"></div>
+            <div class="jog-center">
+              <svg class="px-icon"><use href="#px-disc"/></svg>
+            </div>
+          </div>
+          <div class="platter-meta">
+            <span class="meta-label">OUTPUT SINK ROUTING // B</span>
+            <select id="selectB" class="oled-select">
+              <option value="">-- PRESS [1] SCAN SINKS --</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Gain Fader B -->
+        <div class="fader-box">
+          <div class="fader-head">
+            <span class="fader-name">
+              <svg class="px-icon"><use href="#px-sliders"/></svg>
+              CHANNEL GAIN (獨立音量 B)
+            </span>
+            <span id="volLabelB" class="lcd-val">100%</span>
+          </div>
+          <div class="fader-track-wrap">
+            <input id="volB" class="dj-fader" type="range" min="0" max="150" value="100" />
+          </div>
+          <div class="scale-ticks">
+            <span>-∞</span>
+            <span>50%</span>
+            <span>100% (0dB)</span>
+            <span>150%</span>
+          </div>
+        </div>
+
+        <!-- Delay Fader B -->
+        <div class="fader-box">
+          <div class="fader-head">
+            <span class="fader-name">
+              <svg class="px-icon"><use href="#px-clock"/></svg>
+              SYNC DELAY (藍牙延遲補償 B)
+            </span>
+            <span id="delayLabelB" class="lcd-val">0 ms</span>
+          </div>
+          <div class="fader-track-wrap">
+            <input id="delayB" class="dj-fader" type="range" min="0" max="300" value="0" />
+          </div>
+          <div class="nudge-row">
+            <button class="mini-btn" data-target="delayB" data-delta="-5">-5ms</button>
+            <button class="mini-btn" data-target="delayB" data-delta="0">0ms</button>
+            <button class="mini-btn" data-target="delayB" data-delta="5">+5ms</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Quick Operation Footer -->
+    <footer class="manual-rack">
+      <strong>QUICK PATCH GUIDE // 訊號接入步驟 (macOS / Windows / Linux Chrome)</strong>
+      <div class="manual-steps">
+        <div class="step-item">
+          <span class="step-tag">STEP 01</span>
+          <span>將兩隻藍牙耳機連上電腦，點 <b>[1] SCAN BLUETOOTH SINKS</b>，在 DECK A 與 DECK B 選好兩隻耳機。</span>
+        </div>
+        <div class="step-item">
+          <span class="step-tag">STEP 02</span>
+          <span>用上方 <b>JUKEBOX DECK</b> 開啟側邊點歌窗，再點 <b>[2] LINK TAB AUDIO</b> 選取該分頁並勾選「一併分享分頁音訊」。</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bottom Chassis Screws -->
+    <div class="screw-row">
+      <div class="screw"></div>
+      <span class="rack-model">ICONS: PIXELARTICONS (STATIC INLINE SVG // 0 EXTERNAL REQUESTS // CSP HARDENED)</span>
+      <div class="screw"></div>
+    </div>
+  </div>
+
+  <!-- Hidden audio elements for dual sink output -->
+  <audio id="audioElA" autoplay playsinline></audio>
+  <audio id="audioElB" autoplay playsinline></audio>
+
+  <script>
+    const btnRefreshDevices = document.getElementById('btnRefreshDevices');
+    const btnCaptureTab = document.getElementById('btnCaptureTab');
+    const btnSyncReset = document.getElementById('btnSyncReset');
+    const btnStop = document.getElementById('btnStop');
+    const statusBadge = document.getElementById('statusBadge');
+    const statusText = document.getElementById('statusText');
+
+    const selectA = document.getElementById('selectA');
+    const selectB = document.getElementById('selectB');
+    const volA = document.getElementById('volA');
+    const volB = document.getElementById('volB');
+    const masterVol = document.getElementById('masterVol');
+    const xfader = document.getElementById('xfader');
+    const xfaderReset = document.getElementById('xfaderReset');
+    const delayA = document.getElementById('delayA');
+    const delayB = document.getElementById('delayB');
+
+    const muteA = document.getElementById('muteA');
+    const muteB = document.getElementById('muteB');
+    const muteIconA = document.getElementById('muteIconA');
+    const muteIconB = document.getElementById('muteIconB');
+    const muteTextA = document.getElementById('muteTextA');
+    const muteTextB = document.getElementById('muteTextB');
+    const soloA = document.getElementById('soloA');
+    const soloB = document.getElementById('soloB');
+
+    const wheelA = document.getElementById('wheelA');
+    const wheelB = document.getElementById('wheelB');
+
+    const volLabelA = document.getElementById('volLabelA');
+    const volLabelB = document.getElementById('volLabelB');
+    const masterVolLabel = document.getElementById('masterVolLabel');
+    const xfaderLabel = document.getElementById('xfaderLabel');
+    const delayLabelA = document.getElementById('delayLabelA');
+    const delayLabelB = document.getElementById('delayLabelB');
+
+    const audioElA = document.getElementById('audioElA');
+    const audioElB = document.getElementById('audioElB');
+    const canvas = document.getElementById('visualizer');
+    const canvasCtx = canvas.getContext('2d');
+
+    // Build 16-segment VU meters safely using DOM APIs
+    const vuContainerA = document.getElementById('vuA');
+    const vuContainerB = document.getElementById('vuB');
+    const vuSegsA = [];
+    const vuSegsB = [];
+
+    for (let i = 0; i < 16; i++) {
+      const segA = document.createElement('div');
+      segA.className = 'vu-seg';
+      vuContainerA.appendChild(segA);
+      vuSegsA.push(segA);
+
+      const segB = document.createElement('div');
+      segB.className = 'vu-seg';
+      vuContainerB.appendChild(segB);
+      vuSegsB.push(segB);
+    }
+
+    let capturedStream = null;
+    let audioCtx = null;
+    let gainNodeA = null;
+    let gainNodeB = null;
+    let delayNodeA = null;
+    let delayNodeB = null;
+    let analyserNode = null;
+    let isMutedA = false;
+    let isMutedB = false;
+    let isSoloA = false;
+    let isSoloB = false;
+    let animId = null;
+
+    // 1. Enumerate audio output devices safely (no innerHTML with untrusted device labels)
+    async function loadAudioDevices(requestPermissionFirst = false) {
+      try {
+        if (requestPermissionFirst) {
+          const tempStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          tempStream.getTracks().forEach(t => t.stop());
+        }
+
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const outputs = devices.filter(d => d.kind === 'audiooutput');
+
+        if (outputs.length === 0) {
+          alert('找不到音訊輸出裝置！請確認使用 Google Chrome / Edge / Brave 開啟此頁面。');
+          return;
+        }
+
+        const prevA = selectA.value;
+        const prevB = selectB.value;
+
+        selectA.replaceChildren();
+        selectB.replaceChildren();
+
+        outputs.forEach((dev, idx) => {
+          const label = dev.label || `AUDIO SINK #${idx + 1}`;
+          selectA.add(new Option(label, dev.deviceId));
+          selectB.add(new Option(label, dev.deviceId));
+        });
+
+        // Generic auto-selection: prioritize external / Bluetooth headphones over built-in speakers or virtual devices
+        const externalSinks = outputs.filter(
+          d => d.deviceId !== 'default' &&
+               d.deviceId !== 'communications' &&
+               !/built-in|internal|內建|揚聲器|speakers|teams|zoom|blackhole|soundflower|virtual/i.test(d.label)
+        );
+
+        if (prevA && outputs.some(d => d.deviceId === prevA)) {
+          selectA.value = prevA;
+        } else if (externalSinks.length >= 1) {
+          selectA.value = externalSinks[0].deviceId;
+        }
+
+        if (prevB && outputs.some(d => d.deviceId === prevB)) {
+          selectB.value = prevB;
+        } else if (externalSinks.length >= 2) {
+          selectB.value = externalSinks[1].deviceId;
+        } else if (outputs.length > 1) {
+          selectB.selectedIndex = 1;
+        }
+
+        await routeDeckSink('A', selectA.value);
+        await routeDeckSink('B', selectB.value);
+      } catch (err) {
+        console.error(err);
+        alert('讀取裝置失敗：' + err.message);
+      }
+    }
+
+    async function routeDeckSink(deck, deviceId) {
+      if (!deviceId) return;
+      const el = deck === 'A' ? audioElA : audioElB;
+
+      if (typeof el.setSinkId === 'function') {
+        try {
+          await el.setSinkId(deviceId);
+        } catch (err) {
+          console.warn('setSinkId failed:', err);
+        }
+      } else {
+        alert('此瀏覽器不支援 setSinkId 分流，請移至 Google Chrome / Edge / Brave 視窗開啟！');
+      }
+    }
+
+    // Build / Flush dual audio graph using a single unified AudioContext clock
+    async function buildLowLatencyGraph() {
+      if (!capturedStream) return;
+      const audioTracks = capturedStream.getAudioTracks();
+      if (audioTracks.length === 0) return;
+
+      if (animId) cancelAnimationFrame(animId);
+      if (audioCtx) { await audioCtx.close().catch(() => {}); audioCtx = null; }
+      audioElA.pause();
+      audioElB.pause();
+      audioElA.srcObject = null;
+      audioElB.srcObject = null;
+
+      const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+      const audioOnlyStream = new MediaStream([audioTracks[0]]);
+
+      // Adaptive native sample-rate + 'playback' buffer hint prevents Bluetooth A2DP underruns
+      audioCtx = new AudioCtxClass({ latencyHint: 'playback' });
+      const source = audioCtx.createMediaStreamSource(audioOnlyStream);
+
+      analyserNode = audioCtx.createAnalyser();
+      analyserNode.fftSize = 64;
+      analyserNode.smoothingTimeConstant = 0.78;
+      source.connect(analyserNode);
+
+      // Deck A DSP chain
+      delayNodeA = audioCtx.createDelay(1.0);
+      gainNodeA = audioCtx.createGain();
+      const destA = audioCtx.createMediaStreamDestination();
+      source.connect(delayNodeA);
+      delayNodeA.connect(gainNodeA);
+      gainNodeA.connect(destA);
+      audioElA.srcObject = destA.stream;
+      await routeDeckSink('A', selectA.value);
+      await audioElA.play();
+
+      // Deck B DSP chain
+      delayNodeB = audioCtx.createDelay(1.0);
+      gainNodeB = audioCtx.createGain();
+      const destB = audioCtx.createMediaStreamDestination();
+      source.connect(delayNodeB);
+      delayNodeB.connect(gainNodeB);
+      gainNodeB.connect(destB);
+      audioElB.srcObject = destB.stream;
+      await routeDeckSink('B', selectB.value);
+      await audioElB.play();
+
+      updateGains();
+      updateDelays();
+      drawMonitors();
+    }
+
+    // 2. Capture tab audio with minimal 1x1@1fps video overhead
+    async function startTabAudioSharing() {
+      try {
+        stopSharing();
+
+        capturedStream = await navigator.mediaDevices.getDisplayMedia({
+          video: { width: 1, height: 1, frameRate: 1 },
+          audio: {
+            echoCancellation: false,
+            noiseSuppression: false,
+            autoGainControl: false,
+            suppressLocalAudioPlayback: true
+          },
+          preferCurrentTab: false,
+          selfBrowserSurface: 'exclude',
+          surfaceSwitching: 'include'
+        });
+
+        const audioTracks = capturedStream.getAudioTracks();
+        if (audioTracks.length === 0) {
+          stopSharing();
+          alert('未偵測到分頁音訊！請在選擇分頁時勾選左下角的「一併分享分頁音訊 (Also share tab audio)」。');
+          return;
+        }
+
+        await loadAudioDevices(false);
+        await buildLowLatencyGraph();
+
+        statusText.textContent = 'ON-AIR // DUAL A2DP STREAM ACTIVE';
+        statusBadge.classList.add('active');
+        wheelA.classList.add('spinning');
+        wheelB.classList.add('spinning');
+        btnSyncReset.style.display = 'inline-flex';
+        btnStop.style.display = 'inline-flex';
+
+        audioTracks[0].onended = () => stopSharing();
+      } catch (err) {
+        console.error(err);
+        if (err.name !== 'NotAllowedError') {
+          alert('啟動共享失敗：' + err.message);
+        }
+      }
+    }
+
+    function stopSharing() {
+      if (animId) cancelAnimationFrame(animId);
+      if (capturedStream) {
+        capturedStream.getTracks().forEach(t => t.stop());
+        capturedStream = null;
+      }
+      if (audioCtx) {
+        audioCtx.close();
+        audioCtx = null;
+      }
+      audioElA.srcObject = null;
+      audioElB.srcObject = null;
+      statusText.textContent = 'STANDBY // NO AUDIO LINK';
+      statusBadge.classList.remove('active');
+      wheelA.classList.remove('spinning');
+      wheelB.classList.remove('spinning');
+      btnSyncReset.style.display = 'none';
+      btnStop.style.display = 'none';
+      updateVuBar(vuSegsA, 0);
+      updateVuBar(vuSegsB, 0);
+    }
+
+    function getEffectiveMultipliers() {
+      const m = Number(masterVol.value) / 100;
+      const xf = Number(xfader.value); // -100 to +100
+      const xfA = xf <= 0 ? 1 : (100 - xf) / 100;
+      const xfB = xf >= 0 ? 1 : (100 + xf) / 100;
+
+      const soloMuteA = isSoloB && !isSoloA;
+      const soloMuteB = isSoloA && !isSoloB;
+
+      const effA = (isMutedA || soloMuteA) ? 0 : (Number(volA.value) / 100) * m * xfA;
+      const effB = (isMutedB || soloMuteB) ? 0 : (Number(volB.value) / 100) * m * xfB;
+      return { effA, effB };
+    }
+
+    function updateGains() {
+      const { effA, effB } = getEffectiveMultipliers();
+      const xf = Number(xfader.value);
+
+      masterVolLabel.textContent = `${masterVol.value}%`;
+      volLabelA.textContent = isMutedA ? 'MUTED' : `${volA.value}%`;
+      volLabelB.textContent = isMutedB ? 'MUTED' : `${volB.value}%`;
+      xfaderLabel.textContent = xf === 0 ? 'CENTER' : (xf < 0 ? `A ${Math.abs(xf)}%` : `B ${xf}%`);
+
+      if (gainNodeA && audioCtx) {
+        gainNodeA.gain.setTargetAtTime(effA, audioCtx.currentTime, 0.015);
+      }
+      if (gainNodeB && audioCtx) {
+        gainNodeB.gain.setTargetAtTime(effB, audioCtx.currentTime, 0.015);
+      }
+    }
+
+    function updateDelays() {
+      const dA = Number(delayA.value) / 1000;
+      const dB = Number(delayB.value) / 1000;
+      delayLabelA.textContent = `${delayA.value} ms`;
+      delayLabelB.textContent = `${delayB.value} ms`;
+
+      if (delayNodeA && audioCtx) {
+        delayNodeA.delayTime.setTargetAtTime(dA, audioCtx.currentTime, 0.015);
+      }
+      if (delayNodeB && audioCtx) {
+        delayNodeB.delayTime.setTargetAtTime(dB, audioCtx.currentTime, 0.015);
+      }
+    }
+
+    function updateVuBar(segs, level0to1) {
+      const activeCount = Math.min(16, Math.round(level0to1 * 16));
+      for (let i = 0; i < 16; i++) {
+        segs[i].className = 'vu-seg';
+        if (i < activeCount) {
+          if (i < 10) segs[i].classList.add('on-low');
+          else if (i < 14) segs[i].classList.add('on-mid');
+          else segs[i].classList.add('on-hi');
+        }
+      }
+    }
+
+    function drawMonitors() {
+      if (!analyserNode) return;
+      const bufferLength = analyserNode.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      function render() {
+        animId = requestAnimationFrame(render);
+        analyserNode.getByteFrequencyData(dataArray);
+
+        canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+        let sum = 0;
+        const barWidth = (canvas.width / bufferLength) * 1.15;
+        let x = 0;
+
+        for (let i = 0; i < bufferLength; i++) {
+          const v = dataArray[i] / 255;
+          sum += v;
+          const barHeight = v * (canvas.height - 6);
+          canvasCtx.fillStyle = i % 2 === 0 ? '#9c7344' : '#4a7870';
+          canvasCtx.fillRect(x, canvas.height - barHeight, Math.max(2, barWidth - 2), barHeight);
+          x += barWidth;
+        }
+
+        const avg = sum / bufferLength;
+        const { effA, effB } = getEffectiveMultipliers();
+        updateVuBar(vuSegsA, Math.min(1, avg * 1.45 * effA));
+        updateVuBar(vuSegsB, Math.min(1, avg * 1.45 * effB));
+      }
+      render();
+    }
+
+    // Event bindings
+    btnRefreshDevices.addEventListener('click', () => loadAudioDevices(true));
+    btnCaptureTab.addEventListener('click', startTabAudioSharing);
+    btnSyncReset.addEventListener('click', () => buildLowLatencyGraph());
+    btnStop.addEventListener('click', stopSharing);
+
+    selectA.addEventListener('change', () => routeDeckSink('A', selectA.value));
+    selectB.addEventListener('change', () => routeDeckSink('B', selectB.value));
+
+    masterVol.addEventListener('input', updateGains);
+    volA.addEventListener('input', updateGains);
+    volB.addEventListener('input', updateGains);
+    xfader.addEventListener('input', updateGains);
+    xfader.addEventListener('dblclick', () => { xfader.value = 0; updateGains(); });
+    xfaderReset.addEventListener('click', () => { xfader.value = 0; updateGains(); });
+
+    delayA.addEventListener('input', updateDelays);
+    delayB.addEventListener('input', updateDelays);
+
+    document.querySelectorAll('.mini-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = document.getElementById(btn.dataset.target);
+        const delta = Number(btn.dataset.delta);
+        if (delta === 0) {
+          target.value = 0;
+        } else {
+          target.value = Math.max(0, Math.min(300, Number(target.value) + delta));
+        }
+        updateDelays();
+      });
+    });
+
+    muteA.addEventListener('click', () => {
+      isMutedA = !isMutedA;
+      muteA.classList.toggle('muted', isMutedA);
+      muteIconA.firstElementChild.setAttribute('href', isMutedA ? '#px-vol-mute' : '#px-vol-on');
+      muteTextA.textContent = isMutedA ? 'MUTED' : 'MUTE';
+      updateGains();
+    });
+
+    muteB.addEventListener('click', () => {
+      isMutedB = !isMutedB;
+      muteB.classList.toggle('muted', isMutedB);
+      muteIconB.firstElementChild.setAttribute('href', isMutedB ? '#px-vol-mute' : '#px-vol-on');
+      muteTextB.textContent = isMutedB ? 'MUTED' : 'MUTE';
+      updateGains();
+    });
+
+    soloA.addEventListener('click', () => {
+      isSoloA = !isSoloA;
+      soloA.classList.toggle('soloed', isSoloA);
+      updateGains();
+    });
+
+    soloB.addEventListener('click', () => {
+      isSoloB = !isSoloB;
+      soloB.classList.toggle('soloed', isSoloB);
+      updateGains();
+    });
+
+    // Jukebox Side-by-Side Mini Popup Window Controller (reuses 'DJM_JUKEBOX' so tab audio stays linked!)
+    const jukeboxQuery = document.getElementById('jukeboxQuery');
+    const btnJukeboxYTM = document.getElementById('btnJukeboxYTM');
+    const btnJukeboxYT = document.getElementById('btnJukeboxYT');
+    const btnJukeboxSpotify = document.getElementById('btnJukeboxSpotify');
+    const localFileInput = document.getElementById('localFileInput');
+    const localFilePlayer = document.getElementById('localFilePlayer');
+    const localTrackStatus = document.getElementById('localTrackStatus');
+
+    function openJukeboxPopup(platform) {
+      const q = jukeboxQuery.value.trim();
+      let url = 'https://music.youtube.com';
+      if (platform === 'ytm') {
+        url = q ? `https://music.youtube.com/search?q=${encodeURIComponent(q)}` : 'https://music.youtube.com';
+      } else if (platform === 'yt') {
+        url = q ? `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}` : 'https://www.youtube.com';
+      } else if (platform === 'spotify') {
+        url = q ? `https://open.spotify.com/search/${encodeURIComponent(q)}` : 'https://open.spotify.com';
+      }
+
+      const w = 460;
+      const h = Math.min(720, window.screen.availHeight - 80);
+      const left = Math.max(0, window.screen.availWidth - w - 20);
+      const top = 60;
+      window.open(
+        url,
+        'DJM_JUKEBOX',
+        `width=${w},height=${h},left=${left},top=${top},menubar=no,toolbar=no,location=yes,status=no`
+      );
+    }
+
+    btnJukeboxYTM.addEventListener('click', () => openJukeboxPopup('ytm'));
+    btnJukeboxYT.addEventListener('click', () => openJukeboxPopup('yt'));
+    btnJukeboxSpotify.addEventListener('click', () => openJukeboxPopup('spotify'));
+    jukeboxQuery.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') openJukeboxPopup('ytm');
+    });
+
+    // Zero-Screen-Share Direct Local Audio File Routing
+    localFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      stopSharing();
+      await loadAudioDevices(false);
+
+      const fileUrl = URL.createObjectURL(file);
+      localFilePlayer.src = fileUrl;
+      localFilePlayer.style.display = 'block';
+      localTrackStatus.textContent = `FILE DECK // ${file.name}`;
+
+      const stream = localFilePlayer.captureStream ? localFilePlayer.captureStream() : localFilePlayer.mozCaptureStream();
+      capturedStream = stream;
+      await localFilePlayer.play();
+      await buildLowLatencyGraph();
+
+      statusText.textContent = 'ON-AIR // LOCAL FILE DIRECT DECK';
+      statusBadge.classList.add('active');
+      wheelA.classList.add('spinning');
+      wheelB.classList.add('spinning');
+      btnSyncReset.style.display = 'inline-flex';
+      btnStop.style.display = 'inline-flex';
+    });
+
+    if (navigator.mediaDevices) {
+      navigator.mediaDevices.addEventListener('devicechange', () => loadAudioDevices(false));
+    }
+  </script>
+</body>
+</html>
