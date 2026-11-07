@@ -8,5 +8,5 @@ if ! lsof -i :8766 >/dev/null 2>&1; then
   sleep 0.4
 fi
 
-# Open DJM-2BT in Google Chrome
+# Open PARALLEL in Google Chrome
 open -a "Google Chrome" "http://localhost:8766/index.html"

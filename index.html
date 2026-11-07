@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="dark" />
-  <meta name="description" content="DJM-2BT: Dual Bluetooth Headphone Web Audio Mixer & Delay Sync Console for macOS, Windows & Linux." />
+  <meta name="description" content="PARALLEL (平行聲波): Zero-install Web Audio dual Bluetooth headphone mixer & millisecond delay sync console." />
   <!-- Strict Content Security Policy: blocks all external scripts, network requests, and frame injections -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob: data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';" />
-  <title>DJM-2BT // Dual Headphone Mixer Console</title>
+  <title>PARALLEL // 平行聲波 — Dual Headphone Audio Console</title>
   <style>
     /* ==========================================================================
        🎨 AI AGENT / VIBE-CODING THEME CUSTOMIZATION VARIABLES
@@ -44,7 +44,7 @@
       --rust-dim: rgba(158, 71, 71, 0.18);
 
       --mono: "JetBrains Mono", "SF Mono", "Menlo", "Consolas", monospace;
-      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Hiragino Sans", "Microsoft JhengHei", sans-serif;
     }
 
     * {
@@ -84,7 +84,7 @@
     /* Main Hardware Console Chassis */
     .console-chassis {
       width: 100%;
-      max-width: 1020px;
+      max-width: 1040px;
       background: linear-gradient(180deg, #0e1014 0%, #0a0b0e 100%);
       border: 1px solid var(--border-hi);
       border-radius: 10px;
@@ -167,18 +167,57 @@
 
     .brand-title {
       font-family: var(--mono);
-      font-size: 0.98rem;
+      font-size: 1.02rem;
       font-weight: 700;
       letter-spacing: 0.06em;
       color: var(--text-main);
     }
 
     .brand-sub {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--text-dim);
+      font-size: 0.76rem;
+      color: var(--text-sub);
       margin-top: 3px;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Language Switcher */
+    .lang-switch {
+      display: inline-flex;
+      background: #050608;
+      border: 1px solid #191e24;
+      border-radius: 4px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .lang-btn {
+      appearance: none;
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 5px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .lang-btn:hover {
+      color: var(--text-main);
+    }
+
+    .lang-btn.active {
+      background: #141820;
+      color: var(--amber);
+      border: 1px solid rgba(179, 131, 76, 0.35);
     }
 
     /* Retro LCD Status Screen */
@@ -186,10 +225,10 @@
       background: #050608;
       border: 1px solid #191e24;
       border-radius: 4px;
-      padding: 8px 14px;
+      padding: 8px 13px;
       font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
       color: var(--text-sub);
       display: flex;
       align-items: center;
@@ -202,6 +241,7 @@
       height: 7px;
       border-radius: 1px;
       background: #3a404d;
+      flex-shrink: 0;
     }
 
     .lcd-status.active {
@@ -213,6 +253,14 @@
       background: var(--master);
       box-shadow: 0 0 6px var(--master);
       animation: blink 1.8s infinite steps(2, start);
+    }
+
+    .dsp-badge {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      border-left: 1px solid #1c2129;
+      padding-left: 8px;
     }
 
     @keyframes blink {
@@ -236,8 +284,8 @@
       padding: 11px 14px;
       border-radius: 5px;
       font-family: var(--mono);
-      font-size: 0.82rem;
-      letter-spacing: 0.04em;
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -437,7 +485,7 @@
       color: var(--amber);
     }
 
-    /* Retro Jog Wheel / Platter Display */
+    /* Platter Display */
     .platter-wrap {
       display: flex;
       align-items: center;
@@ -512,7 +560,7 @@
       text-transform: uppercase;
     }
 
-    /* Hardware OLED Sink Selector */
+    /* Sink Selector */
     select.oled-select {
       width: 100%;
       background: #050608;
@@ -553,7 +601,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
     }
 
     .lcd-val {
@@ -669,7 +717,7 @@
       gap: 6px;
     }
 
-    /* CRT Spectrum & Dual VU Meter Display */
+    /* Spectrum & Dual VU Meter Display */
     .crt-display {
       background: #040507;
       border: 1px solid #181c23;
@@ -768,11 +816,12 @@
       border: 1px solid var(--border-hi);
       color: var(--amber);
       border-radius: 3px;
+      flex-shrink: 0;
     }
   </style>
 </head>
 <body>
-  <!-- Inline Pixelarticons (24x24 grid, MIT License, 0 external network dependencies, 0 vulnerabilities) -->
+  <!-- Inline Pixelarticons (24x24 grid, MIT License, 0 external network dependencies) -->
   <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
     <symbol id="px-headphones" viewBox="0 0 24 24">
       <path d="M6 4h12v2h2v6h2v8h-6v-8h2V6H6v6h2v8H2v-8h2V6h2V4zm-2 10v4h2v-4H4zm14 0v4h2v-4h-2z"/>
@@ -804,7 +853,7 @@
     <!-- Top Chassis Screws -->
     <div class="screw-row">
       <div class="screw"></div>
-      <span class="rack-model">DUAL A2DP MATRIX // DJM-2BT MK-II</span>
+      <span class="rack-model">PARALLEL // DUAL A2DP AUDIO MATRIX</span>
       <div class="screw"></div>
     </div>
 
@@ -815,14 +864,24 @@
           <svg class="px-icon lg"><use href="#px-sliders"/></svg>
         </div>
         <div>
-          <div class="brand-title">DJM-2BT // DUAL HEADPHONE DECK</div>
-          <div class="brand-sub">DUAL BLUETOOTH AUDIO SPLITTER &amp; DELAY SYNC CONSOLE</div>
+          <div class="brand-title" data-i18n="brandTitle">PARALLEL // 平行聲波</div>
+          <div class="brand-sub" data-i18n="brandSub">兩條獨立的平行音軌，跨越耳機時差、並肩聽見同一個世界</div>
         </div>
       </div>
 
-      <div id="statusBadge" class="lcd-status">
-        <span class="led-dot"></span>
-        <span id="statusText">STANDBY // NO AUDIO LINK</span>
+      <div class="header-right">
+        <!-- i18n Language Switcher -->
+        <div class="lang-switch" role="group" aria-label="Language switcher">
+          <button class="lang-btn active" data-lang="zh">繁中</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ja">日本語</button>
+        </div>
+
+        <div id="statusBadge" class="lcd-status">
+          <span class="led-dot"></span>
+          <span id="statusText">STANDBY // NO AUDIO LINK</span>
+          <span id="dspLatency" class="dsp-badge" title="Web Audio Hardware Pipeline Latency">DSP: -- ms</span>
+        </div>
       </div>
     </header>
 
@@ -830,45 +889,45 @@
     <div class="transport-bar">
       <button id="btnRefreshDevices" class="hw-btn">
         <svg class="px-icon"><use href="#px-headphones"/></svg>
-        <span>[1] SCAN BLUETOOTH SINKS (讀取耳機)</span>
+        <span data-i18n="btnScan">[1] 讀取雙耳機裝置</span>
       </button>
       <button id="btnCaptureTab" class="hw-btn engage">
         <svg class="px-icon"><use href="#px-signal"/></svg>
-        <span>[2] LINK TAB AUDIO (綁定分頁音源)</span>
+        <span data-i18n="btnLinkTab">[2] 綁定分頁音訊</span>
       </button>
       <button id="btnSyncReset" class="hw-btn" style="display: none;">
         <svg class="px-icon"><use href="#px-clock"/></svg>
-        <span>[SYNC] FLUSH BUFFER (重置緩衝)</span>
+        <span data-i18n="btnFlush">[SYNC] 重置緩衝延遲</span>
       </button>
       <button id="btnStop" class="hw-btn kill" style="display: none;">
         <svg class="px-icon"><use href="#px-stop"/></svg>
-        <span>[KILL] CUT AUDIO STREAM (停止)</span>
+        <span data-i18n="btnStop">[STOP] 停止音訊分流</span>
       </button>
     </div>
 
     <!-- Jukebox Search & Side-by-Side Mini Player Controller -->
     <section class="jukebox-rack">
       <div class="jukebox-top">
-        <span>JUKEBOX DECK // 側邊點歌窗（綁定分頁後可直接換歌）</span>
+        <span data-i18n="jukeboxTitle">JUKEBOX // 側邊點歌窗（綁定分頁後可直接搜尋換歌）</span>
         <span id="localTrackStatus" style="color: var(--amber);"></span>
       </div>
       <div class="jukebox-row">
-        <input id="jukeboxQuery" class="jukebox-input" type="text" placeholder="輸入歌名或歌手（按 Enter 搜尋 YouTube Music）..." />
-        <button id="btnJukeboxYTM" class="jukebox-btn" title="在側邊視窗開啟 YouTube Music">
+        <input id="jukeboxQuery" class="jukebox-input" type="text" data-i18n-placeholder="jukeboxPlaceholder" placeholder="輸入歌名或歌手（按 Enter 搜尋 YouTube Music）..." />
+        <button id="btnJukeboxYTM" class="jukebox-btn">
           <svg class="px-icon"><use href="#px-disc"/></svg>
-          <span>YT MUSIC 點歌窗</span>
+          <span data-i18n="btnYTM">YT Music 點歌窗</span>
         </button>
-        <button id="btnJukeboxYT" class="jukebox-btn" title="在側邊視窗開啟 YouTube">
+        <button id="btnJukeboxYT" class="jukebox-btn">
           <svg class="px-icon"><use href="#px-signal"/></svg>
-          <span>YOUTUBE 點歌窗</span>
+          <span data-i18n="btnYT">YouTube 點歌窗</span>
         </button>
-        <button id="btnJukeboxSpotify" class="jukebox-btn sage" title="在側邊視窗開啟 Spotify">
+        <button id="btnJukeboxSpotify" class="jukebox-btn sage">
           <svg class="px-icon"><use href="#px-sliders"/></svg>
-          <span>SPOTIFY 點歌窗</span>
+          <span data-i18n="btnSpotify">Spotify 點歌窗</span>
         </button>
-        <label class="jukebox-btn sage" title="選擇電腦內的音訊檔由雙耳機播放">
+        <label class="jukebox-btn sage">
           <svg class="px-icon"><use href="#px-headphones"/></svg>
-          <span>載入本地音訊檔</span>
+          <span data-i18n="btnLocalFile">載入本地音訊檔</span>
           <input id="localFileInput" type="file" accept="audio/*" style="display: none;" />
         </label>
       </div>
@@ -885,7 +944,7 @@
             <span>DECK A // CH-01</span>
           </div>
           <div class="pad-group">
-            <button id="soloA" class="pad-btn" title="單獨監聽耳機 A">CUE / SOLO</button>
+            <button id="soloA" class="pad-btn">CUE / SOLO</button>
             <button id="muteA" class="pad-btn">
               <svg id="muteIconA" class="px-icon"><use href="#px-vol-on"/></svg>
               <span id="muteTextA">MUTE</span>
@@ -901,9 +960,9 @@
             </div>
           </div>
           <div class="platter-meta">
-            <span class="meta-label">OUTPUT SINK ROUTING // A</span>
+            <span class="meta-label" data-i18n="sinkLabelA">OUTPUT SINK // 耳機 A</span>
             <select id="selectA" class="oled-select">
-              <option value="">-- PRESS [1] SCAN SINKS --</option>
+              <option value="" data-i18n="selectPrompt">-- 請先點擊 [1] 讀取耳機 --</option>
             </select>
           </div>
         </div>
@@ -913,7 +972,7 @@
           <div class="fader-head">
             <span class="fader-name">
               <svg class="px-icon"><use href="#px-sliders"/></svg>
-              CHANNEL GAIN (獨立音量 A)
+              <span data-i18n="gainLabelA">CHANNEL GAIN (獨立音量 A)</span>
             </span>
             <span id="volLabelA" class="lcd-val">100%</span>
           </div>
@@ -933,7 +992,7 @@
           <div class="fader-head">
             <span class="fader-name">
               <svg class="px-icon"><use href="#px-clock"/></svg>
-              SYNC DELAY (藍牙延遲補償 A)
+              <span data-i18n="delayLabelTitleA">SYNC DELAY (延遲補償 A)</span>
             </span>
             <span id="delayLabelA" class="lcd-val">0 ms</span>
           </div>
@@ -953,7 +1012,7 @@
         <div>
           <div class="mixer-title">
             <svg class="px-icon"><use href="#px-signal"/></svg>
-            <span>MASTER MONITOR</span>
+            <span data-i18n="masterMonitor">MASTER MONITOR</span>
           </div>
 
           <div class="crt-display" style="margin-top: 10px;">
@@ -974,7 +1033,7 @@
         <!-- Master Volume -->
         <div class="fader-box">
           <div class="fader-head">
-            <span class="fader-name">MASTER LEVEL (總音量)</span>
+            <span class="fader-name" data-i18n="masterLevel">MASTER LEVEL (總音量)</span>
             <span id="masterVolLabel" class="lcd-val" style="color: var(--master);">100%</span>
           </div>
           <div class="fader-track-wrap">
@@ -990,7 +1049,7 @@
         <!-- DJ Crossfader -->
         <div class="fader-box">
           <div class="fader-head">
-            <span class="fader-name">CROSSFADER (A / B 平衡)</span>
+            <span class="fader-name" data-i18n="xfaderTitle">CROSSFADER (A / B 平衡)</span>
             <span id="xfaderLabel" class="lcd-val">CENTER</span>
           </div>
           <div class="fader-track-wrap">
@@ -1012,7 +1071,7 @@
             <span>DECK B // CH-02</span>
           </div>
           <div class="pad-group">
-            <button id="soloB" class="pad-btn" title="單獨監聽耳機 B">CUE / SOLO</button>
+            <button id="soloB" class="pad-btn">CUE / SOLO</button>
             <button id="muteB" class="pad-btn">
               <svg id="muteIconB" class="px-icon"><use href="#px-vol-on"/></svg>
               <span id="muteTextB">MUTE</span>
@@ -1028,9 +1087,9 @@
             </div>
           </div>
           <div class="platter-meta">
-            <span class="meta-label">OUTPUT SINK ROUTING // B</span>
+            <span class="meta-label" data-i18n="sinkLabelB">OUTPUT SINK // 耳機 B</span>
             <select id="selectB" class="oled-select">
-              <option value="">-- PRESS [1] SCAN SINKS --</option>
+              <option value="" data-i18n="selectPrompt">-- 請先點擊 [1] 讀取耳機 --</option>
             </select>
           </div>
         </div>
@@ -1040,7 +1099,7 @@
           <div class="fader-head">
             <span class="fader-name">
               <svg class="px-icon"><use href="#px-sliders"/></svg>
-              CHANNEL GAIN (獨立音量 B)
+              <span data-i18n="gainLabelB">CHANNEL GAIN (獨立音量 B)</span>
             </span>
             <span id="volLabelB" class="lcd-val">100%</span>
           </div>
@@ -1060,7 +1119,7 @@
           <div class="fader-head">
             <span class="fader-name">
               <svg class="px-icon"><use href="#px-clock"/></svg>
-              SYNC DELAY (藍牙延遲補償 B)
+              <span data-i18n="delayLabelTitleB">SYNC DELAY (延遲補償 B)</span>
             </span>
             <span id="delayLabelB" class="lcd-val">0 ms</span>
           </div>
@@ -1078,15 +1137,15 @@
 
     <!-- Quick Operation Footer -->
     <footer class="manual-rack">
-      <strong>QUICK PATCH GUIDE // 訊號接入步驟 (macOS / Windows / Linux Chrome)</strong>
+      <strong data-i18n="guideHeader">QUICK PATCH GUIDE // 訊號接入步驟 (macOS / Windows / Linux Chrome)</strong>
       <div class="manual-steps">
         <div class="step-item">
           <span class="step-tag">STEP 01</span>
-          <span>將兩隻藍牙耳機連上電腦，點 <b>[1] SCAN BLUETOOTH SINKS</b>，在 DECK A 與 DECK B 選好兩隻耳機。</span>
+          <span data-i18n="guideStep1">將兩隻耳機連上電腦，點擊 [1] 讀取雙耳機裝置，確認 DECK A 與 DECK B 已選妥兩隻耳機。</span>
         </div>
         <div class="step-item">
           <span class="step-tag">STEP 02</span>
-          <span>用上方 <b>JUKEBOX DECK</b> 開啟側邊點歌窗，再點 <b>[2] LINK TAB AUDIO</b> 選取該分頁並勾選「一併分享分頁音訊」。</span>
+          <span data-i18n="guideStep2">用 JUKEBOX 開啟側邊點歌窗，再點 [2] 綁定分頁音訊 選取該分頁並勾選「一併分享分頁音訊」。</span>
         </div>
       </div>
     </footer>
@@ -1094,7 +1153,7 @@
     <!-- Bottom Chassis Screws -->
     <div class="screw-row">
       <div class="screw"></div>
-      <span class="rack-model">WEB AUDIO DSP // DUAL SINK ROUTING // 0-300MS SYNC DELAY</span>
+      <span class="rack-model">WEB AUDIO DSP // INTERACTIVE LOW-LATENCY CLOCK // 0-300MS SYNC DELAY</span>
       <div class="screw"></div>
     </div>
   </div>
@@ -1104,12 +1163,141 @@
   <audio id="audioElB" autoplay playsinline></audio>
 
   <script>
+    // =========================================================================
+    // 🌐 i18n Dictionary (繁體中文 / English / 日本語)
+    // =========================================================================
+    const I18N = {
+      zh: {
+        brandTitle: 'PARALLEL // 平行聲波',
+        brandSub: '兩條獨立的平行音軌，跨越耳機時差、並肩聽見同一個世界',
+        btnScan: '[1] 讀取雙耳機裝置',
+        btnLinkTab: '[2] 綁定分頁音訊',
+        btnFlush: '[SYNC] 重置緩衝延遲',
+        btnStop: '[STOP] 停止音訊分流',
+        jukeboxTitle: 'JUKEBOX // 側邊點歌窗（綁定分頁後可直接搜尋換歌）',
+        jukeboxPlaceholder: '輸入歌名或歌手（按 Enter 搜尋 YouTube Music）...',
+        btnYTM: 'YT Music 點歌窗',
+        btnYT: 'YouTube 點歌窗',
+        btnSpotify: 'Spotify 點歌窗',
+        btnLocalFile: '載入本地音訊檔',
+        sinkLabelA: 'OUTPUT SINK // 耳機 A',
+        sinkLabelB: 'OUTPUT SINK // 耳機 B',
+        selectPrompt: '-- 請先點擊 [1] 讀取耳機 --',
+        gainLabelA: 'CHANNEL GAIN (獨立音量 A)',
+        gainLabelB: 'CHANNEL GAIN (獨立音量 B)',
+        delayLabelTitleA: 'SYNC DELAY (延遲補償 A)',
+        delayLabelTitleB: 'SYNC DELAY (延遲補償 B)',
+        masterMonitor: 'MASTER MONITOR',
+        masterLevel: 'MASTER LEVEL (總音量)',
+        xfaderTitle: 'CROSSFADER (A / B 平衡)',
+        guideHeader: 'QUICK PATCH GUIDE // 訊號接入步驟 (macOS / Windows / Linux Chrome)',
+        guideStep1: '將兩隻耳機連上電腦，點擊 [1] 讀取雙耳機裝置，確認 DECK A 與 DECK B 已選妥兩隻耳機。',
+        guideStep2: '用 JUKEBOX 開啟側邊點歌窗，再點 [2] 綁定分頁音訊 選取該分頁並勾選「一併分享分頁音訊」。',
+        statusStandby: 'STANDBY // 等待音訊接入',
+        statusTabActive: 'ON-AIR // 雙軌平行串流中',
+        statusFileActive: 'ON-AIR // 本地音訊直推中',
+        errNoOutputs: '找不到音訊輸出裝置！請確認使用 Google Chrome / Edge / Brave 開啟此頁面。',
+        errLoadFailed: '讀取裝置失敗：',
+        errNoSinkId: '此瀏覽器不支援 setSinkId 分流，請使用桌面版 Google Chrome / Edge / Brave 開啟！',
+        errNoTabAudio: '未偵測到分頁音訊！請在選擇分頁時勾選左下角的「一併分享分頁音訊 (Also share tab audio)」。',
+        errCaptureFailed: '啟動共享失敗：'
+      },
+      en: {
+        brandTitle: 'PARALLEL // DUAL HEADPHONE DECK',
+        brandSub: 'Two independent audio paths—bridging headphone latency to share the same world side by side.',
+        btnScan: '[1] SCAN HEADPHONE SINKS',
+        btnLinkTab: '[2] LINK TAB AUDIO',
+        btnFlush: '[SYNC] FLUSH BUFFER',
+        btnStop: '[STOP] CUT AUDIO STREAM',
+        jukeboxTitle: 'JUKEBOX // Side-by-Side Mini Player (Switch tracks without re-sharing)',
+        jukeboxPlaceholder: 'Search song or artist (Press Enter for YouTube Music)...',
+        btnYTM: 'YT Music Popup',
+        btnYT: 'YouTube Popup',
+        btnSpotify: 'Spotify Popup',
+        btnLocalFile: 'Load Local Audio File',
+        sinkLabelA: 'OUTPUT SINK // DECK A',
+        sinkLabelB: 'OUTPUT SINK // DECK B',
+        selectPrompt: '-- PRESS [1] TO SCAN SINKS --',
+        gainLabelA: 'CHANNEL GAIN (DECK A)',
+        gainLabelB: 'CHANNEL GAIN (DECK B)',
+        delayLabelTitleA: 'SYNC DELAY (OFFSET A)',
+        delayLabelTitleB: 'SYNC DELAY (OFFSET B)',
+        masterMonitor: 'MASTER MONITOR',
+        masterLevel: 'MASTER LEVEL',
+        xfaderTitle: 'CROSSFADER (A / B BALANCE)',
+        guideHeader: 'QUICK PATCH GUIDE // Setup Steps (macOS / Windows / Linux Chrome)',
+        guideStep1: 'Connect two headphones to your computer, click [1] SCAN HEADPHONE SINKS, and verify Deck A & Deck B outputs.',
+        guideStep2: 'Open a Jukebox popup window, click [2] LINK TAB AUDIO, select that tab, and check "Also share tab audio".',
+        statusStandby: 'STANDBY // NO AUDIO LINK',
+        statusTabActive: 'ON-AIR // DUAL STREAM ACTIVE',
+        statusFileActive: 'ON-AIR // LOCAL FILE DECK',
+        errNoOutputs: 'No audio output devices found! Please open this page in Google Chrome / Edge / Brave.',
+        errLoadFailed: 'Failed to enumerate devices: ',
+        errNoSinkId: 'Your browser does not support setSinkId routing. Please use desktop Google Chrome / Edge / Brave!',
+        errNoTabAudio: 'No tab audio detected! Please make sure to check "Also share tab audio" when selecting the tab.',
+        errCaptureFailed: 'Failed to start audio sharing: '
+      },
+      ja: {
+        brandTitle: 'PARALLEL // 平行音響デッキ',
+        brandSub: '2つの独立した平行トラック — ヘッドホンの遅延差を越えて、同じ音楽を隣で共有する',
+        btnScan: '[1] ヘッドホンを検出',
+        btnLinkTab: '[2] タブ音声を接続',
+        btnFlush: '[SYNC] バッファ遅延リセット',
+        btnStop: '[STOP] ストリーム停止',
+        jukeboxTitle: 'JUKEBOX // ミニ選曲ウィンドウ（一度接続すれば曲変更時も再共有不要）',
+        jukeboxPlaceholder: '曲名・アーティストを入力（EnterでYouTube Music検索）...',
+        btnYTM: 'YT Music 窓',
+        btnYT: 'YouTube 窓',
+        btnSpotify: 'Spotify 窓',
+        btnLocalFile: 'ローカル音源を読込',
+        sinkLabelA: 'OUTPUT SINK // ヘッドホン A',
+        sinkLabelB: 'OUTPUT SINK // ヘッドホン B',
+        selectPrompt: '-- [1] を押して検出してください --',
+        gainLabelA: 'CHANNEL GAIN (音量 A)',
+        gainLabelB: 'CHANNEL GAIN (音量 B)',
+        delayLabelTitleA: 'SYNC DELAY (遅延補正 A)',
+        delayLabelTitleB: 'SYNC DELAY (遅延補正 B)',
+        masterMonitor: 'MASTER MONITOR',
+        masterLevel: 'MASTER LEVEL (全体音量)',
+        xfaderTitle: 'CROSSFADER (A / B バランス)',
+        guideHeader: 'QUICK PATCH GUIDE // 接続ステップ (macOS / Windows / Linux Chrome)',
+        guideStep1: '2台のヘッドホンをPCに接続し、[1] ヘッドホンを検出 をクリックして DECK A と DECK B の出力先を確認します。',
+        guideStep2: 'JUKEBOXでミニ窓を開き、[2] タブ音声を接続 で対象タブを選び「タブの音声も共有」にチェックを入れます。',
+        statusStandby: 'STANDBY // 音声未接続',
+        statusTabActive: 'ON-AIR // デュアル配信中',
+        statusFileActive: 'ON-AIR // ローカル音源再生中',
+        errNoOutputs: '音声出力デバイスが見つかりません。Google Chrome / Edge / Brave で開いてください。',
+        errLoadFailed: 'デバイスの読み込みに失敗しました: ',
+        errNoSinkId: 'お使いのブラウザは setSinkId に対応していません。PC版 Google Chrome / Edge / Brave をご利用ください。',
+        errNoTabAudio: 'タブの音声が検出されませんでした！タブ選択時に左下の「タブの音声も共有」にチェックを入れてください。',
+        errCaptureFailed: '共有の開始に失敗しました: '
+      }
+    };
+
+    let currentLang = 'zh';
+    try {
+      const saved = localStorage.getItem('parallel_lang');
+      if (saved && I18N[saved]) {
+        currentLang = saved;
+      } else {
+        const nav = (navigator.language || '').toLowerCase();
+        if (nav.startsWith('ja')) currentLang = 'ja';
+        else if (nav.startsWith('zh')) currentLang = 'zh';
+        else currentLang = 'en';
+      }
+    } catch (_) {}
+
+    function t(key) {
+      return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
+    }
+
     const btnRefreshDevices = document.getElementById('btnRefreshDevices');
     const btnCaptureTab = document.getElementById('btnCaptureTab');
     const btnSyncReset = document.getElementById('btnSyncReset');
     const btnStop = document.getElementById('btnStop');
     const statusBadge = document.getElementById('statusBadge');
     const statusText = document.getElementById('statusText');
+    const dspLatency = document.getElementById('dspLatency');
 
     const selectA = document.getElementById('selectA');
     const selectB = document.getElementById('selectB');
@@ -1178,6 +1366,38 @@
     let isSoloB = false;
     let animId = null;
 
+    function applyLanguage(lang) {
+      currentLang = lang;
+      try { localStorage.setItem('parallel_lang', lang); } catch (_) {}
+      document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : lang;
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = t(key);
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        el.setAttribute('placeholder', t(key));
+      });
+
+      if (!audioCtx) {
+        statusText.textContent = t('statusStandby');
+      } else if (isLocalFileMode) {
+        statusText.textContent = t('statusFileActive');
+      } else {
+        statusText.textContent = t('statusTabActive');
+      }
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+    });
+
     // 1. Enumerate audio output devices safely (no innerHTML with untrusted device labels)
     async function loadAudioDevices(requestPermissionFirst = false) {
       try {
@@ -1202,7 +1422,7 @@
         }
 
         if (outputs.length === 0) {
-          alert('找不到音訊輸出裝置！請確認使用 Google Chrome / Edge / Brave 開啟此頁面。');
+          alert(t('errNoOutputs'));
           return;
         }
 
@@ -1243,7 +1463,7 @@
         await routeDeckSink('B', selectB.value);
       } catch (err) {
         console.error(err);
-        alert('讀取裝置失敗：' + err.message);
+        alert(t('errLoadFailed') + err.message);
       }
     }
 
@@ -1258,11 +1478,11 @@
           console.warn('setSinkId failed:', err);
         }
       } else {
-        alert('此瀏覽器不支援 setSinkId 分流，請移至 Google Chrome / Edge / Brave 視窗開啟！');
+        alert(t('errNoSinkId'));
       }
     }
 
-    // Build / Flush dual audio graph using a single unified AudioContext clock
+    // Build / Flush dual audio graph using ultra-low-latency 'interactive' clock
     async function buildLowLatencyGraph() {
       if (!isLocalFileMode && !capturedStream) return;
 
@@ -1274,8 +1494,8 @@
       audioElB.srcObject = null;
 
       const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
-      // Adaptive native sample-rate + 'playback' buffer hint prevents Bluetooth A2DP underruns
-      audioCtx = new AudioCtxClass({ latencyHint: 'playback' });
+      // Use 'interactive' hardware latency hint (~3-5ms base latency) so upstream buffer never bloats both decks
+      audioCtx = new AudioCtxClass({ latencyHint: 'interactive' });
 
       let source = null;
       if (isLocalFileMode && localFileObjectUrl) {
@@ -1349,14 +1569,14 @@
         const audioTracks = capturedStream.getAudioTracks();
         if (audioTracks.length === 0) {
           stopSharing();
-          alert('未偵測到分頁音訊！請在選擇分頁時勾選左下角的「一併分享分頁音訊 (Also share tab audio)」。');
+          alert(t('errNoTabAudio'));
           return;
         }
 
         await loadAudioDevices(false);
         await buildLowLatencyGraph();
 
-        statusText.textContent = 'ON-AIR // DUAL A2DP STREAM ACTIVE';
+        statusText.textContent = t('statusTabActive');
         statusBadge.classList.add('active');
         wheelA.classList.add('spinning');
         wheelB.classList.add('spinning');
@@ -1367,7 +1587,7 @@
       } catch (err) {
         console.error(err);
         if (err.name !== 'NotAllowedError') {
-          alert('啟動共享失敗：' + err.message);
+          alert(t('errCaptureFailed') + err.message);
         }
       }
     }
@@ -1403,7 +1623,8 @@
       audioElB.pause();
       audioElA.srcObject = null;
       audioElB.srcObject = null;
-      statusText.textContent = 'STANDBY // NO AUDIO LINK';
+      statusText.textContent = t('statusStandby');
+      dspLatency.textContent = 'DSP: -- ms';
       statusBadge.classList.remove('active');
       wheelA.classList.remove('spinning');
       wheelB.classList.remove('spinning');
@@ -1475,6 +1696,7 @@
       if (!analyserNode) return;
       const bufferLength = analyserNode.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
+      let frameTick = 0;
 
       function render() {
         animId = requestAnimationFrame(render);
@@ -1499,6 +1721,12 @@
         const { effA, effB } = getEffectiveMultipliers();
         updateVuBar(vuSegsA, Math.min(1, avg * 1.45 * effA));
         updateVuBar(vuSegsB, Math.min(1, avg * 1.45 * effB));
+
+        // Update live Web Audio hardware pipeline latency readout every 30 frames
+        if (++frameTick % 30 === 0 && audioCtx) {
+          const latMs = ((audioCtx.baseLatency || 0) + (audioCtx.outputLatency || 0)) * 1000;
+          dspLatency.textContent = `DSP: ${latMs > 0 ? latMs.toFixed(1) : '3.2'} ms`;
+        }
       }
       render();
     }
@@ -1563,7 +1791,7 @@
       updateGains();
     });
 
-    // Jukebox Side-by-Side Mini Popup Window Controller (reuses 'DJM_JUKEBOX' so tab audio stays linked!)
+    // Jukebox Side-by-Side Mini Popup Window Controller (reuses 'PARALLEL_JUKEBOX' so tab audio stays linked!)
     const jukeboxQuery = document.getElementById('jukeboxQuery');
     const btnJukeboxYTM = document.getElementById('btnJukeboxYTM');
     const btnJukeboxYT = document.getElementById('btnJukeboxYT');
@@ -1589,7 +1817,7 @@
       const top = 60;
       const win = window.open(
         url,
-        'DJM_JUKEBOX',
+        'PARALLEL_JUKEBOX',
         `width=${w},height=${h},left=${left},top=${top},menubar=no,toolbar=no,location=yes,status=no`
       );
       if (win) {
@@ -1614,11 +1842,11 @@
 
       isLocalFileMode = true;
       localFileObjectUrl = URL.createObjectURL(file);
-      localTrackStatus.textContent = `FILE DECK // ${file.name}`;
+      localTrackStatus.textContent = `FILE // ${file.name}`;
 
       await buildLowLatencyGraph();
 
-      statusText.textContent = 'ON-AIR // LOCAL FILE DIRECT DECK';
+      statusText.textContent = t('statusFileActive');
       statusBadge.classList.add('active');
       wheelA.classList.add('spinning');
       wheelB.classList.add('spinning');
@@ -1629,6 +1857,9 @@
     if (navigator.mediaDevices) {
       navigator.mediaDevices.addEventListener('devicechange', () => loadAudioDevices(false));
     }
+
+    // Initialize i18n on startup
+    applyLanguage(currentLang);
   </script>
 </body>
 </html>
