@@ -198,12 +198,12 @@
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 14px 16px;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 12px;
       box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7);
     }
 
@@ -211,6 +211,8 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      min-width: 0;
+      flex: 1 1 320px;
     }
 
     .brand-badge {
@@ -234,26 +236,38 @@
       display: block;
     }
 
+    .brand-info {
+      min-width: 0;
+      flex: 1;
+    }
+
     .brand-title {
       font-family: var(--mono);
       font-size: 1.02rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .brand-sub {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       color: var(--text-sub);
       margin-top: 3px;
       letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .header-right {
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 10px;
+      flex-shrink: 0;
     }
 
     /* Language Switcher */
@@ -264,6 +278,7 @@
       border-radius: 4px;
       padding: 2px;
       gap: 2px;
+      flex-shrink: 0;
     }
 
     .lang-btn {
@@ -277,6 +292,7 @@
       border-radius: 3px;
       cursor: pointer;
       transition: all 0.12s ease;
+      white-space: nowrap;
     }
 
     .lang-btn:hover {
@@ -294,15 +310,17 @@
       background: #050608;
       border: 1px solid #191e24;
       border-radius: 4px;
-      padding: 8px 13px;
+      padding: 7px 12px;
       font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.06em;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
       color: var(--text-sub);
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 8px;
       box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .led-dot {
@@ -330,6 +348,7 @@
       color: var(--text-dim);
       border-left: 1px solid #1c2129;
       padding-left: 8px;
+      white-space: nowrap;
     }
 
     @keyframes blink {
@@ -340,7 +359,7 @@
     /* Hardware Transport Pad Buttons */
     .transport-bar {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 10px;
     }
 
@@ -350,17 +369,26 @@
       border: 1px solid var(--border-hi);
       border-bottom: 2px solid #060709;
       color: var(--text-main);
-      padding: 11px 14px;
+      padding: 10px 12px;
       border-radius: 5px;
       font-family: var(--mono);
-      font-size: 0.8rem;
-      letter-spacing: 0.03em;
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 9px;
+      gap: 8px;
       transition: all 0.12s ease;
+      white-space: nowrap;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .hw-btn span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .hw-btn:hover {
@@ -399,17 +427,30 @@
       flex-direction: column;
       gap: 10px;
       box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.65);
+      min-width: 0;
     }
 
     .jukebox-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
       font-family: var(--mono);
       font-size: 0.74rem;
       color: var(--text-sub);
+      min-width: 0;
+    }
+
+    .jukebox-top > span:first-child {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+
+    #localTrackStatus {
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .jukebox-row {
@@ -417,17 +458,18 @@
       flex-wrap: wrap;
       gap: 8px;
       align-items: center;
+      min-width: 0;
     }
 
     .jukebox-input {
-      flex: 1;
-      min-width: 220px;
+      flex: 1 1 200px;
+      min-width: 180px;
       background: #040507;
       border: 1px solid #1d222b;
       color: var(--text-main);
       font-family: var(--sans);
-      font-size: 0.85rem;
-      padding: 9px 12px;
+      font-size: 0.82rem;
+      padding: 8px 12px;
       border-radius: 4px;
       outline: none;
       user-select: text;
@@ -442,14 +484,20 @@
       border: 1px solid var(--border-hi);
       color: var(--text-main);
       font-family: var(--mono);
-      font-size: 0.75rem;
-      padding: 9px 12px;
+      font-size: 0.74rem;
+      padding: 8px 11px;
       border-radius: 4px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
       transition: all 0.12s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .jukebox-btn span {
+      white-space: nowrap;
     }
 
     .jukebox-btn:hover {
@@ -466,11 +514,12 @@
     /* Main 3-Column DJ Console Grid */
     .mixer-grid {
       display: grid;
-      grid-template-columns: 1fr 280px 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(250px, 280px) minmax(0, 1fr);
       gap: 12px;
+      min-width: 0;
     }
 
-    @media (max-width: 880px) {
+    @media (max-width: 920px) {
       .mixer-grid {
         grid-template-columns: 1fr;
       }
@@ -484,8 +533,10 @@
       padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 14px;
       box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+      min-width: 0;
+      overflow: hidden;
     }
 
     .deck-a {
@@ -502,6 +553,8 @@
       align-items: center;
       border-bottom: 1px solid var(--border);
       padding-bottom: 10px;
+      gap: 8px;
+      min-width: 0;
     }
 
     .deck-id {
@@ -512,6 +565,8 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .deck-a .deck-id { color: var(--amber); }
@@ -520,6 +575,7 @@
     .pad-group {
       display: flex;
       gap: 6px;
+      flex-shrink: 0;
     }
 
     .pad-btn {
@@ -535,6 +591,7 @@
       align-items: center;
       gap: 5px;
       letter-spacing: 0.05em;
+      white-space: nowrap;
     }
 
     .pad-btn:hover {
@@ -563,6 +620,7 @@
       border: 1px solid #13171d;
       border-radius: 6px;
       padding: 12px;
+      min-width: 0;
     }
 
     .jog-wheel {
@@ -625,8 +683,11 @@
       font-family: var(--mono);
       font-size: 0.68rem;
       color: var(--text-dim);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* Sink Selector */
@@ -651,38 +712,53 @@
       background: var(--panel-recess);
       border: 1px solid #13171c;
       border-radius: 5px;
-      padding: 11px 13px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
+      min-width: 0;
     }
 
     .fader-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
+      min-width: 0;
       font-family: var(--mono);
-      font-size: 0.74rem;
+      font-size: 0.72rem;
     }
 
     .fader-name {
       color: var(--text-sub);
       display: flex;
       align-items: center;
-      gap: 6px;
-      letter-spacing: 0.04em;
+      gap: 5px;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .fader-name span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .lcd-val {
       background: #040507;
       border: 1px solid #171b22;
-      padding: 2px 8px;
+      padding: 2px 6px;
       border-radius: 3px;
       font-family: var(--mono);
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       color: var(--text-main);
-      min-width: 64px;
+      min-width: 58px;
       text-align: right;
+      flex-shrink: 0;
     }
 
     .deck-a .lcd-val { color: var(--amber); }
@@ -733,6 +809,7 @@
       font-size: 0.62rem;
       color: var(--text-dim);
       padding: 0 2px;
+      white-space: nowrap;
     }
 
     .nudge-row {
@@ -751,6 +828,7 @@
       padding: 2px 7px;
       border-radius: 2px;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .mini-btn:hover {
@@ -770,20 +848,25 @@
       justify-content: space-between;
       gap: 12px;
       box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+      min-width: 0;
+      overflow: hidden;
     }
 
     .mixer-title {
       font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
       color: var(--master);
       text-align: center;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 9px;
+      padding-bottom: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* Spectrum & Dual VU Meter Display */
@@ -796,6 +879,7 @@
       flex-direction: column;
       gap: 8px;
       box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.95);
+      min-width: 0;
     }
 
     .vu-meters {
@@ -811,6 +895,7 @@
       font-family: var(--mono);
       font-size: 0.65rem;
       color: var(--text-dim);
+      white-space: nowrap;
     }
 
     .vu-bars {
@@ -842,6 +927,7 @@
         #040507;
       background-size: 12px 12px;
       border-top: 1px solid #12161c;
+      display: block;
     }
 
     /* Footer Manual Rack */
@@ -850,12 +936,13 @@
       border: 1px solid var(--border);
       border-radius: 6px;
       padding: 12px 16px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-sub);
-      line-height: 1.65;
+      line-height: 1.6;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
+      min-width: 0;
     }
 
     .manual-rack strong {
@@ -865,16 +952,16 @@
     }
 
     .manual-steps {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 10px;
       margin-top: 2px;
     }
 
     .step-item {
       display: flex;
-      align-items: center;
-      gap: 6px;
+      align-items: flex-start;
+      gap: 8px;
     }
 
     .step-tag {
@@ -886,6 +973,7 @@
       color: var(--amber);
       border-radius: 3px;
       flex-shrink: 0;
+      margin-top: 2px;
     }
   </style>
 </head>
@@ -932,9 +1020,9 @@
         <div class="brand-badge">
           <img src="apple-touch-icon.png" alt="PARALLEL Mechanical Emblem" />
         </div>
-        <div>
+        <div class="brand-info">
           <div class="brand-title" data-i18n="brandTitle">PARALLEL // 平行聲波</div>
-          <div class="brand-sub" data-i18n="brandSub">兩條獨立的平行音軌，跨越耳機時差、並肩聽見同一個世界</div>
+          <div class="brand-sub" data-i18n="brandSub">平行雙軌・並肩聆聽 // 雙耳機延遲同步混音台</div>
         </div>
       </div>
 
@@ -958,7 +1046,7 @@
     <div class="transport-bar">
       <button id="btnRefreshDevices" class="hw-btn">
         <svg class="px-icon"><use href="#px-headphones"/></svg>
-        <span data-i18n="btnScan">[1] 讀取雙耳機裝置</span>
+        <span data-i18n="btnScan">[1] 讀取耳機裝置</span>
       </button>
       <button id="btnCaptureTab" class="hw-btn engage">
         <svg class="px-icon"><use href="#px-signal"/></svg>
@@ -966,37 +1054,37 @@
       </button>
       <button id="btnSyncReset" class="hw-btn" style="display: none;">
         <svg class="px-icon"><use href="#px-clock"/></svg>
-        <span data-i18n="btnFlush">[SYNC] 重置緩衝延遲</span>
+        <span data-i18n="btnFlush">[SYNC] 重置緩衝</span>
       </button>
       <button id="btnStop" class="hw-btn kill" style="display: none;">
         <svg class="px-icon"><use href="#px-stop"/></svg>
-        <span data-i18n="btnStop">[STOP] 停止音訊分流</span>
+        <span data-i18n="btnStop">[STOP] 停止串流</span>
       </button>
     </div>
 
     <!-- Jukebox Search & Side-by-Side Mini Player Controller -->
     <section class="jukebox-rack">
       <div class="jukebox-top">
-        <span data-i18n="jukeboxTitle">JUKEBOX // 側邊點歌窗（綁定分頁後可直接搜尋換歌）</span>
+        <span data-i18n="jukeboxTitle">JUKEBOX // 側邊點歌窗（綁定分頁後換歌免重新共享）</span>
         <span id="localTrackStatus" style="color: var(--amber);"></span>
       </div>
       <div class="jukebox-row">
         <input id="jukeboxQuery" class="jukebox-input" type="text" data-i18n-placeholder="jukeboxPlaceholder" placeholder="輸入歌名或歌手（按 Enter 搜尋 YouTube Music）..." />
         <button id="btnJukeboxYTM" class="jukebox-btn">
           <svg class="px-icon"><use href="#px-disc"/></svg>
-          <span data-i18n="btnYTM">YT Music 點歌窗</span>
+          <span data-i18n="btnYTM">YT Music</span>
         </button>
         <button id="btnJukeboxYT" class="jukebox-btn">
           <svg class="px-icon"><use href="#px-signal"/></svg>
-          <span data-i18n="btnYT">YouTube 點歌窗</span>
+          <span data-i18n="btnYT">YouTube</span>
         </button>
         <button id="btnJukeboxSpotify" class="jukebox-btn sage">
           <svg class="px-icon"><use href="#px-sliders"/></svg>
-          <span data-i18n="btnSpotify">Spotify 點歌窗</span>
+          <span data-i18n="btnSpotify">Spotify</span>
         </button>
         <label class="jukebox-btn sage">
           <svg class="px-icon"><use href="#px-headphones"/></svg>
-          <span data-i18n="btnLocalFile">載入本地音訊檔</span>
+          <span data-i18n="btnLocalFile">載入本地音訊</span>
           <input id="localFileInput" type="file" accept="audio/*" style="display: none;" />
         </label>
       </div>
@@ -1041,7 +1129,7 @@
           <div class="fader-head">
             <span class="fader-name">
               <svg class="px-icon"><use href="#px-sliders"/></svg>
-              <span data-i18n="gainLabelA">CHANNEL GAIN (獨立音量 A)</span>
+              <span data-i18n="gainLabelA">GAIN // 音量 A</span>
             </span>
             <span id="volLabelA" class="lcd-val">100%</span>
           </div>
@@ -1061,7 +1149,7 @@
           <div class="fader-head">
             <span class="fader-name">
               <svg class="px-icon"><use href="#px-clock"/></svg>
-              <span data-i18n="delayLabelTitleA">SYNC DELAY (延遲補償 A)</span>
+              <span data-i18n="delayLabelTitleA">SYNC DELAY // 延遲 A</span>
             </span>
             <span id="delayLabelA" class="lcd-val">0 ms</span>
           </div>
@@ -1102,7 +1190,7 @@
         <!-- Master Volume -->
         <div class="fader-box">
           <div class="fader-head">
-            <span class="fader-name" data-i18n="masterLevel">MASTER LEVEL (總音量)</span>
+            <span class="fader-name" data-i18n="masterLevel">MASTER // 總音量</span>
             <span id="masterVolLabel" class="lcd-val" style="color: var(--master);">100%</span>
           </div>
           <div class="fader-track-wrap">
@@ -1118,7 +1206,7 @@
         <!-- DJ Crossfader -->
         <div class="fader-box">
           <div class="fader-head">
-            <span class="fader-name" data-i18n="xfaderTitle">CROSSFADER (A / B 平衡)</span>
+            <span class="fader-name" data-i18n="xfaderTitle">CROSSFADER // A/B 平衡</span>
             <span id="xfaderLabel" class="lcd-val">CENTER</span>
           </div>
           <div class="fader-track-wrap">
@@ -1168,7 +1256,7 @@
           <div class="fader-head">
             <span class="fader-name">
               <svg class="px-icon"><use href="#px-sliders"/></svg>
-              <span data-i18n="gainLabelB">CHANNEL GAIN (獨立音量 B)</span>
+              <span data-i18n="gainLabelB">GAIN // 音量 B</span>
             </span>
             <span id="volLabelB" class="lcd-val">100%</span>
           </div>
@@ -1188,7 +1276,7 @@
           <div class="fader-head">
             <span class="fader-name">
               <svg class="px-icon"><use href="#px-clock"/></svg>
-              <span data-i18n="delayLabelTitleB">SYNC DELAY (延遲補償 B)</span>
+              <span data-i18n="delayLabelTitleB">SYNC DELAY // 延遲 B</span>
             </span>
             <span id="delayLabelB" class="lcd-val">0 ms</span>
           </div>
@@ -1238,29 +1326,29 @@
     const I18N = {
       zh: {
         brandTitle: 'PARALLEL // 平行聲波',
-        brandSub: '兩條獨立的平行音軌，跨越耳機時差、並肩聽見同一個世界',
-        btnScan: '[1] 讀取雙耳機裝置',
+        brandSub: '平行雙軌・並肩聆聽 // 雙耳機延遲同步混音台',
+        btnScan: '[1] 讀取耳機裝置',
         btnLinkTab: '[2] 綁定分頁音訊',
-        btnFlush: '[SYNC] 重置緩衝延遲',
-        btnStop: '[STOP] 停止音訊分流',
-        jukeboxTitle: 'JUKEBOX // 側邊點歌窗（綁定分頁後可直接搜尋換歌）',
+        btnFlush: '[SYNC] 重置緩衝',
+        btnStop: '[STOP] 停止串流',
+        jukeboxTitle: 'JUKEBOX // 側邊點歌窗（綁定分頁後換歌免重新共享）',
         jukeboxPlaceholder: '輸入歌名或歌手（按 Enter 搜尋 YouTube Music）...',
-        btnYTM: 'YT Music 點歌窗',
-        btnYT: 'YouTube 點歌窗',
-        btnSpotify: 'Spotify 點歌窗',
-        btnLocalFile: '載入本地音訊檔',
+        btnYTM: 'YT Music',
+        btnYT: 'YouTube',
+        btnSpotify: 'Spotify',
+        btnLocalFile: '載入本地音訊',
         sinkLabelA: 'OUTPUT SINK // 耳機 A',
         sinkLabelB: 'OUTPUT SINK // 耳機 B',
         selectPrompt: '-- 請先點擊 [1] 讀取耳機 --',
-        gainLabelA: 'CHANNEL GAIN (獨立音量 A)',
-        gainLabelB: 'CHANNEL GAIN (獨立音量 B)',
-        delayLabelTitleA: 'SYNC DELAY (延遲補償 A)',
-        delayLabelTitleB: 'SYNC DELAY (延遲補償 B)',
+        gainLabelA: 'GAIN // 音量 A',
+        gainLabelB: 'GAIN // 音量 B',
+        delayLabelTitleA: 'SYNC DELAY // 延遲 A',
+        delayLabelTitleB: 'SYNC DELAY // 延遲 B',
         masterMonitor: 'MASTER MONITOR',
-        masterLevel: 'MASTER LEVEL (總音量)',
-        xfaderTitle: 'CROSSFADER (A / B 平衡)',
+        masterLevel: 'MASTER // 總音量',
+        xfaderTitle: 'CROSSFADER // A/B 平衡',
         guideHeader: 'QUICK PATCH GUIDE // 訊號接入步驟 (macOS / Windows / Linux Chrome)',
-        guideStep1: '將兩隻耳機連上電腦，點擊 [1] 讀取雙耳機裝置，確認 DECK A 與 DECK B 已選妥兩隻耳機。',
+        guideStep1: '將兩隻耳機連上電腦，點擊 [1] 讀取耳機裝置，確認 DECK A 與 DECK B 已選妥兩隻耳機。',
         guideStep2: '用 JUKEBOX 開啟側邊點歌窗，再點 [2] 綁定分頁音訊 選取該分頁並勾選「一併分享分頁音訊」。',
         statusStandby: 'STANDBY // 等待音訊接入',
         statusTabActive: 'ON-AIR // 雙軌平行串流中',
@@ -1273,30 +1361,30 @@
       },
       en: {
         brandTitle: 'PARALLEL // DUAL HEADPHONE DECK',
-        brandSub: 'Two independent audio paths—bridging headphone latency to share the same world side by side.',
-        btnScan: '[1] SCAN HEADPHONE SINKS',
+        brandSub: 'Dual Bluetooth Splitter & Latency Sync Console',
+        btnScan: '[1] SCAN SINKS',
         btnLinkTab: '[2] LINK TAB AUDIO',
         btnFlush: '[SYNC] FLUSH BUFFER',
-        btnStop: '[STOP] CUT AUDIO STREAM',
-        jukeboxTitle: 'JUKEBOX // Side-by-Side Mini Player (Switch tracks without re-sharing)',
+        btnStop: '[STOP] CUT STREAM',
+        jukeboxTitle: 'JUKEBOX // Side-by-Side Player (No re-sharing needed)',
         jukeboxPlaceholder: 'Search song or artist (Press Enter for YouTube Music)...',
-        btnYTM: 'YT Music Popup',
-        btnYT: 'YouTube Popup',
-        btnSpotify: 'Spotify Popup',
-        btnLocalFile: 'Load Local Audio File',
+        btnYTM: 'YT Music',
+        btnYT: 'YouTube',
+        btnSpotify: 'Spotify',
+        btnLocalFile: 'Local Audio',
         sinkLabelA: 'OUTPUT SINK // DECK A',
         sinkLabelB: 'OUTPUT SINK // DECK B',
         selectPrompt: '-- PRESS [1] TO SCAN SINKS --',
-        gainLabelA: 'CHANNEL GAIN (DECK A)',
-        gainLabelB: 'CHANNEL GAIN (DECK B)',
-        delayLabelTitleA: 'SYNC DELAY (OFFSET A)',
-        delayLabelTitleB: 'SYNC DELAY (OFFSET B)',
+        gainLabelA: 'GAIN // CH A',
+        gainLabelB: 'GAIN // CH B',
+        delayLabelTitleA: 'SYNC DELAY // A',
+        delayLabelTitleB: 'SYNC DELAY // B',
         masterMonitor: 'MASTER MONITOR',
         masterLevel: 'MASTER LEVEL',
-        xfaderTitle: 'CROSSFADER (A / B BALANCE)',
+        xfaderTitle: 'CROSSFADER // A/B',
         guideHeader: 'QUICK PATCH GUIDE // Setup Steps (macOS / Windows / Linux Chrome)',
-        guideStep1: 'Connect two headphones to your computer, click [1] SCAN HEADPHONE SINKS, and verify Deck A & Deck B outputs.',
-        guideStep2: 'Open a Jukebox popup window, click [2] LINK TAB AUDIO, select that tab, and check "Also share tab audio".',
+        guideStep1: 'Connect two headphones, click [1] SCAN SINKS, and verify Deck A & Deck B outputs.',
+        guideStep2: 'Open a Jukebox popup, click [2] LINK TAB AUDIO, select that tab, and check "Also share tab audio".',
         statusStandby: 'STANDBY // NO AUDIO LINK',
         statusTabActive: 'ON-AIR // DUAL STREAM ACTIVE',
         statusFileActive: 'ON-AIR // LOCAL FILE DECK',
@@ -1308,30 +1396,30 @@
       },
       ja: {
         brandTitle: 'PARALLEL // 平行音響デッキ',
-        brandSub: '2つの独立した平行トラック — ヘッドホンの遅延差を越えて、同じ音楽を隣で共有する',
-        btnScan: '[1] ヘッドホンを検出',
-        btnLinkTab: '[2] タブ音声を接続',
-        btnFlush: '[SYNC] バッファ遅延リセット',
-        btnStop: '[STOP] ストリーム停止',
-        jukeboxTitle: 'JUKEBOX // ミニ選曲ウィンドウ（一度接続すれば曲変更時も再共有不要）',
+        brandSub: 'デュアルBluetooth分配 & 遅延同期コンソール',
+        btnScan: '[1] 耳機を検出',
+        btnLinkTab: '[2] タブ音声接続',
+        btnFlush: '[SYNC] バッファ同期',
+        btnStop: '[STOP] 停止',
+        jukeboxTitle: 'JUKEBOX // ミニ選曲窓（曲変更時の再共有不要）',
         jukeboxPlaceholder: '曲名・アーティストを入力（EnterでYouTube Music検索）...',
-        btnYTM: 'YT Music 窓',
-        btnYT: 'YouTube 窓',
-        btnSpotify: 'Spotify 窓',
-        btnLocalFile: 'ローカル音源を読込',
+        btnYTM: 'YT Music',
+        btnYT: 'YouTube',
+        btnSpotify: 'Spotify',
+        btnLocalFile: 'ローカル音源',
         sinkLabelA: 'OUTPUT SINK // ヘッドホン A',
         sinkLabelB: 'OUTPUT SINK // ヘッドホン B',
         selectPrompt: '-- [1] を押して検出してください --',
-        gainLabelA: 'CHANNEL GAIN (音量 A)',
-        gainLabelB: 'CHANNEL GAIN (音量 B)',
-        delayLabelTitleA: 'SYNC DELAY (遅延補正 A)',
-        delayLabelTitleB: 'SYNC DELAY (遅延補正 B)',
+        gainLabelA: 'GAIN // 音量 A',
+        gainLabelB: 'GAIN // 音量 B',
+        delayLabelTitleA: 'SYNC DELAY // 補正 A',
+        delayLabelTitleB: 'SYNC DELAY // 補正 B',
         masterMonitor: 'MASTER MONITOR',
-        masterLevel: 'MASTER LEVEL (全体音量)',
-        xfaderTitle: 'CROSSFADER (A / B バランス)',
+        masterLevel: 'MASTER // 全体音量',
+        xfaderTitle: 'CROSSFADER // A/B バランス',
         guideHeader: 'QUICK PATCH GUIDE // 接続ステップ (macOS / Windows / Linux Chrome)',
-        guideStep1: '2台のヘッドホンをPCに接続し、[1] ヘッドホンを検出 をクリックして DECK A と DECK B の出力先を確認します。',
-        guideStep2: 'JUKEBOXでミニ窓を開き、[2] タブ音声を接続 で対象タブを選び「タブの音声も共有」にチェックを入れます。',
+        guideStep1: '2台のヘッドホンをPCに接続し、[1] 耳機を検出 で DECK A / B の出力先を確認します。',
+        guideStep2: 'JUKEBOXで選曲窓を開き、[2] タブ音声接続 で対象タブを選び「タブの音声も共有」をONにします。',
         statusStandby: 'STANDBY // 音声未接続',
         statusTabActive: 'ON-AIR // デュアル配信中',
         statusFileActive: 'ON-AIR // ローカル音源再生中',
