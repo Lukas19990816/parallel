@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="DJM-2BT: Dual Bluetooth Headphone Web Audio Mixer & Delay Sync Console for macOS, Windows & Linux." />
   <!-- Strict Content Security Policy: blocks all external scripts, network requests, and frame injections -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob: data:; connect-src 'none'; object-src 'none'; base-uri 'none';" />
-  <title>DJM-2BT // Dual Bluetooth Headphone DJ Mixer Console</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob: data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';" />
+  <title>DJM-2BT // Dual Headphone Mixer Console</title>
   <style>
     /* ==========================================================================
        🎨 AI AGENT / VIBE-CODING THEME CUSTOMIZATION VARIABLES
@@ -14,7 +16,7 @@
        Just ask your coding agent to modify the CSS variables inside :root below!
        ========================================================================== */
     :root {
-      /* Deep Black Low-Contrast Hardware Palette */
+      /* Console Chassis Palette */
       --bg-room: #050607;
       --chassis: #0b0d10;
       --chassis-hi: #12151a;
@@ -23,12 +25,12 @@
       --border: #181c22;
       --border-hi: #222730;
 
-      /* Low-contrast eye-care typography */
+      /* Console Typography */
       --text-main: #8c95a4;
       --text-dim: #4c5360;
       --text-sub: #636b78;
 
-      /* Muted Retro Hardware Phosphor Accents */
+      /* Channel & Meter Accents */
       --amber: #b3834c;
       --amber-dim: rgba(179, 131, 76, 0.14);
 
@@ -802,7 +804,7 @@
     <!-- Top Chassis Screws -->
     <div class="screw-row">
       <div class="screw"></div>
-      <span class="rack-model">DUAL A2DP MATRIX // DJM-2BT MK-II // ZERO-TELEMETRY OPEN SOURCE BUILD</span>
+      <span class="rack-model">DUAL A2DP MATRIX // DJM-2BT MK-II</span>
       <div class="screw"></div>
     </div>
 
@@ -814,7 +816,7 @@
         </div>
         <div>
           <div class="brand-title">DJM-2BT // DUAL HEADPHONE DECK</div>
-          <div class="brand-sub">LOW-CONTRAST DUAL BLUETOOTH AUDIO SPLITTER &amp; DELAY SYNC CONSOLE</div>
+          <div class="brand-sub">DUAL BLUETOOTH AUDIO SPLITTER &amp; DELAY SYNC CONSOLE</div>
         </div>
       </div>
 
@@ -836,7 +838,7 @@
       </button>
       <button id="btnSyncReset" class="hw-btn" style="display: none;">
         <svg class="px-icon"><use href="#px-clock"/></svg>
-        <span>[SYNC] FLUSH BUFFER (一鍵消除延遲)</span>
+        <span>[SYNC] FLUSH BUFFER (重置緩衝)</span>
       </button>
       <button id="btnStop" class="hw-btn kill" style="display: none;">
         <svg class="px-icon"><use href="#px-stop"/></svg>
@@ -847,26 +849,26 @@
     <!-- Jukebox Search & Side-by-Side Mini Player Controller -->
     <section class="jukebox-rack">
       <div class="jukebox-top">
-        <span>JUKEBOX DECK // 直接搜尋點歌（自動固定於同一個側邊迷你窗，首次綁定後換歌免重新共享！）</span>
+        <span>JUKEBOX DECK // 側邊點歌窗（綁定分頁後可直接換歌）</span>
         <span id="localTrackStatus" style="color: var(--amber);"></span>
       </div>
       <div class="jukebox-row">
-        <input id="jukeboxQuery" class="jukebox-input" type="text" placeholder="輸入歌名、歌手或關鍵字（按 Enter 直接在側邊迷你窗搜尋 YouTube Music）..." />
-        <button id="btnJukeboxYTM" class="jukebox-btn" title="在側邊迷你視窗搜尋 YouTube Music">
+        <input id="jukeboxQuery" class="jukebox-input" type="text" placeholder="輸入歌名或歌手（按 Enter 搜尋 YouTube Music）..." />
+        <button id="btnJukeboxYTM" class="jukebox-btn" title="在側邊視窗開啟 YouTube Music">
           <svg class="px-icon"><use href="#px-disc"/></svg>
           <span>YT MUSIC 點歌窗</span>
         </button>
-        <button id="btnJukeboxYT" class="jukebox-btn" title="在側邊迷你視窗搜尋 YouTube">
+        <button id="btnJukeboxYT" class="jukebox-btn" title="在側邊視窗開啟 YouTube">
           <svg class="px-icon"><use href="#px-signal"/></svg>
           <span>YOUTUBE 點歌窗</span>
         </button>
-        <button id="btnJukeboxSpotify" class="jukebox-btn sage" title="在側邊迷你視窗開啟 Spotify">
+        <button id="btnJukeboxSpotify" class="jukebox-btn sage" title="在側邊視窗開啟 Spotify">
           <svg class="px-icon"><use href="#px-sliders"/></svg>
           <span>SPOTIFY 點歌窗</span>
         </button>
-        <label class="jukebox-btn sage" title="免共享螢幕！直接選擇電腦裡的音樂檔雙耳機播放">
+        <label class="jukebox-btn sage" title="選擇電腦內的音訊檔由雙耳機播放">
           <svg class="px-icon"><use href="#px-headphones"/></svg>
-          <span>載入本地音樂檔 (免共享)</span>
+          <span>載入本地音訊檔</span>
           <input id="localFileInput" type="file" accept="audio/*" style="display: none;" />
         </label>
       </div>
@@ -1092,7 +1094,7 @@
     <!-- Bottom Chassis Screws -->
     <div class="screw-row">
       <div class="screw"></div>
-      <span class="rack-model">ICONS: PIXELARTICONS (STATIC INLINE SVG // 0 EXTERNAL REQUESTS // CSP HARDENED)</span>
+      <span class="rack-model">WEB AUDIO DSP // DUAL SINK ROUTING // 0-300MS SYNC DELAY</span>
       <div class="screw"></div>
     </div>
   </div>
@@ -1162,6 +1164,8 @@
     }
 
     let capturedStream = null;
+    let isLocalFileMode = false;
+    let localFileObjectUrl = null;
     let audioCtx = null;
     let gainNodeA = null;
     let gainNodeB = null;
@@ -1182,8 +1186,20 @@
           tempStream.getTracks().forEach(t => t.stop());
         }
 
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const outputs = devices.filter(d => d.kind === 'audiooutput');
+        let devices = await navigator.mediaDevices.enumerateDevices();
+        let outputs = devices.filter(d => d.kind === 'audiooutput');
+
+        // Auto-unlock audio device labels if user started Tab Link or Local File before clicking [1]
+        if (!requestPermissionFirst && outputs.every(d => !d.label)) {
+          try {
+            const tempStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            tempStream.getTracks().forEach(t => t.stop());
+            devices = await navigator.mediaDevices.enumerateDevices();
+            outputs = devices.filter(d => d.kind === 'audiooutput');
+          } catch (_) {
+            // Continue with default sink if mic permission was declined
+          }
+        }
 
         if (outputs.length === 0) {
           alert('找不到音訊輸出裝置！請確認使用 Google Chrome / Edge / Brave 開啟此頁面。');
@@ -1248,9 +1264,7 @@
 
     // Build / Flush dual audio graph using a single unified AudioContext clock
     async function buildLowLatencyGraph() {
-      if (!capturedStream) return;
-      const audioTracks = capturedStream.getAudioTracks();
-      if (audioTracks.length === 0) return;
+      if (!isLocalFileMode && !capturedStream) return;
 
       if (animId) cancelAnimationFrame(animId);
       if (audioCtx) { await audioCtx.close().catch(() => {}); audioCtx = null; }
@@ -1260,11 +1274,27 @@
       audioElB.srcObject = null;
 
       const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
-      const audioOnlyStream = new MediaStream([audioTracks[0]]);
-
       // Adaptive native sample-rate + 'playback' buffer hint prevents Bluetooth A2DP underruns
       audioCtx = new AudioCtxClass({ latencyHint: 'playback' });
-      const source = audioCtx.createMediaStreamSource(audioOnlyStream);
+
+      let source = null;
+      if (isLocalFileMode && localFileObjectUrl) {
+        // Clone audio element so a fresh MediaElementAudioSourceNode can bind cleanly without speaker bleed
+        const resumeTime = localFilePlayer.currentTime || 0;
+        const freshPlayer = localFilePlayer.cloneNode(false);
+        freshPlayer.src = localFileObjectUrl;
+        freshPlayer.style.display = 'block';
+        freshPlayer.currentTime = resumeTime;
+        localFilePlayer.replaceWith(freshPlayer);
+        localFilePlayer = freshPlayer;
+        source = audioCtx.createMediaElementSource(localFilePlayer);
+        await localFilePlayer.play();
+      } else {
+        const audioTracks = capturedStream.getAudioTracks();
+        if (audioTracks.length === 0) return;
+        const audioOnlyStream = new MediaStream([audioTracks[0]]);
+        source = audioCtx.createMediaStreamSource(audioOnlyStream);
+      }
 
       analyserNode = audioCtx.createAnalyser();
       analyserNode.fftSize = 64;
@@ -1343,15 +1373,34 @@
     }
 
     function stopSharing() {
-      if (animId) cancelAnimationFrame(animId);
+      if (animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
       if (capturedStream) {
         capturedStream.getTracks().forEach(t => t.stop());
         capturedStream = null;
       }
+      if (localFilePlayer) {
+        localFilePlayer.pause();
+        localFilePlayer.removeAttribute('src');
+        localFilePlayer.load();
+        localFilePlayer.style.display = 'none';
+      }
+      if (localFileObjectUrl) {
+        URL.revokeObjectURL(localFileObjectUrl);
+        localFileObjectUrl = null;
+      }
+      isLocalFileMode = false;
+      localFileInput.value = '';
+      localTrackStatus.textContent = '';
+
       if (audioCtx) {
-        audioCtx.close();
+        audioCtx.close().catch(() => {});
         audioCtx = null;
       }
+      audioElA.pause();
+      audioElB.pause();
       audioElA.srcObject = null;
       audioElB.srcObject = null;
       statusText.textContent = 'STANDBY // NO AUDIO LINK';
@@ -1362,6 +1411,7 @@
       btnStop.style.display = 'none';
       updateVuBar(vuSegsA, 0);
       updateVuBar(vuSegsB, 0);
+      canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
     function getEffectiveMultipliers() {
@@ -1519,7 +1569,7 @@
     const btnJukeboxYT = document.getElementById('btnJukeboxYT');
     const btnJukeboxSpotify = document.getElementById('btnJukeboxSpotify');
     const localFileInput = document.getElementById('localFileInput');
-    const localFilePlayer = document.getElementById('localFilePlayer');
+    let localFilePlayer = document.getElementById('localFilePlayer');
     const localTrackStatus = document.getElementById('localTrackStatus');
 
     function openJukeboxPopup(platform) {
@@ -1537,11 +1587,14 @@
       const h = Math.min(720, window.screen.availHeight - 80);
       const left = Math.max(0, window.screen.availWidth - w - 20);
       const top = 60;
-      window.open(
+      const win = window.open(
         url,
         'DJM_JUKEBOX',
         `width=${w},height=${h},left=${left},top=${top},menubar=no,toolbar=no,location=yes,status=no`
       );
+      if (win) {
+        try { win.opener = null; } catch (_) {}
+      }
     }
 
     btnJukeboxYTM.addEventListener('click', () => openJukeboxPopup('ytm'));
@@ -1559,14 +1612,10 @@
       stopSharing();
       await loadAudioDevices(false);
 
-      const fileUrl = URL.createObjectURL(file);
-      localFilePlayer.src = fileUrl;
-      localFilePlayer.style.display = 'block';
+      isLocalFileMode = true;
+      localFileObjectUrl = URL.createObjectURL(file);
       localTrackStatus.textContent = `FILE DECK // ${file.name}`;
 
-      const stream = localFilePlayer.captureStream ? localFilePlayer.captureStream() : localFilePlayer.mozCaptureStream();
-      capturedStream = stream;
-      await localFilePlayer.play();
       await buildLowLatencyGraph();
 
       statusText.textContent = 'ON-AIR // LOCAL FILE DIRECT DECK';
