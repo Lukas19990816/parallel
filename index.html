@@ -552,21 +552,46 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 10px;
-      gap: 8px;
+      padding-bottom: 8px;
+      gap: 6px;
       min-width: 0;
+      flex-wrap: nowrap;
     }
 
     .deck-id {
       font-family: var(--mono);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       white-space: nowrap;
+      min-width: 0;
+      flex-shrink: 1;
+    }
+
+    .deck-id .px-icon {
+      width: 15px;
+      height: 15px;
       flex-shrink: 0;
+    }
+
+    .deck-name {
+      white-space: nowrap;
+    }
+
+    .deck-ch {
+      font-size: 0.68rem;
+      font-weight: 400;
+      opacity: 0.55;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 420px) {
+      .deck-ch {
+        display: none;
+      }
     }
 
     .deck-a .deck-id { color: var(--amber); }
@@ -574,8 +599,10 @@
 
     .pad-group {
       display: flex;
-      gap: 6px;
+      align-items: center;
+      gap: 5px;
       flex-shrink: 0;
+      white-space: nowrap;
     }
 
     .pad-btn {
@@ -583,15 +610,36 @@
       border: 1px solid var(--border-hi);
       color: var(--text-sub);
       font-family: var(--mono);
-      font-size: 0.72rem;
-      padding: 5px 10px;
+      font-size: 0.68rem;
+      padding: 4px 7px;
       border-radius: 3px;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 5px;
-      letter-spacing: 0.05em;
+      justify-content: center;
+      gap: 4px;
+      letter-spacing: 0.04em;
       white-space: nowrap;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      line-height: 1.2;
+      transition: all 0.12s ease;
+    }
+
+    .pad-btn .px-icon {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+
+    .pad-btn.solo-btn {
+      min-width: 44px;
+      justify-content: center;
+    }
+
+    .pad-btn.mute-btn {
+      min-width: 64px;
+      justify-content: center;
     }
 
     .pad-btn:hover {
@@ -1098,11 +1146,12 @@
         <div class="deck-header">
           <div class="deck-id">
             <svg class="px-icon"><use href="#px-headphones"/></svg>
-            <span>DECK A // CH-01</span>
+            <span class="deck-name">DECK A</span>
+            <span class="deck-ch">// CH-01</span>
           </div>
           <div class="pad-group">
-            <button id="soloA" class="pad-btn">CUE / SOLO</button>
-            <button id="muteA" class="pad-btn">
+            <button id="soloA" class="pad-btn solo-btn" title="CUE / SOLO">SOLO</button>
+            <button id="muteA" class="pad-btn mute-btn" title="MUTE">
               <svg id="muteIconA" class="px-icon"><use href="#px-vol-on"/></svg>
               <span id="muteTextA">MUTE</span>
             </button>
@@ -1225,11 +1274,12 @@
         <div class="deck-header">
           <div class="deck-id">
             <svg class="px-icon"><use href="#px-headphones"/></svg>
-            <span>DECK B // CH-02</span>
+            <span class="deck-name">DECK B</span>
+            <span class="deck-ch">// CH-02</span>
           </div>
           <div class="pad-group">
-            <button id="soloB" class="pad-btn">CUE / SOLO</button>
-            <button id="muteB" class="pad-btn">
+            <button id="soloB" class="pad-btn solo-btn" title="CUE / SOLO">SOLO</button>
+            <button id="muteB" class="pad-btn mute-btn" title="MUTE">
               <svg id="muteIconB" class="px-icon"><use href="#px-vol-on"/></svg>
               <span id="muteTextB">MUTE</span>
             </button>
