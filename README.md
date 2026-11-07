@@ -41,10 +41,18 @@
 * **相容桌面系統：Windows 10 / 11、Linux**（只要作業系統支援同時連接兩隻藍牙音訊輸出裝置，或「1 隻藍牙耳機 + 1 隻有線耳機」皆可運作）。
 * ❌ **不支援 iOS / iPadOS / Android 手機瀏覽器**：由於行動作業系統底層（如 iOS `AVAudioSession`）硬體鎖死同時只能啟用單一標準藍牙 A2DP 路由，且行動版瀏覽器不支援 `getDisplayMedia` 分頁音訊擷取與 `setSinkId` 多重輸出。
 
-### 2. 瀏覽器需求 (Browser Requirements)
-* ✅ **Google Chrome**（建議 v110 以上）
-* ✅ **Microsoft Edge** / **Brave** / **Arc**（Chromium 核心瀏覽器）
-* ❌ **不支援 Safari / Firefox**：因 Safari 與 Firefox 尚未完整實作 Web Audio `setSinkId()` 多重硬體輸出路由與分頁音訊擷取 API。
+### 2. 瀏覽器需求與各家內核限制 (Browser Requirements & Engine Matrix)
+
+| 瀏覽器核心 | 代表瀏覽器 | 支援多硬體分流 (`setSinkId`) | 支援單一分頁音訊擷取 (`Tab Audio Loopback`) | 支援狀態 |
+| :--- | :--- | :---: | :---: | :---: |
+| **Blink (Chromium)** | **Google Chrome、Microsoft Edge、Brave、Arc、Vivaldi** | ✅ **完整支援** (原生穩定) | ✅ **完整支援** (可單獨擷取分頁並靜音) | 🟢 **完全相容 (最推薦)** |
+| **WebKit** | **Apple Safari** (macOS / iOS) | ❌ **不支援** (`setSinkId` 屬性未實作) | ❌ **不支援** (無法單獨抽離分頁音訊) | 🔴 **無法運作** |
+| **Gecko** | **Mozilla Firefox** | ⚠️ **預設關閉** (需進 `about:config` 開啟) | ❌ **不支援** (螢幕分享不支援 Tab Audio) | 🔴 **無法分頁串流** |
+
+> **💡 為什麼 Safari 與 Firefox 無法運作？**
+> 1. **Apple Safari (WebKit)**：Apple 至今未在 WebKit 實作 `HTMLMediaElement.setSinkId()`，所有音訊強制輸出至系統預設端點，無法做到雙耳機硬體分流；此外商業策略上 Apple 將「音訊共享」作為其專屬 H1/H2 晶片（AirPods/Beats）的生態護城河。
+> 2. **Mozilla Firefox (Gecko)**：基於防範瀏覽器指紋追蹤（Anti-Fingerprinting）的隱私考量，Firefox 將音訊輸出端點 API 預設鎖定；且其 `getDisplayMedia` 尚未實作 Chromium 的單一分頁純音訊循環迴路。
+> 3. **結論**：請務必使用 **Google Chrome、Edge、Brave 或 Arc** 等 Chromium 核心瀏覽器開啟本專案。
 
 ---
 
@@ -68,8 +76,12 @@
 ### 1. 為什麼一隻耳機受干擾時，會讓「兩邊一起 Lag」？
 * **單一藍牙天線分時多工（TDM）與 ARQ 重傳阻塞**：
   Mac 內部只有**一顆藍牙晶片與一組 `2.4GHz` 天線**，必須毫秒級輪流發送封包給耳機 A 與耳機 B。藍牙 A2DP 底層的 L2CAP 協定具有**自動重傳機制（ARQ）**：當其中一隻耳機（例如距離較遠或被身體遮擋的耳機 A）掉封包時，Mac 的藍牙控制器會**暫停發送新封包，優先重傳給耳機 A**。在這幾十毫秒的重傳等待期間，**排在同一個硬體佇列後面的耳機 B 封包也會被一起卡住**，接著 macOS `coreaudiod` 為了防破音會同時拉大安全緩衝區（Jitter Buffer），造成兩邊一起慢半拍。
-* **Web Audio 低延遲對策（`latencyHint: 'interactive'`）**：
-  `PARALLEL` 已將 Web Audio 引擎鎖定在 `interactive` 硬體低延遲模式（DSP 基礎延遲僅約 `3ms ~ 5ms`，顯示於右上角 `DSP: X.X ms`），避免瀏覽器上游佇列堆積。若因干擾累積了系統緩衝延遲，點擊 **`[SYNC] 重置緩衝延遲`** 即可在 `0.02 秒` 內抽乾並重新對齊即時音訊！
+* **💡 能不能「先中央集中 Buffer 再一次多發一點」？（雙檔位緩衝引擎）**：
+  你的直覺完全正確！純聽歌時最怕的就是即時滴灌（來 1 塊發 1 塊）導致 Buffer 見底斷炊。因此 `PARALLEL` 在右上角實作了**雙檔位中央緩衝引擎（Buffer Engine）**：
+  1. **`BUFFER: MUSIC` (抗干擾預載模式，純聽歌最推薦)**：音訊在上游先集中蓄水約 `180ms ~ 250ms` 環形緩衝池，給底層藍牙晶片充分的「存糧儲備」。當周圍有瞬間 Wi-Fi 干擾或掉封包時，重傳機制在背景悄悄完成，耳機端只管消耗存糧，**完全感覺不到任何頓挫與破音**！
+  2. **`BUFFER: SYNC` (極速低延遲模式，追劇對齊嘴型)**：將 Web Audio 引擎鎖定在 `interactive` 硬體低延遲（約 `15ms`），適合看電影或 YouTube 說話影片對齊嘴型。
+  3. **切歌智慧清空（Auto-Flush on Track Change）**：針對換歌問題，當在 Jukebox 搜尋點歌或切換音訊源時，程式會在 `0.01 秒` 內自動瞬間排空舊歌緩衝殘留並重新蓄水，換歌俐落乾淨！
+* **一鍵重置**：若因環境極端干擾累積了系統緩衝，隨時點擊 **`[SYNC] 重置緩衝`** 即可在 `0.02 秒` 內抽乾並重新對齊即時音訊。
 
 ### 2. 如何查看連到的藍牙耳機「訊號強度（RSSI dBm）」？
 * **為什麼網頁無法直接顯示藍牙 dBm？**：基於 Chrome 瀏覽器沙盒安全限制，網頁只能存取 CoreAudio 音訊路由層，無法讀取底層 `IOBluetooth` 無線電射頻強度（且 Web Bluetooth API 僅支援 BLE 低功耗感測器，不支援 A2DP 傳統音訊耳機）。

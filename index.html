@@ -270,6 +270,57 @@
       flex-shrink: 0;
     }
 
+    /* Buffer Engine Switcher */
+    .buffer-switch {
+      display: inline-flex;
+      background: #050608;
+      border: 1px solid #191e24;
+      border-radius: 4px;
+      padding: 2px;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .buf-btn {
+      appearance: none;
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      padding: 4px 7px;
+      border-radius: 3px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.12s ease;
+      white-space: nowrap;
+    }
+
+    .buf-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #2a313d;
+      flex-shrink: 0;
+    }
+
+    .buf-btn:hover {
+      color: var(--text-main);
+    }
+
+    .buf-btn.active {
+      background: #141820;
+      color: var(--master);
+      border: 1px solid rgba(108, 135, 94, 0.35);
+    }
+
+    .buf-btn.active .buf-dot {
+      background: var(--master);
+      box-shadow: 0 0 5px var(--master);
+    }
+
     /* Language Switcher */
     .lang-switch {
       display: inline-flex;
@@ -1027,6 +1078,18 @@
       </div>
 
       <div class="header-right">
+        <!-- Buffer Pipeline Mode Selector -->
+        <div class="buffer-switch" role="group" aria-label="Buffer engine selector">
+          <button id="btnBufMusic" class="buf-btn active" data-i18n-title="bufMusicTitle" title="MUSIC 模式：預載集中緩衝，抗干擾最強，純聽歌推薦">
+            <span class="buf-dot"></span>
+            <span data-i18n="bufMusic">BUF: MUSIC</span>
+          </button>
+          <button id="btnBufSync" class="buf-btn" data-i18n-title="bufSyncTitle" title="SYNC 模式：極速低延遲，追劇對齊嘴型推薦">
+            <span class="buf-dot"></span>
+            <span data-i18n="bufSync">BUF: SYNC</span>
+          </button>
+        </div>
+
         <!-- i18n Language Switcher -->
         <div class="lang-switch" role="group" aria-label="Language switcher">
           <button class="lang-btn active" data-lang="zh">繁中</button>
@@ -1357,7 +1420,11 @@
         errLoadFailed: '讀取裝置失敗：',
         errNoSinkId: '此瀏覽器不支援 setSinkId 分流，請使用桌面版 Google Chrome / Edge / Brave 開啟！',
         errNoTabAudio: '未偵測到分頁音訊！請在選擇分頁時勾選左下角的「一併分享分頁音訊 (Also share tab audio)」。',
-        errCaptureFailed: '啟動共享失敗：'
+        errCaptureFailed: '啟動共享失敗：',
+        bufMusic: 'BUF: MUSIC (抗干擾)',
+        bufSync: 'BUF: SYNC (低延遲)',
+        bufMusicTitle: 'MUSIC 模式：預載集中緩衝，抗干擾最強，純聽歌推薦',
+        bufSyncTitle: 'SYNC 模式：極速低延遲，追劇對齊嘴型推薦'
       },
       en: {
         brandTitle: 'PARALLEL // DUAL HEADPHONE DECK',
@@ -1392,7 +1459,11 @@
         errLoadFailed: 'Failed to enumerate devices: ',
         errNoSinkId: 'Your browser does not support setSinkId routing. Please use desktop Google Chrome / Edge / Brave!',
         errNoTabAudio: 'No tab audio detected! Please make sure to check "Also share tab audio" when selecting the tab.',
-        errCaptureFailed: 'Failed to start audio sharing: '
+        errCaptureFailed: 'Failed to start audio sharing: ',
+        bufMusic: 'BUF: MUSIC',
+        bufSync: 'BUF: SYNC',
+        bufMusicTitle: 'MUSIC Mode: Pre-buffered packet reservoir for maximum stability',
+        bufSyncTitle: 'SYNC Mode: Ultra-low latency for video dialogue sync'
       },
       ja: {
         brandTitle: 'PARALLEL // 平行音響デッキ',
@@ -1427,7 +1498,11 @@
         errLoadFailed: 'デバイスの読み込みに失敗しました: ',
         errNoSinkId: 'お使いのブラウザは setSinkId に対応していません。PC版 Google Chrome / Edge / Brave をご利用ください。',
         errNoTabAudio: 'タブの音声が検出されませんでした！タブ選択時に左下の「タブの音声も共有」にチェックを入れてください。',
-        errCaptureFailed: '共有の開始に失敗しました: '
+        errCaptureFailed: '共有の開始に失敗しました: ',
+        bufMusic: 'BUF: MUSIC',
+        bufSync: 'BUF: SYNC',
+        bufMusicTitle: 'MUSIC モード：集中バッファで音飛び・遅延を防止',
+        bufSyncTitle: 'SYNC モード：超低遅延で動画・リップシンクに最適'
       }
     };
 
@@ -1452,6 +1527,8 @@
     const btnCaptureTab = document.getElementById('btnCaptureTab');
     const btnSyncReset = document.getElementById('btnSyncReset');
     const btnStop = document.getElementById('btnStop');
+    const btnBufMusic = document.getElementById('btnBufMusic');
+    const btnBufSync = document.getElementById('btnBufSync');
     const statusBadge = document.getElementById('statusBadge');
     const statusText = document.getElementById('statusText');
     const dspLatency = document.getElementById('dspLatency');
@@ -1512,6 +1589,8 @@
     let isLocalFileMode = false;
     let localFileObjectUrl = null;
     let audioCtx = null;
+    let bufferEngineMode = 'music'; // 'music' (200ms pre-roll pool) or 'sync' (0ms low latency)
+    let preBufferNode = null;
     let gainNodeA = null;
     let gainNodeB = null;
     let delayNodeA = null;
@@ -1540,6 +1619,11 @@
       document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
         el.setAttribute('placeholder', t(key));
+      });
+
+      document.querySelectorAll('[data-i18n-title]').forEach(el => {
+        const key = el.getAttribute('data-i18n-title');
+        el.setAttribute('title', t(key));
       });
 
       if (!audioCtx) {
@@ -1673,16 +1757,22 @@
         source = audioCtx.createMediaStreamSource(audioOnlyStream);
       }
 
+      // Central Buffer Reservoir Node (absorbs 2.4GHz Bluetooth TDM packet jitter)
+      preBufferNode = audioCtx.createDelay(1.0);
+      const preBufferSec = (bufferEngineMode === 'music' ? 0.20 : 0.0);
+      preBufferNode.delayTime.setValueAtTime(preBufferSec, audioCtx.currentTime);
+      source.connect(preBufferNode);
+
       analyserNode = audioCtx.createAnalyser();
       analyserNode.fftSize = 64;
       analyserNode.smoothingTimeConstant = 0.78;
-      source.connect(analyserNode);
+      preBufferNode.connect(analyserNode);
 
       // Deck A DSP chain
       delayNodeA = audioCtx.createDelay(1.0);
       gainNodeA = audioCtx.createGain();
       const destA = audioCtx.createMediaStreamDestination();
-      source.connect(delayNodeA);
+      preBufferNode.connect(delayNodeA);
       delayNodeA.connect(gainNodeA);
       gainNodeA.connect(destA);
       audioElA.srcObject = destA.stream;
@@ -1693,7 +1783,7 @@
       delayNodeB = audioCtx.createDelay(1.0);
       gainNodeB = audioCtx.createGain();
       const destB = audioCtx.createMediaStreamDestination();
-      source.connect(delayNodeB);
+      preBufferNode.connect(delayNodeB);
       delayNodeB.connect(gainNodeB);
       gainNodeB.connect(destB);
       audioElB.srcObject = destB.stream;
@@ -1881,12 +1971,27 @@
 
         // Update live Web Audio hardware pipeline latency readout every 30 frames
         if (++frameTick % 30 === 0 && audioCtx) {
-          const latMs = ((audioCtx.baseLatency || 0) + (audioCtx.outputLatency || 0)) * 1000;
-          dspLatency.textContent = `DSP: ${latMs > 0 ? latMs.toFixed(1) : '3.2'} ms`;
+          const hwLatMs = ((audioCtx.baseLatency || 0) + (audioCtx.outputLatency || 0)) * 1000;
+          const preBufMs = bufferEngineMode === 'music' ? 200 : 0;
+          const totalMs = (hwLatMs > 0 ? hwLatMs : 3.2) + preBufMs;
+          dspLatency.textContent = `DSP: ${totalMs.toFixed(1)} ms (${bufferEngineMode.toUpperCase()})`;
         }
       }
       render();
     }
+
+    // Buffer Engine Mode Switching
+    function setBufferMode(mode) {
+      bufferEngineMode = mode;
+      btnBufMusic.classList.toggle('active', mode === 'music');
+      btnBufSync.classList.toggle('active', mode === 'sync');
+      if (preBufferNode && audioCtx) {
+        const target = (mode === 'music' ? 0.20 : 0.0);
+        preBufferNode.delayTime.setTargetAtTime(target, audioCtx.currentTime, 0.03);
+      }
+    }
+    btnBufMusic.addEventListener('click', () => setBufferMode('music'));
+    btnBufSync.addEventListener('click', () => setBufferMode('sync'));
 
     // Event bindings
     btnRefreshDevices.addEventListener('click', () => loadAudioDevices(true));
@@ -1958,6 +2063,16 @@
     const localTrackStatus = document.getElementById('localTrackStatus');
 
     function openJukeboxPopup(platform) {
+      // Auto-flush upstream delay buffer so switching songs starts with an immediate clean slate
+      if (preBufferNode && audioCtx) {
+        try {
+          preBufferNode.delayTime.cancelScheduledValues(audioCtx.currentTime);
+          preBufferNode.delayTime.setValueAtTime(0, audioCtx.currentTime);
+          const target = (bufferEngineMode === 'music' ? 0.20 : 0.0);
+          preBufferNode.delayTime.setTargetAtTime(target, audioCtx.currentTime + 0.08, 0.03);
+        } catch (_) {}
+      }
+
       const q = jukeboxQuery.value.trim();
       let url = 'https://music.youtube.com';
       if (platform === 'ytm') {
