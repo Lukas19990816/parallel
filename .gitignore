@@ -1,0 +1,5 @@
+# Commercial macOS Native App (Keep private until open-sourced)
+macos-app/
+
+# macOS system files
+.DS_Store
