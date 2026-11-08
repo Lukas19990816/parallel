@@ -1526,10 +1526,10 @@
               </div>
               <select id="profileA" class="profile-select" aria-label="Headphone Profile Deck A">
                 <option value="AUTO">⚡ AUTO (智能偵測自動配對)</option>
+                <option value="SONY_1000X">Sony WH/WF-1000X (極簡減法/消腫通透)</option>
                 <option value="AIRPODS_PRO">AirPods Pro (入耳降噪/3D空氣感)</option>
                 <option value="AIRPODS_OPEN">AirPods (半入耳漏音/低頻補償)</option>
                 <option value="SOUNDCORE">Soundcore Space One (撫平高頻刺耳)</option>
-                <option value="SONY_1000X">Sony WH/WF-1000X (掀開暖厚面紗)</option>
                 <option value="BOSE_QC">Bose QuietComfort (空間微動態)</option>
                 <option value="FLAT">Flat / Monitor (原音直通無渲染)</option>
               </select>
@@ -1719,10 +1719,10 @@
               </div>
               <select id="profileB" class="profile-select" aria-label="Headphone Profile Deck B">
                 <option value="AUTO">⚡ AUTO (智能偵測自動配對)</option>
+                <option value="SONY_1000X">Sony WH/WF-1000X (極簡減法/消腫通透)</option>
                 <option value="AIRPODS_PRO">AirPods Pro (入耳降噪/3D空氣感)</option>
                 <option value="AIRPODS_OPEN">AirPods (半入耳漏音/低頻補償)</option>
                 <option value="SOUNDCORE">Soundcore Space One (撫平高頻刺耳)</option>
-                <option value="SONY_1000X">Sony WH/WF-1000X (掀開暖厚面紗)</option>
                 <option value="BOSE_QC">Bose QuietComfort (空間微動態)</option>
                 <option value="FLAT">Flat / Monitor (原音直通無渲染)</option>
               </select>
@@ -2150,12 +2150,12 @@
         high: { freq: 11000, gain: 2.2 }
       },
       SONY_1000X: {
-        badge: 'SONY 1000X',
-        name: 'Sony WH/WF-1000X',
-        desc: '掀開暖厚面紗：提升 4.5kHz 咬字清晰度與 8.5kHz 通透感',
-        low:  { freq: 180, gain: -1.0 },
-        mid:  { freq: 4500, Q: 1.0, gain: 2.0 },
-        high: { freq: 8500, gain: 3.0 }
+        badge: 'PURIST // SONY',
+        name: 'Sony WH/WF-1000X (極簡減法/消腫)',
+        desc: '消解 220Hz 肥厚箱音泥濘 + 極簡微渲染，避免與 V1/QN1 晶片 DSP 撞車',
+        low:  { freq: 220, gain: -2.0 },
+        mid:  { freq: 3200, Q: 0.8, gain: 0.8 },
+        high: { freq: 10000, gain: 0.0 }
       },
       BOSE_QC: {
         badge: 'BOSE QC',
@@ -2170,12 +2170,12 @@
     function detectHeadphoneProfile(deviceName) {
       if (!deviceName) return 'FLAT';
       const name = deviceName.toLowerCase();
+      if (name.includes('wh-1000') || name.includes('wf-1000') || name.includes('1000xm') || name.includes('wh1000') || name.includes('wf1000') || name.includes('sony')) return 'SONY_1000X';
+      if (name.includes('max') && (name.includes('airpod') || name.includes('air pod'))) return 'SONY_1000X';
+      if (name.includes('bose') || name.includes('quietcomfort') || name.includes('qc') || name.includes('ultra')) return 'BOSE_QC';
       if (name.includes('pro') && (name.includes('airpod') || name.includes('air pod'))) return 'AIRPODS_PRO';
-      if (name.includes('max') && name.includes('airpod')) return 'AIRPODS_PRO';
       if (name.includes('airpod') || name.includes('air pod')) return 'AIRPODS_OPEN';
-      if (name.includes('space one') || name.includes('soundcore') || name.includes('anker') || name.includes('liberty')) return 'SOUNDCORE';
-      if (name.includes('wh-1000') || name.includes('wf-1000') || name.includes('1000xm') || name.includes('sony')) return 'SONY_1000X';
-      if (name.includes('bose') || name.includes('quietcomfort') || name.includes('qc')) return 'BOSE_QC';
+      if (name.includes('space one') || name.includes('space q') || name.includes('life q') || name.includes('soundcore') || name.includes('anker') || name.includes('liberty')) return 'SOUNDCORE';
       return 'FLAT';
     }
 
@@ -2189,10 +2189,21 @@
 
       let activeKey = selectedProfileKey;
       let isAuto = false;
+      const devId = selectEl ? selectEl.value : '';
+
       if (selectedProfileKey === 'AUTO') {
         isAuto = true;
-        const currentDev = selectEl && selectEl.selectedOptions && selectEl.selectedOptions[0] ? selectEl.selectedOptions[0].text : '';
-        activeKey = detectHeadphoneProfile(currentDev);
+        const savedDevProfile = devId ? localStorage.getItem('parallel_dev_profile_' + devId) : null;
+        if (savedDevProfile && HEADPHONE_PROFILES[savedDevProfile]) {
+          activeKey = savedDevProfile;
+        } else {
+          const currentDev = selectEl && selectEl.selectedOptions && selectEl.selectedOptions[0] ? selectEl.selectedOptions[0].text : '';
+          activeKey = detectHeadphoneProfile(currentDev);
+        }
+      } else {
+        if (devId) {
+          try { localStorage.setItem('parallel_dev_profile_' + devId, activeKey); } catch (_) {}
+        }
       }
 
       const cfg = HEADPHONE_PROFILES[activeKey] || HEADPHONE_PROFILES.FLAT;
@@ -2221,33 +2232,74 @@
     function autoOptimizeMatrix() {
       const devA = selectA && selectA.selectedOptions && selectA.selectedOptions[0] ? selectA.selectedOptions[0].text : '';
       const devB = selectB && selectB.selectedOptions && selectB.selectedOptions[0] ? selectB.selectedOptions[0].text : '';
-      const profA = profileKeyA === 'AUTO' ? detectHeadphoneProfile(devA) : profileKeyA;
-      const profB = profileKeyB === 'AUTO' ? detectHeadphoneProfile(devB) : profileKeyB;
+      const devIdA = selectA ? selectA.value : '';
+      const devIdB = selectB ? selectB.value : '';
 
-      let targetTube = 40;
-      let targetSurround = 75;
-      let targetSpatial = 55;
+      const getActiveProfileKey = (key, devId, devText) => {
+        if (key !== 'AUTO') return key;
+        const saved = devId ? localStorage.getItem('parallel_dev_profile_' + devId) : null;
+        if (saved && HEADPHONE_PROFILES[saved]) return saved;
+        return detectHeadphoneProfile(devText);
+      };
 
-      if (profA === 'SOUNDCORE' || profB === 'SOUNDCORE') {
+      const profA = getActiveProfileKey(profileKeyA, devIdA, devA);
+      const profB = getActiveProfileKey(profileKeyB, devIdB, devB);
+
+      let targetTube = 35;
+      let targetSurround = 65;
+      let targetSpatial = 45;
+      let targetSurroundMode = '3D';
+      let targetSpatialMode = 'CINEMA';
+      let statusLabel = '✓ OPTIMIZED!';
+
+      const isSonyA = profA === 'SONY_1000X';
+      const isSonyB = profB === 'SONY_1000X';
+
+      if (isSonyA && isSonyB) {
+        // Dual Flagship Purist Tuning: minimal coloration to avoid double-processing conflict with Sony V1/QN1
+        targetTube = 12;
+        targetSurround = 32;
+        targetSpatial = 18;
+        targetSurroundMode = 'XF';   // Bauer crossfeed avoids comb filtering on sealed ANC earcups
+        targetSpatialMode = 'STUDIO'; // Short studio room avoids echo chamber
+        statusLabel = '✓ PURIST SONY MODE';
+      } else if (isSonyA || isSonyB) {
+        // Mixed pairing (Sony XM5 + Space One or AirPods)
+        targetTube = 22;
+        targetSurround = 48;
+        targetSpatial = 30;
+        targetSurroundMode = '3D';
+        targetSpatialMode = 'STUDIO';
+        statusLabel = '✓ BALANCED CALIBRATED';
+      } else if (profA === 'SOUNDCORE' || profB === 'SOUNDCORE') {
         targetTube = 45;
         targetSurround = 85;
         targetSpatial = 65;
+        targetSurroundMode = '3D';
+        targetSpatialMode = 'CINEMA';
+        statusLabel = '✓ CINEMA 3D MODE';
       } else if (profA === 'AIRPODS_PRO' || profB === 'AIRPODS_PRO') {
         targetTube = 38;
         targetSurround = 80;
         targetSpatial = 60;
+        targetSurroundMode = '3D';
+        targetSpatialMode = 'CINEMA';
+        statusLabel = '✓ AIRPODS PRO 3D';
       } else if (profA === 'AIRPODS_OPEN' || profB === 'AIRPODS_OPEN') {
         targetTube = 45;
         targetSurround = 65;
         targetSpatial = 50;
+        targetSurroundMode = '3D';
+        targetSpatialMode = 'STUDIO';
+        statusLabel = '✓ AIRPODS OPEN AIR';
       }
 
-      isTubeActive = true;
+      isTubeActive = targetTube > 0;
       isSurroundActive = true;
       isCrossfeedActive = true;
-      surroundMode = '3D';
+      surroundMode = targetSurroundMode;
       isSpatialActive = true;
-      spatialMode = 'CINEMA';
+      spatialMode = targetSpatialMode;
 
       tubeIntensity = targetTube;
       surroundIntensity = targetSurround;
@@ -2255,12 +2307,12 @@
       spatialIntensity = targetSpatial;
 
       try {
-        localStorage.setItem('parallel_fx_tube', 'true');
+        localStorage.setItem('parallel_fx_tube', isTubeActive ? 'true' : 'false');
         localStorage.setItem('parallel_fx_surround', 'true');
         localStorage.setItem('parallel_fx_crossfeed', 'true');
-        localStorage.setItem('parallel_fx_surround_mode', '3D');
+        localStorage.setItem('parallel_fx_surround_mode', surroundMode);
         localStorage.setItem('parallel_fx_spatial', 'true');
-        localStorage.setItem('parallel_fx_spatial_mode', 'CINEMA');
+        localStorage.setItem('parallel_fx_spatial_mode', spatialMode);
         localStorage.setItem('parallel_fx_tube_level', tubeIntensity);
         localStorage.setItem('parallel_fx_surround_level', surroundIntensity);
         localStorage.setItem('parallel_fx_crossfeed_level', surroundIntensity);
@@ -2274,8 +2326,8 @@
 
       if (btnAutoTuneMatrix) {
         const orig = btnAutoTuneMatrix.textContent;
-        btnAutoTuneMatrix.textContent = '✓ OPTIMIZED!';
-        setTimeout(() => { btnAutoTuneMatrix.textContent = orig; }, 1800);
+        btnAutoTuneMatrix.textContent = statusLabel;
+        setTimeout(() => { btnAutoTuneMatrix.textContent = orig; }, 2200);
       }
     }
 
