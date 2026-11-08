@@ -755,6 +755,104 @@
     .deck-a select.oled-select:focus { border-color: var(--amber); }
     .deck-b select.oled-select:focus { border-color: var(--sage); }
 
+    /* Per-Deck Headphone Profile Selector */
+    .profile-box {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-top: 4px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid #141922;
+      border-radius: 4px;
+      padding: 4px 6px;
+    }
+
+    .profile-head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .profile-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .profile-badge {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      padding: 1px 4px;
+      border-radius: 2px;
+      background: #0d1017;
+      border: 1px solid #1f2735;
+      color: #6d7b8e;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .deck-a .profile-badge.active-pro {
+      border-color: rgba(179, 131, 76, 0.55);
+      color: var(--amber);
+      background: rgba(179, 131, 76, 0.12);
+    }
+
+    .deck-b .profile-badge.active-pro {
+      border-color: rgba(122, 148, 122, 0.55);
+      color: var(--sage);
+      background: rgba(122, 148, 122, 0.12);
+    }
+
+    select.profile-select {
+      width: 100%;
+      background: #06080b;
+      border: 1px solid #181f2a;
+      color: var(--text-sub);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      padding: 3px 5px;
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    select.profile-select:focus {
+      border-color: var(--border-focus);
+      color: var(--text-main);
+    }
+
+    /* Auto-tune button in Enhancer header */
+    .fx-auto-tune-btn {
+      appearance: none;
+      background: #0a0d13;
+      border: 1px solid #242d3d;
+      border-radius: 3px;
+      color: var(--master);
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: all 0.12s ease;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .fx-auto-tune-btn:hover {
+      background: #121822;
+      border-color: var(--master);
+      box-shadow: 0 0 6px rgba(108, 135, 94, 0.35);
+    }
+
     /* Fader Modules */
     .fader-box {
       background: var(--panel-recess);
@@ -1421,6 +1519,21 @@
             <select id="selectA" class="oled-select">
               <option value="" data-i18n="selectPrompt">-- 請先點擊 [1] 讀取耳機 --</option>
             </select>
+            <div class="profile-box">
+              <div class="profile-head-row">
+                <span class="profile-label" data-i18n="profileLabelA">⚡ DSP PROFILE // 聲學校正</span>
+                <span id="profileBadgeA" class="profile-badge">FLAT</span>
+              </div>
+              <select id="profileA" class="profile-select" aria-label="Headphone Profile Deck A">
+                <option value="AUTO">⚡ AUTO (智能偵測自動配對)</option>
+                <option value="AIRPODS_PRO">AirPods Pro (入耳降噪/3D空氣感)</option>
+                <option value="AIRPODS_OPEN">AirPods (半入耳漏音/低頻補償)</option>
+                <option value="SOUNDCORE">Soundcore Space One (撫平高頻刺耳)</option>
+                <option value="SONY_1000X">Sony WH/WF-1000X (掀開暖厚面紗)</option>
+                <option value="BOSE_QC">Bose QuietComfort (空間微動態)</option>
+                <option value="FLAT">Flat / Monitor (原音直通無渲染)</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -1494,7 +1607,7 @@
               <svg class="px-icon"><use href="#px-sliders"/></svg>
               <span data-i18n="enhancerTitle">ACOUSTIC MATRIX // 聲學聽感矩陣</span>
             </span>
-            <span class="enhancer-dsp-tag">32-BIT DSP</span>
+            <button id="btnAutoTuneMatrix" class="fx-auto-tune-btn" data-i18n="autoTuneBtn" title="根據兩副耳機型號，自動將中央聲學矩陣推至黃金調校參數">⚡ AUTO-OPTIMIZE</button>
           </div>
           <div class="enhancer-rows" role="group" aria-label="Acoustic Enhancer Controls">
             <!-- Tube Warmth Row -->
@@ -1599,6 +1712,21 @@
             <select id="selectB" class="oled-select">
               <option value="" data-i18n="selectPrompt">-- 請先點擊 [1] 讀取耳機 --</option>
             </select>
+            <div class="profile-box">
+              <div class="profile-head-row">
+                <span class="profile-label" data-i18n="profileLabelB">⚡ DSP PROFILE // 聲學校正</span>
+                <span id="profileBadgeB" class="profile-badge">FLAT</span>
+              </div>
+              <select id="profileB" class="profile-select" aria-label="Headphone Profile Deck B">
+                <option value="AUTO">⚡ AUTO (智能偵測自動配對)</option>
+                <option value="AIRPODS_PRO">AirPods Pro (入耳降噪/3D空氣感)</option>
+                <option value="AIRPODS_OPEN">AirPods (半入耳漏音/低頻補償)</option>
+                <option value="SOUNDCORE">Soundcore Space One (撫平高頻刺耳)</option>
+                <option value="SONY_1000X">Sony WH/WF-1000X (掀開暖厚面紗)</option>
+                <option value="BOSE_QC">Bose QuietComfort (空間微動態)</option>
+                <option value="FLAT">Flat / Monitor (原音直通無渲染)</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -1712,7 +1840,10 @@
         enhancerTitle: 'ACOUSTIC MATRIX // 聲學聽感矩陣',
         fxTubeTitle: 'TUBE: 類比真空管偶次諧波增強，人聲溫潤厚實（可滑動微調 Drive 強度）',
         fxSurroundTitle: 'SURROUND: 3D 空間立體環繞聲場外擴 / 點擊 [3D/XF] 可切換 Bauer 互饋監聽',
-        fxSpatialTitle: 'ROOM AIR: 3D 虛擬空間微環境 / 點擊 [CINEMA/STUDIO] 切換劇院或錄音室'
+        fxSpatialTitle: 'ROOM AIR: 3D 虛擬空間微環境 / 點擊 [CINEMA/STUDIO] 切換劇院或錄音室',
+        profileLabelA: '⚡ DSP PROFILE // 聲學校正',
+        profileLabelB: '⚡ DSP PROFILE // 聲學校正',
+        autoTuneBtn: '⚡ 智能優化'
       },
       en: {
         brandTitle: 'PARALLEL // DUAL HEADPHONE DECK',
@@ -1751,7 +1882,10 @@
         enhancerTitle: 'ACOUSTIC MATRIX // DSP ENHANCER',
         fxTubeTitle: 'TUBE: Analog vacuum tube 2nd-order harmonics for warm vocals (adjustable drive)',
         fxSurroundTitle: 'SURROUND: 3D Binaural spatial soundstage expansion / Click [3D/XF] to toggle Crossfeed',
-        fxSpatialTitle: 'ROOM AIR: 3D Virtual acoustic ambience / Click [CINEMA/STUDIO] to toggle room size'
+        fxSpatialTitle: 'ROOM AIR: 3D Virtual acoustic ambience / Click [CINEMA/STUDIO] to toggle room size',
+        profileLabelA: '⚡ DSP PROFILE // CALIBRATION',
+        profileLabelB: '⚡ DSP PROFILE // CALIBRATION',
+        autoTuneBtn: '⚡ AUTO-OPTIMIZE'
       },
       ja: {
         brandTitle: 'PARALLEL // 平行音響デッキ',
@@ -1790,7 +1924,10 @@
         enhancerTitle: 'ACOUSTIC MATRIX // 音響エンハンサー',
         fxTubeTitle: 'TUBE: 真空管の偶数次高調波でボーカルを温かく豊かに（Drive調整可）',
         fxSurroundTitle: 'SURROUND: 3D空間サラウンド音場拡張 / [3D/XF]クリックでバウアー互饋に切替',
-        fxSpatialTitle: 'ROOM AIR: 3D仮想音響空間 / [CINEMA/STUDIO]クリックで劇院・スタジオ切替'
+        fxSpatialTitle: 'ROOM AIR: 3D仮想音響空間 / [CINEMA/STUDIO]クリックで劇院・スタジオ切替',
+        profileLabelA: '⚡ DSP PROFILE // 音響補正',
+        profileLabelB: '⚡ DSP PROFILE // 音響補正',
+        autoTuneBtn: '⚡ 自動最適化'
       }
     };
 
@@ -1958,6 +2095,189 @@
     let spatialWetNode = null;
     let surroundWidthNode = null;
     let surroundShelfNode = null;
+
+    // Headphone Acoustic Profiles & Hardware Calibration System
+    const profileA = document.getElementById('profileA');
+    const profileB = document.getElementById('profileB');
+    const profileBadgeA = document.getElementById('profileBadgeA');
+    const profileBadgeB = document.getElementById('profileBadgeB');
+    const btnAutoTuneMatrix = document.getElementById('btnAutoTuneMatrix');
+
+    let profileKeyA = 'AUTO';
+    let profileKeyB = 'AUTO';
+    try {
+      profileKeyA = localStorage.getItem('parallel_profile_a') || 'AUTO';
+      profileKeyB = localStorage.getItem('parallel_profile_b') || 'AUTO';
+    } catch (_) {}
+
+    if (profileA) profileA.value = profileKeyA;
+    if (profileB) profileB.value = profileKeyB;
+
+    let profileLowA = null, profileMidA = null, profileHighA = null;
+    let profileLowB = null, profileMidB = null, profileHighB = null;
+
+    const HEADPHONE_PROFILES = {
+      FLAT: {
+        badge: 'FLAT',
+        name: 'Flat / Monitor',
+        desc: '原音直通無渲染',
+        low:  { freq: 100, gain: 0 },
+        mid:  { freq: 2500, Q: 1.0, gain: 0 },
+        high: { freq: 10000, gain: 0 }
+      },
+      AIRPODS_PRO: {
+        badge: 'PRO 3D',
+        name: 'AirPods Pro (1/2)',
+        desc: '入耳密閉消除耳壓 + Air Band 通透空氣感 + 收斂悶音',
+        low:  { freq: 150, gain: -1.2 },
+        mid:  { freq: 2400, Q: 0.9, gain: 1.2 },
+        high: { freq: 9000, gain: 3.2 }
+      },
+      AIRPODS_OPEN: {
+        badge: 'AIRPODS',
+        name: 'AirPods (1/2/3)',
+        desc: '半入耳漏音補償：+4.5dB 澎湃低頻底層 + 撫平塑膠共振齒音',
+        low:  { freq: 110, gain: 4.5 },
+        mid:  { freq: 3200, Q: 1.2, gain: -1.8 },
+        high: { freq: 8500, gain: 1.0 }
+      },
+      SOUNDCORE: {
+        badge: 'SPACE ONE',
+        name: 'Soundcore Space One',
+        desc: '撫平 6.8kHz 金屬尖刺峰值 + 收束肥厚低頻 + 拓寬超高頻',
+        low:  { freq: 120, gain: -1.5 },
+        mid:  { freq: 6800, Q: 1.6, gain: -3.0 },
+        high: { freq: 11000, gain: 2.2 }
+      },
+      SONY_1000X: {
+        badge: 'SONY 1000X',
+        name: 'Sony WH/WF-1000X',
+        desc: '掀開暖厚面紗：提升 4.5kHz 咬字清晰度與 8.5kHz 通透感',
+        low:  { freq: 180, gain: -1.0 },
+        mid:  { freq: 4500, Q: 1.0, gain: 2.0 },
+        high: { freq: 8500, gain: 3.0 }
+      },
+      BOSE_QC: {
+        badge: 'BOSE QC',
+        name: 'Bose QuietComfort',
+        desc: '增強中頻人聲微動態與自然空間深度',
+        low:  { freq: 140, gain: 0.5 },
+        mid:  { freq: 3000, Q: 1.0, gain: 1.5 },
+        high: { freq: 9500, gain: 2.0 }
+      }
+    };
+
+    function detectHeadphoneProfile(deviceName) {
+      if (!deviceName) return 'FLAT';
+      const name = deviceName.toLowerCase();
+      if (name.includes('pro') && (name.includes('airpod') || name.includes('air pod'))) return 'AIRPODS_PRO';
+      if (name.includes('max') && name.includes('airpod')) return 'AIRPODS_PRO';
+      if (name.includes('airpod') || name.includes('air pod')) return 'AIRPODS_OPEN';
+      if (name.includes('space one') || name.includes('soundcore') || name.includes('anker') || name.includes('liberty')) return 'SOUNDCORE';
+      if (name.includes('wh-1000') || name.includes('wf-1000') || name.includes('1000xm') || name.includes('sony')) return 'SONY_1000X';
+      if (name.includes('bose') || name.includes('quietcomfort') || name.includes('qc')) return 'BOSE_QC';
+      return 'FLAT';
+    }
+
+    function applyDeckProfile(deck, selectedProfileKey) {
+      const isA = deck === 'A';
+      const selectEl = isA ? selectA : selectB;
+      const badgeEl = isA ? profileBadgeA : profileBadgeB;
+      const lowNode = isA ? profileLowA : profileLowB;
+      const midNode = isA ? profileMidA : profileMidB;
+      const highNode = isA ? profileHighA : profileHighB;
+
+      let activeKey = selectedProfileKey;
+      let isAuto = false;
+      if (selectedProfileKey === 'AUTO') {
+        isAuto = true;
+        const currentDev = selectEl && selectEl.selectedOptions && selectEl.selectedOptions[0] ? selectEl.selectedOptions[0].text : '';
+        activeKey = detectHeadphoneProfile(currentDev);
+      }
+
+      const cfg = HEADPHONE_PROFILES[activeKey] || HEADPHONE_PROFILES.FLAT;
+
+      if (badgeEl) {
+        badgeEl.textContent = isAuto ? `⚡ ${cfg.badge}` : cfg.badge;
+        badgeEl.classList.toggle('active-pro', activeKey !== 'FLAT');
+        badgeEl.title = `${cfg.name} // ${cfg.desc}`;
+      }
+
+      if (audioCtx && lowNode && midNode && highNode) {
+        const now = audioCtx.currentTime;
+        lowNode.frequency.setTargetAtTime(cfg.low.freq, now, 0.02);
+        lowNode.gain.setTargetAtTime(cfg.low.gain, now, 0.02);
+
+        midNode.frequency.setTargetAtTime(cfg.mid.freq, now, 0.02);
+        midNode.Q.setTargetAtTime(cfg.mid.Q, now, 0.02);
+        midNode.gain.setTargetAtTime(cfg.mid.gain, now, 0.02);
+
+        highNode.frequency.setTargetAtTime(cfg.high.freq, now, 0.02);
+        highNode.gain.setTargetAtTime(cfg.high.gain, now, 0.02);
+      }
+    }
+
+    // Auto-Optimize Master Acoustic Matrix based on both connected headphones
+    function autoOptimizeMatrix() {
+      const devA = selectA && selectA.selectedOptions && selectA.selectedOptions[0] ? selectA.selectedOptions[0].text : '';
+      const devB = selectB && selectB.selectedOptions && selectB.selectedOptions[0] ? selectB.selectedOptions[0].text : '';
+      const profA = profileKeyA === 'AUTO' ? detectHeadphoneProfile(devA) : profileKeyA;
+      const profB = profileKeyB === 'AUTO' ? detectHeadphoneProfile(devB) : profileKeyB;
+
+      let targetTube = 40;
+      let targetSurround = 75;
+      let targetSpatial = 55;
+
+      if (profA === 'SOUNDCORE' || profB === 'SOUNDCORE') {
+        targetTube = 45;
+        targetSurround = 85;
+        targetSpatial = 65;
+      } else if (profA === 'AIRPODS_PRO' || profB === 'AIRPODS_PRO') {
+        targetTube = 38;
+        targetSurround = 80;
+        targetSpatial = 60;
+      } else if (profA === 'AIRPODS_OPEN' || profB === 'AIRPODS_OPEN') {
+        targetTube = 45;
+        targetSurround = 65;
+        targetSpatial = 50;
+      }
+
+      isTubeActive = true;
+      isSurroundActive = true;
+      isCrossfeedActive = true;
+      surroundMode = '3D';
+      isSpatialActive = true;
+      spatialMode = 'CINEMA';
+
+      tubeIntensity = targetTube;
+      surroundIntensity = targetSurround;
+      crossfeedIntensity = targetSurround;
+      spatialIntensity = targetSpatial;
+
+      try {
+        localStorage.setItem('parallel_fx_tube', 'true');
+        localStorage.setItem('parallel_fx_surround', 'true');
+        localStorage.setItem('parallel_fx_crossfeed', 'true');
+        localStorage.setItem('parallel_fx_surround_mode', '3D');
+        localStorage.setItem('parallel_fx_spatial', 'true');
+        localStorage.setItem('parallel_fx_spatial_mode', 'CINEMA');
+        localStorage.setItem('parallel_fx_tube_level', tubeIntensity);
+        localStorage.setItem('parallel_fx_surround_level', surroundIntensity);
+        localStorage.setItem('parallel_fx_crossfeed_level', surroundIntensity);
+        localStorage.setItem('parallel_fx_spatial_level', spatialIntensity);
+      } catch (_) {}
+
+      updateFxVisuals();
+      applyTubeCurve();
+      applySurroundParams();
+      applySpatialParams();
+
+      if (btnAutoTuneMatrix) {
+        const orig = btnAutoTuneMatrix.textContent;
+        btnAutoTuneMatrix.textContent = '✓ OPTIMIZED!';
+        setTimeout(() => { btnAutoTuneMatrix.textContent = orig; }, 1800);
+      }
+    }
 
     // Smooth Asymmetric Soft Saturation Curve Generator:
     // Produces pure 2nd-harmonic tube warmth without harsh zero-crossing glitch or digital clipping.
@@ -2290,6 +2610,9 @@
 
         await routeDeckSink('A', selectA.value);
         await routeDeckSink('B', selectB.value);
+
+        applyDeckProfile('A', profileKeyA);
+        applyDeckProfile('B', profileKeyB);
       } catch (err) {
         console.error(err);
         alert(t('errLoadFailed') + err.message);
@@ -2439,26 +2762,44 @@
       analyserNode.smoothingTimeConstant = 0.78;
       masterEnhancerNode.connect(analyserNode);
 
-      // Deck A DSP chain
+      // Deck A DSP chain (with dedicated Headphone Hardware Profile Filter)
+      profileLowA = audioCtx.createBiquadFilter(); profileLowA.type = 'lowshelf';
+      profileMidA = audioCtx.createBiquadFilter(); profileMidA.type = 'peaking';
+      profileHighA = audioCtx.createBiquadFilter(); profileHighA.type = 'highshelf';
+
       delayNodeA = audioCtx.createDelay(1.0);
       gainNodeA = audioCtx.createGain();
       const destA = audioCtx.createMediaStreamDestination();
-      masterEnhancerNode.connect(delayNodeA);
+
+      masterEnhancerNode.connect(profileLowA);
+      profileLowA.connect(profileMidA);
+      profileMidA.connect(profileHighA);
+      profileHighA.connect(delayNodeA);
       delayNodeA.connect(gainNodeA);
       gainNodeA.connect(destA);
       audioElA.srcObject = destA.stream;
       await routeDeckSink('A', selectA.value);
+      applyDeckProfile('A', profileKeyA);
       await audioElA.play();
 
-      // Deck B DSP chain
+      // Deck B DSP chain (with dedicated Headphone Hardware Profile Filter)
+      profileLowB = audioCtx.createBiquadFilter(); profileLowB.type = 'lowshelf';
+      profileMidB = audioCtx.createBiquadFilter(); profileMidB.type = 'peaking';
+      profileHighB = audioCtx.createBiquadFilter(); profileHighB.type = 'highshelf';
+
       delayNodeB = audioCtx.createDelay(1.0);
       gainNodeB = audioCtx.createGain();
       const destB = audioCtx.createMediaStreamDestination();
-      masterEnhancerNode.connect(delayNodeB);
+
+      masterEnhancerNode.connect(profileLowB);
+      profileLowB.connect(profileMidB);
+      profileMidB.connect(profileHighB);
+      profileHighB.connect(delayNodeB);
       delayNodeB.connect(gainNodeB);
       gainNodeB.connect(destB);
       audioElB.srcObject = destB.stream;
       await routeDeckSink('B', selectB.value);
+      applyDeckProfile('B', profileKeyB);
       await audioElB.play();
 
       updateGains();
@@ -2720,8 +3061,37 @@
       });
     }
 
-    selectA.addEventListener('change', () => routeDeckSink('A', selectA.value));
-    selectB.addEventListener('change', () => routeDeckSink('B', selectB.value));
+    selectA.addEventListener('change', () => {
+      routeDeckSink('A', selectA.value);
+      applyDeckProfile('A', profileKeyA);
+    });
+    selectB.addEventListener('change', () => {
+      routeDeckSink('B', selectB.value);
+      applyDeckProfile('B', profileKeyB);
+    });
+
+    if (profileA) {
+      profileA.addEventListener('change', (e) => {
+        profileKeyA = e.target.value;
+        try { localStorage.setItem('parallel_profile_a', profileKeyA); } catch (_) {}
+        applyDeckProfile('A', profileKeyA);
+      });
+    }
+
+    if (profileB) {
+      profileB.addEventListener('change', (e) => {
+        profileKeyB = e.target.value;
+        try { localStorage.setItem('parallel_profile_b', profileKeyB); } catch (_) {}
+        applyDeckProfile('B', profileKeyB);
+      });
+    }
+
+    if (btnAutoTuneMatrix) {
+      btnAutoTuneMatrix.addEventListener('click', autoOptimizeMatrix);
+    }
+
+    applyDeckProfile('A', profileKeyA);
+    applyDeckProfile('B', profileKeyB);
 
     masterVol.addEventListener('input', updateGains);
     volA.addEventListener('input', updateGains);
