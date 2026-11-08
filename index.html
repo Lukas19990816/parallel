@@ -986,7 +986,7 @@
       padding: 8px 10px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 7px;
       min-width: 0;
     }
 
@@ -1008,10 +1008,34 @@
       color: var(--master);
     }
 
-    .enhancer-btns {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+    .enhancer-dsp-tag {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: #434c5c;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+
+    .enhancer-rows {
+      display: flex;
+      flex-direction: column;
       gap: 5px;
+    }
+
+    .fx-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid #11141a;
+      border-radius: 3px;
+      padding: 3px 6px 3px 4px;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .fx-row.active {
+      border-color: #1e2633;
+      background: rgba(8, 12, 18, 0.45);
     }
 
     .fx-toggle {
@@ -1019,19 +1043,23 @@
       background: #080a0e;
       border: 1px solid var(--border-hi);
       border-radius: 3px;
-      padding: 5px 3px;
+      width: 72px;
+      height: 22px;
+      padding: 0 4px;
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.56rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
       color: var(--text-sub);
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 4px;
+      justify-content: flex-start;
+      gap: 5px;
       cursor: pointer;
       transition: all 0.12s ease;
       white-space: nowrap;
       user-select: none;
+      flex-shrink: 0;
     }
 
     .fx-led {
@@ -1077,6 +1105,91 @@
     .fx-toggle.spatial.active .fx-led {
       background: var(--steel);
       box-shadow: 0 0 6px var(--steel);
+    }
+
+    .fx-track-wrap {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .fx-slider {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      background: #06080b;
+      border: 1px solid #151a22;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      opacity: 0.45;
+      transition: opacity 0.15s ease;
+    }
+
+    .fx-row.active .fx-slider {
+      opacity: 1;
+    }
+
+    .fx-slider::-webkit-slider-thumb {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 10px;
+      height: 16px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, #323a48 0%, #171b22 100%);
+      border: 1px solid #434c5c;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+      cursor: grab;
+      transition: transform 0.05s ease;
+    }
+
+    .fx-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.08);
+    }
+
+    .fx-slider::-moz-range-thumb {
+      width: 10px;
+      height: 16px;
+      border-radius: 2px;
+      background: #252b36;
+      border: 1px solid #434c5c;
+      cursor: grab;
+    }
+
+    .tube-slider::-webkit-slider-thumb {
+      border-top: 2px solid var(--amber);
+    }
+
+    .cross-slider::-webkit-slider-thumb {
+      border-top: 2px solid var(--master);
+    }
+
+    .spatial-slider::-webkit-slider-thumb {
+      border-top: 2px solid var(--steel);
+    }
+
+    .fx-val {
+      width: 32px;
+      text-align: right;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      flex-shrink: 0;
+      transition: color 0.15s ease;
+    }
+
+    .fx-row.active .tube-val {
+      color: var(--amber);
+    }
+
+    .fx-row.active .cross-val {
+      color: var(--master);
+    }
+
+    .fx-row.active .spatial-val {
+      color: var(--steel);
     }
 
     /* Footer Manual Rack */
@@ -1344,20 +1457,44 @@
               <svg class="px-icon"><use href="#px-sliders"/></svg>
               <span data-i18n="enhancerTitle">ACOUSTIC MATRIX // 聲學聽感矩陣</span>
             </span>
+            <span class="enhancer-dsp-tag">32-BIT DSP</span>
           </div>
-          <div class="enhancer-btns" role="group" aria-label="Acoustic Enhancer Matrix">
-            <button id="btnFxTube" class="fx-toggle" data-i18n-title="fxTubeTitle" title="TUBE: 類比真空管偶次諧波增強，人聲溫潤厚實">
-              <span class="fx-led"></span>
-              <span>TUBE</span>
-            </button>
-            <button id="btnFxCrossfeed" class="fx-toggle crossfeed" data-i18n-title="fxCrossfeedTitle" title="CROSSFEED: 雙耳互饋開闊聲場，消除耳機腦內定位與聽覺疲勞">
-              <span class="fx-led"></span>
-              <span>CROSSFEED</span>
-            </button>
-            <button id="btnFxSpatial" class="fx-toggle spatial" data-i18n-title="fxSpatialTitle" title="ROOM AIR: 虛擬原木空間微環境，如置身同一聆聽室">
-              <span class="fx-led"></span>
-              <span>ROOM AIR</span>
-            </button>
+          <div class="enhancer-rows" role="group" aria-label="Acoustic Enhancer Controls">
+            <!-- Tube Warmth Row -->
+            <div id="fxRowTube" class="fx-row">
+              <button id="btnFxTube" class="fx-toggle" data-i18n-title="fxTubeTitle" title="TUBE: 類比真空管偶次諧波增強，人聲溫潤厚實">
+                <span class="fx-led"></span>
+                <span>TUBE</span>
+              </button>
+              <div class="fx-track-wrap">
+                <input id="fxTubeLevel" class="fx-slider tube-slider" type="range" min="0" max="100" value="40" aria-label="Tube Saturation Drive" />
+              </div>
+              <span id="fxTubeVal" class="fx-val tube-val">40%</span>
+            </div>
+
+            <!-- Bauer Crossfeed Row -->
+            <div id="fxRowCrossfeed" class="fx-row">
+              <button id="btnFxCrossfeed" class="fx-toggle crossfeed" data-i18n-title="fxCrossfeedTitle" title="CROSSFEED: 雙耳互饋開闊聲場，消除耳機腦內定位與聽覺疲勞">
+                <span class="fx-led"></span>
+                <span>CROSS</span>
+              </button>
+              <div class="fx-track-wrap">
+                <input id="fxCrossfeedLevel" class="fx-slider cross-slider" type="range" min="0" max="100" value="50" aria-label="Bauer Crossfeed Bleed" />
+              </div>
+              <span id="fxCrossfeedVal" class="fx-val cross-val">50%</span>
+            </div>
+
+            <!-- Room Air Ambience Row -->
+            <div id="fxRowSpatial" class="fx-row">
+              <button id="btnFxSpatial" class="fx-toggle spatial" data-i18n-title="fxSpatialTitle" title="ROOM AIR: 虛擬原木空間微環境，如置身同一聆聽室">
+                <span class="fx-led"></span>
+                <span>ROOM</span>
+              </button>
+              <div class="fx-track-wrap">
+                <input id="fxSpatialLevel" class="fx-slider spatial-slider" type="range" min="0" max="100" value="45" aria-label="Room Air Space" />
+              </div>
+              <span id="fxSpatialVal" class="fx-val spatial-val">45%</span>
+            </div>
           </div>
         </div>
 
@@ -1534,9 +1671,9 @@
         errNoTabAudio: '未偵測到分頁音訊！請在選擇分頁時勾選左下角的「一併分享分頁音訊 (Also share tab audio)」。',
         errCaptureFailed: '啟動共享失敗：',
         enhancerTitle: 'ACOUSTIC MATRIX // 聲學聽感矩陣',
-        fxTubeTitle: 'TUBE: 類比真空管偶次諧波增強，人聲溫潤厚實',
-        fxCrossfeedTitle: 'CROSSFEED: 雙耳互饋開闊聲場，消除耳機腦內定位與聽覺疲勞',
-        fxSpatialTitle: 'ROOM AIR: 虛擬原木空間微環境，如置身同一聆聽室'
+        fxTubeTitle: 'TUBE: 類比真空管偶次諧波增強，人聲溫潤厚實（可滑動微調 Drive 強度）',
+        fxCrossfeedTitle: 'CROSSFEED: Bauer 雙耳互饋開闊聲場，消除耳機腦內定位與聽覺疲勞（可調整 Bleed 強度）',
+        fxSpatialTitle: 'ROOM AIR: 虛擬原木空間微環境早期反射，消除封閉耳機窒息感（可調整 Space 深度）'
       },
       en: {
         brandTitle: 'PARALLEL // DUAL HEADPHONE DECK',
@@ -1573,9 +1710,9 @@
         errNoTabAudio: 'No tab audio detected! Please make sure to check "Also share tab audio" when selecting the tab.',
         errCaptureFailed: 'Failed to start audio sharing: ',
         enhancerTitle: 'ACOUSTIC MATRIX // DSP ENHANCER',
-        fxTubeTitle: 'TUBE: Analog vacuum tube 2nd-order harmonics for warm vocals',
-        fxCrossfeedTitle: 'CROSSFEED: Bauer binaural crossfeed to eliminate in-head fatigue',
-        fxSpatialTitle: 'ROOM AIR: Subtle acoustic room ambience simulation'
+        fxTubeTitle: 'TUBE: Analog vacuum tube 2nd-order harmonics for warm vocals (adjustable drive)',
+        fxCrossfeedTitle: 'CROSSFEED: Bauer binaural crossfeed to eliminate in-head fatigue (adjustable bleed)',
+        fxSpatialTitle: 'ROOM AIR: Studio acoustic room early reflections simulation (adjustable space)'
       },
       ja: {
         brandTitle: 'PARALLEL // 平行音響デッキ',
@@ -1612,9 +1749,9 @@
         errNoTabAudio: 'タブの音声が検出されませんでした！タブ選択時に左下の「タブの音声も共有」にチェックを入れてください。',
         errCaptureFailed: '共有の開始に失敗しました: ',
         enhancerTitle: 'ACOUSTIC MATRIX // 音響エンハンサー',
-        fxTubeTitle: 'TUBE: 真空管の偶数次高調波でボーカルを温かく豊かに',
-        fxCrossfeedTitle: 'CROSSFEED: バウアー式バイノーラル互饋で聴覚疲労を低減',
-        fxSpatialTitle: 'ROOM AIR: リアルな木造リスニングルームの残響を付加'
+        fxTubeTitle: 'TUBE: 真空管の偶数次高調波でボーカルを温かく豊かに（Drive調整可）',
+        fxCrossfeedTitle: 'CROSSFEED: バウアー式バイノーラル互饋で聴覚疲労を低減（Bleed調整可）',
+        fxSpatialTitle: 'ROOM AIR: リアルな木造リスニングルームの初期反射を付加（Space調整可）'
       }
     };
 
@@ -1713,37 +1850,80 @@
     let isSoloB = false;
     let animId = null;
 
-    // Acoustic Matrix Enhancer State & Nodes
+    // Acoustic Matrix Enhancer State & DOM Nodes
     const btnFxTube = document.getElementById('btnFxTube');
     const btnFxCrossfeed = document.getElementById('btnFxCrossfeed');
     const btnFxSpatial = document.getElementById('btnFxSpatial');
+
+    const fxTubeLevel = document.getElementById('fxTubeLevel');
+    const fxCrossfeedLevel = document.getElementById('fxCrossfeedLevel');
+    const fxSpatialLevel = document.getElementById('fxSpatialLevel');
+
+    const fxTubeVal = document.getElementById('fxTubeVal');
+    const fxCrossfeedVal = document.getElementById('fxCrossfeedVal');
+    const fxSpatialVal = document.getElementById('fxSpatialVal');
+
+    const fxRowTube = document.getElementById('fxRowTube');
+    const fxRowCrossfeed = document.getElementById('fxRowCrossfeed');
+    const fxRowSpatial = document.getElementById('fxRowSpatial');
 
     let isTubeActive = false;
     let isCrossfeedActive = false;
     let isSpatialActive = false;
 
+    let tubeIntensity = 40;
+    let crossfeedIntensity = 50;
+    let spatialIntensity = 45;
+
     try {
       isTubeActive = localStorage.getItem('parallel_fx_tube') === 'true';
       isCrossfeedActive = localStorage.getItem('parallel_fx_crossfeed') === 'true';
       isSpatialActive = localStorage.getItem('parallel_fx_spatial') === 'true';
+
+      const savedTube = localStorage.getItem('parallel_fx_tube_level');
+      if (savedTube !== null) tubeIntensity = parseInt(savedTube, 10);
+
+      const savedCross = localStorage.getItem('parallel_fx_crossfeed_level');
+      if (savedCross !== null) crossfeedIntensity = parseInt(savedCross, 10);
+
+      const savedSpatial = localStorage.getItem('parallel_fx_spatial_level');
+      if (savedSpatial !== null) spatialIntensity = parseInt(savedSpatial, 10);
     } catch (_) {}
 
-    if (btnFxTube) btnFxTube.classList.toggle('active', isTubeActive);
-    if (btnFxCrossfeed) btnFxCrossfeed.classList.toggle('active', isCrossfeedActive);
-    if (btnFxSpatial) btnFxSpatial.classList.toggle('active', isSpatialActive);
-
     let tubeNode = null;
+    let spatialDryNode = null;
     let spatialWetNode = null;
+    let crossDirectL = null;
+    let crossDirectR = null;
     let crossGainL = null;
     let crossGainR = null;
 
-    // Vacuum Tube Transfer Curve Generator: injects subtle 2nd-order harmonic warmth
-    function makeTubeCurve(samples = 4096) {
+    // Smooth Asymmetric Soft Saturation Curve Generator:
+    // Produces pure 2nd-harmonic tube warmth without harsh zero-crossing glitch or digital clipping.
+    function makeTubeCurve(intensity = 0.4, samples = 2048) {
       const curve = new Float32Array(samples);
-      const bias = 0.22;
+      if (intensity <= 0.01) {
+        for (let i = 0; i < samples; i++) {
+          curve[i] = (i * 2) / (samples - 1) - 1;
+        }
+        return curve;
+      }
+      const drive = 1.0 + intensity * 1.5;   // 1.0 ~ 2.5 drive
+      const asym = 0.22 * intensity;          // 0.0 ~ 0.22 even-harmonic asymmetry
+      let maxVal = 0;
+      const raw = new Float32Array(samples);
       for (let i = 0; i < samples; i++) {
-        const x = (i * 2) / samples - 1;
-        curve[i] = (x + bias * (x * x - Math.sign(x) * 0.15)) / (1 + bias);
+        const x = (i * 2) / (samples - 1) - 1;
+        const u = x + asym * x * x;
+        const y = Math.tanh(drive * u);
+        raw[i] = y;
+        const absY = Math.abs(y);
+        if (absY > maxVal) maxVal = absY;
+      }
+      // Bounded normalization keeps maximum peak strictly <= 0.95 (0dBFS protection)
+      const norm = maxVal > 0 ? (0.95 / maxVal) : 1;
+      for (let i = 0; i < samples; i++) {
+        curve[i] = raw[i] * norm;
       }
       return curve;
     }
@@ -1755,52 +1935,138 @@
       return curve;
     }
 
-    // Algorithmic Studio Room Impulse Response Generator
-    function createStudioRoomIR(ctx, duration = 0.12, decay = 2.4) {
+    // High-Fidelity Studio Room Impulse Response Generator:
+    // 7 discrete Haas early reflections (12ms - 140ms) + high-frequency damped wood studio diffusion tail
+    function createStudioRoomIR(ctx, duration = 0.32, decay = 3.2) {
       const sampleRate = ctx.sampleRate;
       const length = Math.max(1, Math.floor(sampleRate * duration));
       const irBuffer = ctx.createBuffer(2, length, sampleRate);
       const left = irBuffer.getChannelData(0);
       const right = irBuffer.getChannelData(1);
 
+      // Haas early reflections for physical distance perception
+      const early = [
+        { t: 0.012, gL: 0.65, gR: 0.20 },
+        { t: 0.022, gL: 0.22, gR: 0.60 },
+        { t: 0.035, gL: 0.50, gR: 0.35 },
+        { t: 0.052, gL: 0.30, gR: 0.45 },
+        { t: 0.075, gL: 0.38, gR: 0.25 },
+        { t: 0.105, gL: 0.22, gR: 0.32 },
+        { t: 0.140, gL: 0.18, gR: 0.18 }
+      ];
+
+      early.forEach(r => {
+        const idx = Math.floor(r.t * sampleRate);
+        if (idx < length) {
+          left[idx] += r.gL * 0.8;
+          right[idx] += r.gR * 0.8;
+        }
+      });
+
+      let prevL = 0;
+      let prevR = 0;
       for (let i = 0; i < length; i++) {
         const t = i / sampleRate;
         const env = Math.exp(-decay * (t / duration));
-        left[i] = (Math.random() * 2 - 1) * env;
-        right[i] = (Math.random() * 2 - 1) * env;
+        const damping = Math.max(0.12, 1.0 - (t / duration) * 0.65);
+        const rawL = (Math.random() * 2 - 1) * env * 0.4;
+        const rawR = (Math.random() * 2 - 1) * env * 0.4;
+        prevL = prevL * (1 - damping) + rawL * damping;
+        prevR = prevR * (1 - damping) + rawR * damping;
+        left[i] += prevL;
+        right[i] += prevR;
+      }
+
+      let max = 0;
+      for (let i = 0; i < length; i++) {
+        if (Math.abs(left[i]) > max) max = Math.abs(left[i]);
+        if (Math.abs(right[i]) > max) max = Math.abs(right[i]);
+      }
+      if (max > 0) {
+        for (let i = 0; i < length; i++) {
+          left[i] /= max;
+          right[i] /= max;
+        }
       }
       return irBuffer;
     }
 
+    function updateFxVisuals() {
+      if (btnFxTube) btnFxTube.classList.toggle('active', isTubeActive);
+      if (fxRowTube) fxRowTube.classList.toggle('active', isTubeActive);
+      if (fxTubeLevel) fxTubeLevel.value = tubeIntensity;
+      if (fxTubeVal) fxTubeVal.textContent = tubeIntensity + '%';
+
+      if (btnFxCrossfeed) btnFxCrossfeed.classList.toggle('active', isCrossfeedActive);
+      if (fxRowCrossfeed) fxRowCrossfeed.classList.toggle('active', isCrossfeedActive);
+      if (fxCrossfeedLevel) fxCrossfeedLevel.value = crossfeedIntensity;
+      if (fxCrossfeedVal) fxCrossfeedVal.textContent = crossfeedIntensity + '%';
+
+      if (btnFxSpatial) btnFxSpatial.classList.toggle('active', isSpatialActive);
+      if (fxRowSpatial) fxRowSpatial.classList.toggle('active', isSpatialActive);
+      if (fxSpatialLevel) fxSpatialLevel.value = spatialIntensity;
+      if (fxSpatialVal) fxSpatialVal.textContent = spatialIntensity + '%';
+    }
+
+    function applyTubeCurve() {
+      if (!tubeNode) return;
+      tubeNode.curve = isTubeActive ? makeTubeCurve(tubeIntensity / 100) : makeLinearCurve();
+    }
+
+    function getCrossfeedGain() {
+      if (!isCrossfeedActive) return 0.0;
+      return (crossfeedIntensity / 100) * 0.65;
+    }
+
+    function applyCrossfeed() {
+      if (!audioCtx || !crossGainL || !crossGainR) return;
+      const target = getCrossfeedGain();
+      crossGainL.gain.setTargetAtTime(target, audioCtx.currentTime, 0.02);
+      crossGainR.gain.setTargetAtTime(target, audioCtx.currentTime, 0.02);
+      if (crossDirectL && crossDirectR) {
+        const directTarget = 1.0 - (target * 0.15);
+        crossDirectL.gain.setTargetAtTime(directTarget, audioCtx.currentTime, 0.02);
+        crossDirectR.gain.setTargetAtTime(directTarget, audioCtx.currentTime, 0.02);
+      }
+    }
+
+    function getSpatialWetGain() {
+      if (!isSpatialActive) return 0.0;
+      return (spatialIntensity / 100) * 0.48;
+    }
+
+    function applySpatial() {
+      if (!audioCtx || !spatialWetNode) return;
+      const targetWet = getSpatialWetGain();
+      spatialWetNode.gain.setTargetAtTime(targetWet, audioCtx.currentTime, 0.02);
+      if (spatialDryNode) {
+        const targetDry = 1.0 - (targetWet * 0.25);
+        spatialDryNode.gain.setTargetAtTime(targetDry, audioCtx.currentTime, 0.02);
+      }
+    }
+
     function toggleTube() {
       isTubeActive = !isTubeActive;
-      btnFxTube.classList.toggle('active', isTubeActive);
       try { localStorage.setItem('parallel_fx_tube', isTubeActive); } catch (_) {}
-      if (tubeNode) {
-        tubeNode.curve = isTubeActive ? makeTubeCurve() : makeLinearCurve();
-      }
+      updateFxVisuals();
+      applyTubeCurve();
     }
 
     function toggleCrossfeed() {
       isCrossfeedActive = !isCrossfeedActive;
-      btnFxCrossfeed.classList.toggle('active', isCrossfeedActive);
       try { localStorage.setItem('parallel_fx_crossfeed', isCrossfeedActive); } catch (_) {}
-      if (crossGainL && crossGainR && audioCtx) {
-        const target = isCrossfeedActive ? 0.22 : 0.0;
-        crossGainL.gain.setTargetAtTime(target, audioCtx.currentTime, 0.02);
-        crossGainR.gain.setTargetAtTime(target, audioCtx.currentTime, 0.02);
-      }
+      updateFxVisuals();
+      applyCrossfeed();
     }
 
     function toggleSpatial() {
       isSpatialActive = !isSpatialActive;
-      btnFxSpatial.classList.toggle('active', isSpatialActive);
       try { localStorage.setItem('parallel_fx_spatial', isSpatialActive); } catch (_) {}
-      if (spatialWetNode && audioCtx) {
-        const target = isSpatialActive ? 0.14 : 0.0;
-        spatialWetNode.gain.setTargetAtTime(target, audioCtx.currentTime, 0.02);
-      }
+      updateFxVisuals();
+      applySpatial();
     }
+
+    updateFxVisuals();
 
     function applyLanguage(lang) {
       currentLang = lang;
@@ -1969,18 +2235,19 @@
       // --- 1. TUBE WARMTH STAGE (WaveShaper with 2nd-order harmonics) ---
       tubeNode = audioCtx.createWaveShaper();
       tubeNode.oversample = '4x';
-      tubeNode.curve = isTubeActive ? makeTubeCurve() : makeLinearCurve();
+      tubeNode.curve = isTubeActive ? makeTubeCurve(tubeIntensity / 100) : makeLinearCurve();
       reservoirNode.connect(tubeNode);
 
       // --- 2. SPATIAL AIR STAGE (Convolver room ambience dry/wet blend) ---
       const convolverNode = audioCtx.createConvolver();
       convolverNode.buffer = createStudioRoomIR(audioCtx);
 
-      const spatialDryNode = audioCtx.createGain();
-      spatialDryNode.gain.value = 1.0;
+      const initWet = getSpatialWetGain();
+      spatialDryNode = audioCtx.createGain();
+      spatialDryNode.gain.value = 1.0 - (initWet * 0.25);
 
       spatialWetNode = audioCtx.createGain();
-      spatialWetNode.gain.value = isSpatialActive ? 0.14 : 0.0;
+      spatialWetNode.gain.value = initWet;
 
       const spatialSumNode = audioCtx.createGain();
       spatialSumNode.channelCount = 2;
@@ -1997,30 +2264,33 @@
       const crossSplitter = audioCtx.createChannelSplitter(2);
       const crossMerger = audioCtx.createChannelMerger(2);
 
-      const crossDirectL = audioCtx.createGain();
-      const crossDirectR = audioCtx.createGain();
+      const initCross = getCrossfeedGain();
+      crossDirectL = audioCtx.createGain();
+      crossDirectR = audioCtx.createGain();
+      crossDirectL.gain.value = 1.0 - (initCross * 0.15);
+      crossDirectR.gain.value = 1.0 - (initCross * 0.15);
 
       const crossFilterL = audioCtx.createBiquadFilter();
       crossFilterL.type = 'lowpass';
-      crossFilterL.frequency.value = 700;
-      crossFilterL.Q.value = 0.5;
+      crossFilterL.frequency.value = 750;
+      crossFilterL.Q.value = 0.707;
 
       const crossDelayL = audioCtx.createDelay(0.005);
-      crossDelayL.delayTime.value = 0.0003;
+      crossDelayL.delayTime.value = 0.00032;
 
       crossGainL = audioCtx.createGain();
-      crossGainL.gain.value = isCrossfeedActive ? 0.22 : 0.0;
+      crossGainL.gain.value = initCross;
 
       const crossFilterR = audioCtx.createBiquadFilter();
       crossFilterR.type = 'lowpass';
-      crossFilterR.frequency.value = 700;
-      crossFilterR.Q.value = 0.5;
+      crossFilterR.frequency.value = 750;
+      crossFilterR.Q.value = 0.707;
 
       const crossDelayR = audioCtx.createDelay(0.005);
-      crossDelayR.delayTime.value = 0.0003;
+      crossDelayR.delayTime.value = 0.00032;
 
       crossGainR = audioCtx.createGain();
-      crossGainR.gain.value = isCrossfeedActive ? 0.22 : 0.0;
+      crossGainR.gain.value = initCross;
 
       spatialSumNode.connect(crossSplitter);
 
@@ -2297,6 +2567,33 @@
     if (btnFxTube) btnFxTube.addEventListener('click', toggleTube);
     if (btnFxCrossfeed) btnFxCrossfeed.addEventListener('click', toggleCrossfeed);
     if (btnFxSpatial) btnFxSpatial.addEventListener('click', toggleSpatial);
+
+    if (fxTubeLevel) {
+      fxTubeLevel.addEventListener('input', (e) => {
+        tubeIntensity = parseInt(e.target.value, 10);
+        if (fxTubeVal) fxTubeVal.textContent = tubeIntensity + '%';
+        try { localStorage.setItem('parallel_fx_tube_level', tubeIntensity); } catch (_) {}
+        applyTubeCurve();
+      });
+    }
+
+    if (fxCrossfeedLevel) {
+      fxCrossfeedLevel.addEventListener('input', (e) => {
+        crossfeedIntensity = parseInt(e.target.value, 10);
+        if (fxCrossfeedVal) fxCrossfeedVal.textContent = crossfeedIntensity + '%';
+        try { localStorage.setItem('parallel_fx_crossfeed_level', crossfeedIntensity); } catch (_) {}
+        applyCrossfeed();
+      });
+    }
+
+    if (fxSpatialLevel) {
+      fxSpatialLevel.addEventListener('input', (e) => {
+        spatialIntensity = parseInt(e.target.value, 10);
+        if (fxSpatialVal) fxSpatialVal.textContent = spatialIntensity + '%';
+        try { localStorage.setItem('parallel_fx_spatial_level', spatialIntensity); } catch (_) {}
+        applySpatial();
+      });
+    }
 
     selectA.addEventListener('change', () => routeDeckSink('A', selectA.value));
     selectB.addEventListener('change', () => routeDeckSink('B', selectB.value));
