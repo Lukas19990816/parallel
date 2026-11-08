@@ -1107,6 +1107,43 @@
       box-shadow: 0 0 6px var(--steel);
     }
 
+    .fx-mode-badge {
+      appearance: none;
+      background: #090c10;
+      border: 1px solid #1f2633;
+      border-radius: 2px;
+      color: #637185;
+      font-family: var(--mono);
+      font-size: 0.50rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 0 4px;
+      height: 20px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.12s ease;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fx-mode-badge:hover {
+      border-color: #3b4657;
+      color: var(--text-main);
+      background: #121720;
+    }
+
+    .fx-row.active .surround-mode-3d {
+      border-color: rgba(108, 135, 94, 0.6);
+      color: var(--master);
+    }
+
+    .fx-row.active .spatial-mode-cinema {
+      border-color: rgba(94, 114, 135, 0.6);
+      color: var(--steel);
+    }
+
     .fx-track-wrap {
       flex: 1;
       min-width: 0;
@@ -1472,28 +1509,30 @@
               <span id="fxTubeVal" class="fx-val tube-val">40%</span>
             </div>
 
-            <!-- Bauer Crossfeed Row -->
-            <div id="fxRowCrossfeed" class="fx-row">
-              <button id="btnFxCrossfeed" class="fx-toggle crossfeed" data-i18n-title="fxCrossfeedTitle" title="CROSSFEED: 雙耳互饋開闊聲場，消除耳機腦內定位與聽覺疲勞">
+            <!-- 3D Spatial Surround / Crossfeed Row -->
+            <div id="fxRowSurround" class="fx-row">
+              <button id="btnFxSurround" class="fx-toggle crossfeed" data-i18n-title="fxSurroundTitle" title="SURROUND: 3D 空間立體環繞聲場外擴 / 點擊 [3D/XF] 可切換 Bauer 互饋監聽">
                 <span class="fx-led"></span>
-                <span>CROSS</span>
+                <span id="fxSurroundLabel">SURROUND</span>
               </button>
+              <button id="btnSurroundMode" class="fx-mode-badge surround-mode-3d" title="點擊切換演算法：[3D 空間外擴] 或 [XF 互饋監聽]">3D</button>
               <div class="fx-track-wrap">
-                <input id="fxCrossfeedLevel" class="fx-slider cross-slider" type="range" min="0" max="100" value="50" aria-label="Bauer Crossfeed Bleed" />
+                <input id="fxSurroundLevel" class="fx-slider cross-slider" type="range" min="0" max="100" value="70" aria-label="Surround Width / Bleed" />
               </div>
-              <span id="fxCrossfeedVal" class="fx-val cross-val">50%</span>
+              <span id="fxSurroundVal" class="fx-val cross-val">70%</span>
             </div>
 
             <!-- Room Air Ambience Row -->
             <div id="fxRowSpatial" class="fx-row">
-              <button id="btnFxSpatial" class="fx-toggle spatial" data-i18n-title="fxSpatialTitle" title="ROOM AIR: 虛擬原木空間微環境，如置身同一聆聽室">
+              <button id="btnFxSpatial" class="fx-toggle spatial" data-i18n-title="fxSpatialTitle" title="ROOM AIR: 3D 虛擬空間微環境 / 點擊 [CINEMA/STUDIO] 切換空間大小">
                 <span class="fx-led"></span>
                 <span>ROOM</span>
               </button>
+              <button id="btnSpatialMode" class="fx-mode-badge spatial-mode-cinema" title="點擊切換空間大小：[CINEMA 劇院] 或 [STUDIO 錄音室]">CINEMA</button>
               <div class="fx-track-wrap">
-                <input id="fxSpatialLevel" class="fx-slider spatial-slider" type="range" min="0" max="100" value="45" aria-label="Room Air Space" />
+                <input id="fxSpatialLevel" class="fx-slider spatial-slider" type="range" min="0" max="100" value="55" aria-label="Room Air Space" />
               </div>
-              <span id="fxSpatialVal" class="fx-val spatial-val">45%</span>
+              <span id="fxSpatialVal" class="fx-val spatial-val">55%</span>
             </div>
           </div>
         </div>
@@ -1672,8 +1711,8 @@
         errCaptureFailed: '啟動共享失敗：',
         enhancerTitle: 'ACOUSTIC MATRIX // 聲學聽感矩陣',
         fxTubeTitle: 'TUBE: 類比真空管偶次諧波增強，人聲溫潤厚實（可滑動微調 Drive 強度）',
-        fxCrossfeedTitle: 'CROSSFEED: Bauer 雙耳互饋開闊聲場，消除耳機腦內定位與聽覺疲勞（可調整 Bleed 強度）',
-        fxSpatialTitle: 'ROOM AIR: 虛擬原木空間微環境早期反射，消除封閉耳機窒息感（可調整 Space 深度）'
+        fxSurroundTitle: 'SURROUND: 3D 空間立體環繞聲場外擴 / 點擊 [3D/XF] 可切換 Bauer 互饋監聽',
+        fxSpatialTitle: 'ROOM AIR: 3D 虛擬空間微環境 / 點擊 [CINEMA/STUDIO] 切換劇院或錄音室'
       },
       en: {
         brandTitle: 'PARALLEL // DUAL HEADPHONE DECK',
@@ -1711,8 +1750,8 @@
         errCaptureFailed: 'Failed to start audio sharing: ',
         enhancerTitle: 'ACOUSTIC MATRIX // DSP ENHANCER',
         fxTubeTitle: 'TUBE: Analog vacuum tube 2nd-order harmonics for warm vocals (adjustable drive)',
-        fxCrossfeedTitle: 'CROSSFEED: Bauer binaural crossfeed to eliminate in-head fatigue (adjustable bleed)',
-        fxSpatialTitle: 'ROOM AIR: Studio acoustic room early reflections simulation (adjustable space)'
+        fxSurroundTitle: 'SURROUND: 3D Binaural spatial soundstage expansion / Click [3D/XF] to toggle Crossfeed',
+        fxSpatialTitle: 'ROOM AIR: 3D Virtual acoustic ambience / Click [CINEMA/STUDIO] to toggle room size'
       },
       ja: {
         brandTitle: 'PARALLEL // 平行音響デッキ',
@@ -1750,8 +1789,8 @@
         errCaptureFailed: '共有の開始に失敗しました: ',
         enhancerTitle: 'ACOUSTIC MATRIX // 音響エンハンサー',
         fxTubeTitle: 'TUBE: 真空管の偶数次高調波でボーカルを温かく豊かに（Drive調整可）',
-        fxCrossfeedTitle: 'CROSSFEED: バウアー式バイノーラル互饋で聴覚疲労を低減（Bleed調整可）',
-        fxSpatialTitle: 'ROOM AIR: リアルな木造リスニングルームの初期反射を付加（Space調整可）'
+        fxSurroundTitle: 'SURROUND: 3D空間サラウンド音場拡張 / [3D/XF]クリックでバウアー互饋に切替',
+        fxSpatialTitle: 'ROOM AIR: 3D仮想音響空間 / [CINEMA/STUDIO]クリックで劇院・スタジオ切替'
       }
     };
 
@@ -1852,51 +1891,73 @@
 
     // Acoustic Matrix Enhancer State & DOM Nodes
     const btnFxTube = document.getElementById('btnFxTube');
-    const btnFxCrossfeed = document.getElementById('btnFxCrossfeed');
+    const btnFxSurround = document.getElementById('btnFxSurround');
+    const btnFxCrossfeed = btnFxSurround; // Alias for backward compatibility
     const btnFxSpatial = document.getElementById('btnFxSpatial');
 
+    const btnSurroundMode = document.getElementById('btnSurroundMode');
+    const btnSpatialMode = document.getElementById('btnSpatialMode');
+    const fxSurroundLabel = document.getElementById('fxSurroundLabel');
+
     const fxTubeLevel = document.getElementById('fxTubeLevel');
-    const fxCrossfeedLevel = document.getElementById('fxCrossfeedLevel');
+    const fxSurroundLevel = document.getElementById('fxSurroundLevel');
+    const fxCrossfeedLevel = fxSurroundLevel; // Alias
     const fxSpatialLevel = document.getElementById('fxSpatialLevel');
 
     const fxTubeVal = document.getElementById('fxTubeVal');
-    const fxCrossfeedVal = document.getElementById('fxCrossfeedVal');
+    const fxSurroundVal = document.getElementById('fxSurroundVal');
+    const fxCrossfeedVal = fxSurroundVal; // Alias
     const fxSpatialVal = document.getElementById('fxSpatialVal');
 
     const fxRowTube = document.getElementById('fxRowTube');
-    const fxRowCrossfeed = document.getElementById('fxRowCrossfeed');
+    const fxRowSurround = document.getElementById('fxRowSurround');
+    const fxRowCrossfeed = fxRowSurround; // Alias
     const fxRowSpatial = document.getElementById('fxRowSpatial');
 
     let isTubeActive = false;
+    let isSurroundActive = false;
     let isCrossfeedActive = false;
     let isSpatialActive = false;
 
     let tubeIntensity = 40;
-    let crossfeedIntensity = 50;
-    let spatialIntensity = 45;
+    let surroundIntensity = 70;
+    let crossfeedIntensity = 70;
+    let spatialIntensity = 55;
+
+    let surroundMode = '3D';       // '3D' (Surround Expansion) or 'XF' (Bauer Crossfeed)
+    let spatialMode = 'CINEMA';    // 'CINEMA' (480ms 3D Theater) or 'STUDIO' (240ms Studio)
 
     try {
       isTubeActive = localStorage.getItem('parallel_fx_tube') === 'true';
-      isCrossfeedActive = localStorage.getItem('parallel_fx_crossfeed') === 'true';
+      isSurroundActive = (localStorage.getItem('parallel_fx_surround') || localStorage.getItem('parallel_fx_crossfeed')) === 'true';
+      isCrossfeedActive = isSurroundActive;
       isSpatialActive = localStorage.getItem('parallel_fx_spatial') === 'true';
 
       const savedTube = localStorage.getItem('parallel_fx_tube_level');
       if (savedTube !== null) tubeIntensity = parseInt(savedTube, 10);
 
-      const savedCross = localStorage.getItem('parallel_fx_crossfeed_level');
-      if (savedCross !== null) crossfeedIntensity = parseInt(savedCross, 10);
+      const savedSurround = localStorage.getItem('parallel_fx_surround_level') || localStorage.getItem('parallel_fx_crossfeed_level');
+      if (savedSurround !== null) {
+        surroundIntensity = parseInt(savedSurround, 10);
+        crossfeedIntensity = surroundIntensity;
+      }
 
       const savedSpatial = localStorage.getItem('parallel_fx_spatial_level');
       if (savedSpatial !== null) spatialIntensity = parseInt(savedSpatial, 10);
+
+      const savedSurroundMode = localStorage.getItem('parallel_fx_surround_mode');
+      if (savedSurroundMode === '3D' || savedSurroundMode === 'XF') surroundMode = savedSurroundMode;
+
+      const savedSpatialMode = localStorage.getItem('parallel_fx_spatial_mode');
+      if (savedSpatialMode === 'CINEMA' || savedSpatialMode === 'STUDIO') spatialMode = savedSpatialMode;
     } catch (_) {}
 
     let tubeNode = null;
+    let convolverNode = null;
     let spatialDryNode = null;
     let spatialWetNode = null;
-    let crossDirectL = null;
-    let crossDirectR = null;
-    let crossGainL = null;
-    let crossGainR = null;
+    let surroundWidthNode = null;
+    let surroundShelfNode = null;
 
     // Smooth Asymmetric Soft Saturation Curve Generator:
     // Produces pure 2nd-harmonic tube warmth without harsh zero-crossing glitch or digital clipping.
@@ -1935,42 +1996,56 @@
       return curve;
     }
 
-    // High-Fidelity Studio Room Impulse Response Generator:
-    // 7 discrete Haas early reflections (12ms - 140ms) + high-frequency damped wood studio diffusion tail
-    function createStudioRoomIR(ctx, duration = 0.32, decay = 3.2) {
+    // High-Fidelity 3D Spatial Theater / Studio Room Impulse Response Generator
+    function createStudioRoomIR(ctx, isCinema = true) {
       const sampleRate = ctx.sampleRate;
+      const duration = isCinema ? 0.52 : 0.24;
+      const decay = isCinema ? 2.5 : 3.6;
       const length = Math.max(1, Math.floor(sampleRate * duration));
       const irBuffer = ctx.createBuffer(2, length, sampleRate);
       const left = irBuffer.getChannelData(0);
       const right = irBuffer.getChannelData(1);
 
-      // Haas early reflections for physical distance perception
-      const early = [
+      const cinemaReflections = [
+        { t: 0.012, gL: 0.70, gR: 0.22 },
+        { t: 0.019, gL: 0.20, gR: 0.68 },
+        { t: 0.031, gL: 0.55, gR: 0.35 },
+        { t: 0.046, gL: 0.32, gR: 0.58 },
+        { t: 0.068, gL: 0.45, gR: 0.42 },
+        { t: 0.098, gL: 0.38, gR: 0.26 },
+        { t: 0.138, gL: 0.25, gR: 0.36 },
+        { t: 0.185, gL: 0.20, gR: 0.22 },
+        { t: 0.240, gL: 0.16, gR: 0.18 },
+        { t: 0.310, gL: 0.12, gR: 0.12 }
+      ];
+
+      const studioReflections = [
         { t: 0.012, gL: 0.65, gR: 0.20 },
         { t: 0.022, gL: 0.22, gR: 0.60 },
         { t: 0.035, gL: 0.50, gR: 0.35 },
         { t: 0.052, gL: 0.30, gR: 0.45 },
         { t: 0.075, gL: 0.38, gR: 0.25 },
-        { t: 0.105, gL: 0.22, gR: 0.32 },
-        { t: 0.140, gL: 0.18, gR: 0.18 }
+        { t: 0.105, gL: 0.22, gR: 0.32 }
       ];
 
+      const early = isCinema ? cinemaReflections : studioReflections;
       early.forEach(r => {
         const idx = Math.floor(r.t * sampleRate);
         if (idx < length) {
-          left[idx] += r.gL * 0.8;
-          right[idx] += r.gR * 0.8;
+          left[idx] += r.gL * 0.85;
+          right[idx] += r.gR * 0.85;
         }
       });
 
       let prevL = 0;
       let prevR = 0;
+      const dampFactor = isCinema ? 0.55 : 0.70;
       for (let i = 0; i < length; i++) {
         const t = i / sampleRate;
         const env = Math.exp(-decay * (t / duration));
-        const damping = Math.max(0.12, 1.0 - (t / duration) * 0.65);
-        const rawL = (Math.random() * 2 - 1) * env * 0.4;
-        const rawR = (Math.random() * 2 - 1) * env * 0.4;
+        const damping = Math.max(0.10, 1.0 - (t / duration) * dampFactor);
+        const rawL = (Math.random() * 2 - 1) * env * 0.42;
+        const rawR = (Math.random() * 2 - 1) * env * 0.42;
         prevL = prevL * (1 - damping) + rawL * damping;
         prevR = prevR * (1 - damping) + rawR * damping;
         left[i] += prevL;
@@ -1997,15 +2072,34 @@
       if (fxTubeLevel) fxTubeLevel.value = tubeIntensity;
       if (fxTubeVal) fxTubeVal.textContent = tubeIntensity + '%';
 
-      if (btnFxCrossfeed) btnFxCrossfeed.classList.toggle('active', isCrossfeedActive);
-      if (fxRowCrossfeed) fxRowCrossfeed.classList.toggle('active', isCrossfeedActive);
-      if (fxCrossfeedLevel) fxCrossfeedLevel.value = crossfeedIntensity;
-      if (fxCrossfeedVal) fxCrossfeedVal.textContent = crossfeedIntensity + '%';
+      if (btnFxSurround) btnFxSurround.classList.toggle('active', isSurroundActive);
+      if (fxRowSurround) fxRowSurround.classList.toggle('active', isSurroundActive);
+      if (fxSurroundLevel) fxSurroundLevel.value = surroundIntensity;
+      if (fxSurroundVal) fxSurroundVal.textContent = surroundIntensity + '%';
+
+      if (btnSurroundMode) {
+        btnSurroundMode.textContent = surroundMode;
+        btnSurroundMode.classList.toggle('surround-mode-3d', surroundMode === '3D');
+        btnSurroundMode.title = surroundMode === '3D'
+          ? '目前：3D WIDE (立體劇院環繞聲場外擴) - 點擊切換為 XF (Bauer 互饋監聽)'
+          : '目前：XF (Bauer 雙耳互饋監聽) - 點擊切換為 3D (劇院環繞外擴)';
+      }
+      if (fxSurroundLabel) {
+        fxSurroundLabel.textContent = surroundMode === '3D' ? 'SURROUND' : 'CROSS';
+      }
 
       if (btnFxSpatial) btnFxSpatial.classList.toggle('active', isSpatialActive);
       if (fxRowSpatial) fxRowSpatial.classList.toggle('active', isSpatialActive);
       if (fxSpatialLevel) fxSpatialLevel.value = spatialIntensity;
       if (fxSpatialVal) fxSpatialVal.textContent = spatialIntensity + '%';
+
+      if (btnSpatialMode) {
+        btnSpatialMode.textContent = spatialMode;
+        btnSpatialMode.classList.toggle('spatial-mode-cinema', spatialMode === 'CINEMA');
+        btnSpatialMode.title = spatialMode === 'CINEMA'
+          ? '目前：CINEMA (480ms 劇院巨幕環繞反射) - 點擊切換為 STUDIO'
+          : '目前：STUDIO (240ms 錄音室近場監聽) - 點擊切換為 CINEMA';
+      }
     }
 
     function applyTubeCurve() {
@@ -2013,35 +2107,42 @@
       tubeNode.curve = isTubeActive ? makeTubeCurve(tubeIntensity / 100) : makeLinearCurve();
     }
 
-    function getCrossfeedGain() {
-      if (!isCrossfeedActive) return 0.0;
-      return (crossfeedIntensity / 100) * 0.65;
-    }
-
-    function applyCrossfeed() {
-      if (!audioCtx || !crossGainL || !crossGainR) return;
-      const target = getCrossfeedGain();
-      crossGainL.gain.setTargetAtTime(target, audioCtx.currentTime, 0.02);
-      crossGainR.gain.setTargetAtTime(target, audioCtx.currentTime, 0.02);
-      if (crossDirectL && crossDirectR) {
-        const directTarget = 1.0 - (target * 0.15);
-        crossDirectL.gain.setTargetAtTime(directTarget, audioCtx.currentTime, 0.02);
-        crossDirectR.gain.setTargetAtTime(directTarget, audioCtx.currentTime, 0.02);
+    function applySurroundParams() {
+      if (!audioCtx || !surroundWidthNode) return;
+      const now = audioCtx.currentTime;
+      if (!isSurroundActive) {
+        surroundWidthNode.gain.setTargetAtTime(1.0, now, 0.02);
+        if (surroundShelfNode) surroundShelfNode.gain.setTargetAtTime(0, now, 0.02);
+        return;
+      }
+      const norm = surroundIntensity / 100;
+      if (surroundMode === '3D') {
+        const targetWidth = 1.0 + norm * 1.8; // 1.0 to 2.8x M/S expansion
+        const targetShelf = norm * 4.0;       // up to +4dB diffuse air
+        surroundWidthNode.gain.setTargetAtTime(targetWidth, now, 0.02);
+        if (surroundShelfNode) surroundShelfNode.gain.setTargetAtTime(targetShelf, now, 0.02);
+      } else {
+        const targetWidth = 1.0 - norm * 0.65; // Bauer side attenuation
+        const targetShelf = -norm * 3.0;
+        surroundWidthNode.gain.setTargetAtTime(targetWidth, now, 0.02);
+        if (surroundShelfNode) surroundShelfNode.gain.setTargetAtTime(targetShelf, now, 0.02);
       }
     }
 
     function getSpatialWetGain() {
       if (!isSpatialActive) return 0.0;
-      return (spatialIntensity / 100) * 0.48;
+      const maxWet = spatialMode === 'CINEMA' ? 0.65 : 0.45;
+      return (spatialIntensity / 100) * maxWet;
     }
 
-    function applySpatial() {
+    function applySpatialParams() {
       if (!audioCtx || !spatialWetNode) return;
+      const now = audioCtx.currentTime;
       const targetWet = getSpatialWetGain();
-      spatialWetNode.gain.setTargetAtTime(targetWet, audioCtx.currentTime, 0.02);
+      spatialWetNode.gain.setTargetAtTime(targetWet, now, 0.02);
       if (spatialDryNode) {
-        const targetDry = 1.0 - (targetWet * 0.25);
-        spatialDryNode.gain.setTargetAtTime(targetDry, audioCtx.currentTime, 0.02);
+        const targetDry = 1.0 - (targetWet * 0.3);
+        spatialDryNode.gain.setTargetAtTime(targetDry, now, 0.02);
       }
     }
 
@@ -2052,18 +2153,39 @@
       applyTubeCurve();
     }
 
-    function toggleCrossfeed() {
-      isCrossfeedActive = !isCrossfeedActive;
-      try { localStorage.setItem('parallel_fx_crossfeed', isCrossfeedActive); } catch (_) {}
+    function toggleSurround() {
+      isSurroundActive = !isSurroundActive;
+      isCrossfeedActive = isSurroundActive;
+      try {
+        localStorage.setItem('parallel_fx_surround', isSurroundActive);
+        localStorage.setItem('parallel_fx_crossfeed', isSurroundActive);
+      } catch (_) {}
       updateFxVisuals();
-      applyCrossfeed();
+      applySurroundParams();
+    }
+
+    function toggleSurroundMode() {
+      surroundMode = surroundMode === '3D' ? 'XF' : '3D';
+      try { localStorage.setItem('parallel_fx_surround_mode', surroundMode); } catch (_) {}
+      updateFxVisuals();
+      applySurroundParams();
     }
 
     function toggleSpatial() {
       isSpatialActive = !isSpatialActive;
       try { localStorage.setItem('parallel_fx_spatial', isSpatialActive); } catch (_) {}
       updateFxVisuals();
-      applySpatial();
+      applySpatialParams();
+    }
+
+    function toggleSpatialMode() {
+      spatialMode = spatialMode === 'CINEMA' ? 'STUDIO' : 'CINEMA';
+      try { localStorage.setItem('parallel_fx_spatial_mode', spatialMode); } catch (_) {}
+      if (convolverNode && audioCtx) {
+        convolverNode.buffer = createStudioRoomIR(audioCtx, spatialMode === 'CINEMA');
+      }
+      updateFxVisuals();
+      applySpatialParams();
     }
 
     updateFxVisuals();
@@ -2239,12 +2361,12 @@
       reservoirNode.connect(tubeNode);
 
       // --- 2. SPATIAL AIR STAGE (Convolver room ambience dry/wet blend) ---
-      const convolverNode = audioCtx.createConvolver();
-      convolverNode.buffer = createStudioRoomIR(audioCtx);
+      convolverNode = audioCtx.createConvolver();
+      convolverNode.buffer = createStudioRoomIR(audioCtx, spatialMode === 'CINEMA');
 
       const initWet = getSpatialWetGain();
       spatialDryNode = audioCtx.createGain();
-      spatialDryNode.gain.value = 1.0 - (initWet * 0.25);
+      spatialDryNode.gain.value = 1.0 - (initWet * 0.3);
 
       spatialWetNode = audioCtx.createGain();
       spatialWetNode.gain.value = initWet;
@@ -2260,59 +2382,56 @@
       convolverNode.connect(spatialWetNode);
       spatialWetNode.connect(spatialSumNode);
 
-      // --- 3. BAUER CROSSFEED STAGE (Natural Interaural Bleed) ---
-      const crossSplitter = audioCtx.createChannelSplitter(2);
-      const crossMerger = audioCtx.createChannelMerger(2);
+      // --- 3. 3D SPATIAL SURROUND & BINAURAL MATRIX STAGE ---
+      const spatialSplitter = audioCtx.createChannelSplitter(2);
+      const spatialMerger = audioCtx.createChannelMerger(2);
 
-      const initCross = getCrossfeedGain();
-      crossDirectL = audioCtx.createGain();
-      crossDirectR = audioCtx.createGain();
-      crossDirectL.gain.value = 1.0 - (initCross * 0.15);
-      crossDirectR.gain.value = 1.0 - (initCross * 0.15);
+      // Mid Channel (L + R) * 0.5
+      const midGainL = audioCtx.createGain(); midGainL.gain.value = 0.5;
+      const midGainR = audioCtx.createGain(); midGainR.gain.value = 0.5;
+      const midNode = audioCtx.createGain();
+      spatialSplitter.connect(midGainL, 0);
+      spatialSplitter.connect(midGainR, 1);
+      midGainL.connect(midNode);
+      midGainR.connect(midNode);
+      midNode.connect(spatialMerger, 0, 0);
+      midNode.connect(spatialMerger, 0, 1);
 
-      const crossFilterL = audioCtx.createBiquadFilter();
-      crossFilterL.type = 'lowpass';
-      crossFilterL.frequency.value = 750;
-      crossFilterL.Q.value = 0.707;
+      // Side Channel (L - R) * 0.5
+      const sideGainL = audioCtx.createGain(); sideGainL.gain.value = 0.5;
+      const sideGainR = audioCtx.createGain(); sideGainR.gain.value = -0.5;
+      const sideNode = audioCtx.createGain();
+      spatialSplitter.connect(sideGainL, 0);
+      spatialSplitter.connect(sideGainR, 1);
+      sideGainL.connect(sideNode);
+      sideGainR.connect(sideNode);
 
-      const crossDelayL = audioCtx.createDelay(0.005);
-      crossDelayL.delayTime.value = 0.00032;
+      // Side High-Shelf Filter for diffuse 3D spatial air (>6.5kHz)
+      surroundShelfNode = audioCtx.createBiquadFilter();
+      surroundShelfNode.type = 'highshelf';
+      surroundShelfNode.frequency.value = 6500;
+      sideNode.connect(surroundShelfNode);
 
-      crossGainL = audioCtx.createGain();
-      crossGainL.gain.value = initCross;
+      // Side Width Multiplier Node
+      surroundWidthNode = audioCtx.createGain();
+      surroundShelfNode.connect(surroundWidthNode);
 
-      const crossFilterR = audioCtx.createBiquadFilter();
-      crossFilterR.type = 'lowpass';
-      crossFilterR.frequency.value = 750;
-      crossFilterR.Q.value = 0.707;
+      // Inverted Side for Right Channel
+      const sideInvertNode = audioCtx.createGain();
+      sideInvertNode.gain.value = -1.0;
+      surroundWidthNode.connect(sideInvertNode);
 
-      const crossDelayR = audioCtx.createDelay(0.005);
-      crossDelayR.delayTime.value = 0.00032;
+      // Connect to Merger: Left = Mid + Side, Right = Mid - Side
+      surroundWidthNode.connect(spatialMerger, 0, 0);
+      sideInvertNode.connect(spatialMerger, 0, 1);
 
-      crossGainR = audioCtx.createGain();
-      crossGainR.gain.value = initCross;
+      spatialSumNode.connect(spatialSplitter);
 
-      spatialSumNode.connect(crossSplitter);
+      // Apply initial dynamic parameters
+      applySurroundParams();
+      applySpatialParams();
 
-      // Left direct + Right crossfeed
-      crossSplitter.connect(crossDirectL, 0);
-      crossDirectL.connect(crossMerger, 0, 0);
-
-      crossSplitter.connect(crossFilterL, 0);
-      crossFilterL.connect(crossDelayL);
-      crossDelayL.connect(crossGainL);
-      crossGainL.connect(crossMerger, 0, 1);
-
-      // Right direct + Left crossfeed
-      crossSplitter.connect(crossDirectR, 1);
-      crossDirectR.connect(crossMerger, 0, 1);
-
-      crossSplitter.connect(crossFilterR, 1);
-      crossFilterR.connect(crossDelayR);
-      crossDelayR.connect(crossGainR);
-      crossGainR.connect(crossMerger, 0, 0);
-
-      const masterEnhancerNode = crossMerger;
+      const masterEnhancerNode = spatialMerger;
 
       // Connect to Analyser for live visualizer
       analyserNode = audioCtx.createAnalyser();
@@ -2565,8 +2684,10 @@
     btnStop.addEventListener('click', stopSharing);
 
     if (btnFxTube) btnFxTube.addEventListener('click', toggleTube);
-    if (btnFxCrossfeed) btnFxCrossfeed.addEventListener('click', toggleCrossfeed);
+    if (btnFxSurround) btnFxSurround.addEventListener('click', toggleSurround);
+    if (btnSurroundMode) btnSurroundMode.addEventListener('click', toggleSurroundMode);
     if (btnFxSpatial) btnFxSpatial.addEventListener('click', toggleSpatial);
+    if (btnSpatialMode) btnSpatialMode.addEventListener('click', toggleSpatialMode);
 
     if (fxTubeLevel) {
       fxTubeLevel.addEventListener('input', (e) => {
@@ -2577,12 +2698,16 @@
       });
     }
 
-    if (fxCrossfeedLevel) {
-      fxCrossfeedLevel.addEventListener('input', (e) => {
-        crossfeedIntensity = parseInt(e.target.value, 10);
-        if (fxCrossfeedVal) fxCrossfeedVal.textContent = crossfeedIntensity + '%';
-        try { localStorage.setItem('parallel_fx_crossfeed_level', crossfeedIntensity); } catch (_) {}
-        applyCrossfeed();
+    if (fxSurroundLevel) {
+      fxSurroundLevel.addEventListener('input', (e) => {
+        surroundIntensity = parseInt(e.target.value, 10);
+        crossfeedIntensity = surroundIntensity;
+        if (fxSurroundVal) fxSurroundVal.textContent = surroundIntensity + '%';
+        try {
+          localStorage.setItem('parallel_fx_surround_level', surroundIntensity);
+          localStorage.setItem('parallel_fx_crossfeed_level', surroundIntensity);
+        } catch (_) {}
+        applySurroundParams();
       });
     }
 
@@ -2591,7 +2716,7 @@
         spatialIntensity = parseInt(e.target.value, 10);
         if (fxSpatialVal) fxSpatialVal.textContent = spatialIntensity + '%';
         try { localStorage.setItem('parallel_fx_spatial_level', spatialIntensity); } catch (_) {}
-        applySpatial();
+        applySpatialParams();
       });
     }
 
