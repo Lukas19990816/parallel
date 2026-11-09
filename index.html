@@ -5,8 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="dark" />
   <meta name="theme-color" content="#0b0d10" />
-  <!-- Strict Content Security Policy: blocks all external scripts, network requests, and frame injections -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob: data:; manifest-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';" />
+  <!-- Content Security Policy: strictly permits local code and Google Analytics 4 telemetry, blocking all other external injection -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self' blob: data:; manifest-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'none';" />
+
+  <!-- Google Analytics 4 (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E6Q8L7K0MW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-E6Q8L7K0MW', {
+      send_page_view: true
+    });
+  </script>
 
   <!-- Primary SEO Metadata -->
   <title>PARALLEL // 平行聲波 — Dual Bluetooth Headphone Audio Splitter &amp; Sync Console</title>
@@ -67,1312 +78,7 @@
     }
   }
   </script>
-  <style>
-    /* ==========================================================================
-       🎨 AI AGENT / VIBE-CODING THEME CUSTOMIZATION VARIABLES
-       Want a different aesthetic (e.g. Teenage Engineering Industrial White,
-       Cyberpunk 2077 Neon, 80s Synthwave, or Matcha Dark)?
-       Just ask your coding agent to modify the CSS variables inside :root below!
-       ========================================================================== */
-    :root {
-      /* Console Chassis Palette */
-      --bg-room: #050607;
-      --chassis: #0b0d10;
-      --chassis-hi: #12151a;
-      --panel: #08090c;
-      --panel-recess: #060709;
-      --border: #181c22;
-      --border-hi: #222730;
-
-      /* Console Typography */
-      --text-main: #8c95a4;
-      --text-dim: #4c5360;
-      --text-sub: #636b78;
-
-      /* Channel & Meter Accents */
-      --amber: #b3834c;
-      --amber-dim: rgba(179, 131, 76, 0.14);
-
-      --sage: #52857c;
-      --sage-dim: rgba(82, 133, 124, 0.14);
-
-      --master: #6c875e;
-      --master-dim: rgba(108, 135, 94, 0.15);
-
-      --rust: #9e4747;
-      --rust-dim: rgba(158, 71, 71, 0.18);
-
-      --mono: "JetBrains Mono", "SF Mono", "Menlo", "Consolas", monospace;
-      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Hiragino Sans", "Microsoft JhengHei", sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-    }
-
-    body {
-      background-color: var(--bg-room);
-      background-image:
-        radial-gradient(circle at 50% 20%, #0d1015 0%, #050607 75%);
-      color: var(--text-main);
-      font-family: var(--sans);
-      min-height: 100vh;
-      padding: 22px 16px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-    }
-
-    /* Pixelarticons inline SVG styling */
-    .px-icon {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-      flex-shrink: 0;
-      shape-rendering: crispEdges;
-    }
-
-    .px-icon.lg {
-      width: 22px;
-      height: 22px;
-    }
-
-    /* Main Hardware Console Chassis */
-    .console-chassis {
-      width: 100%;
-      max-width: 1040px;
-      background: linear-gradient(180deg, #0e1014 0%, #0a0b0e 100%);
-      border: 1px solid var(--border-hi);
-      border-radius: 10px;
-      box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.85),
-        inset 0 1px 0 rgba(255, 255, 255, 0.03);
-      padding: 18px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    /* Corner Rack Screws */
-    .screw-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 2px;
-    }
-
-    .screw {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #07080a;
-      border: 1px solid #1d2128;
-      position: relative;
-    }
-
-    .screw::after {
-      content: "";
-      position: absolute;
-      top: 4px;
-      left: 1px;
-      right: 1px;
-      height: 1px;
-      background: #1a1e24;
-      transform: rotate(-35deg);
-    }
-
-    .rack-model {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.16em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-    }
-
-    /* Top Control & LCD Header Bar */
-    .top-rack {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 12px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7);
-    }
-
-    .brand-block {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-      flex: 1 1 320px;
-    }
-
-    .brand-badge {
-      width: 44px;
-      height: 44px;
-      background: #07080a;
-      border: 1px solid var(--border-hi);
-      border-radius: 6px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-    }
-
-    .brand-badge img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .brand-info {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .brand-title {
-      font-family: var(--mono);
-      font-size: 1.02rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .brand-sub {
-      font-size: 0.74rem;
-      color: var(--text-sub);
-      margin-top: 3px;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      flex-wrap: nowrap;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    /* Language Switcher */
-    .lang-switch {
-      display: inline-flex;
-      background: #050608;
-      border: 1px solid #191e24;
-      border-radius: 4px;
-      padding: 2px;
-      gap: 2px;
-      flex-shrink: 0;
-    }
-
-    .lang-btn {
-      appearance: none;
-      background: transparent;
-      border: none;
-      color: var(--text-dim);
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      padding: 5px 8px;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: all 0.12s ease;
-      white-space: nowrap;
-    }
-
-    .lang-btn:hover {
-      color: var(--text-main);
-    }
-
-    .lang-btn.active {
-      background: #141820;
-      color: var(--amber);
-      border: 1px solid rgba(179, 131, 76, 0.35);
-    }
-
-    /* Retro LCD Status Screen */
-    .lcd-status {
-      background: #050608;
-      border: 1px solid #191e24;
-      border-radius: 4px;
-      padding: 7px 12px;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.05em;
-      color: var(--text-sub);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .led-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 1px;
-      background: #3a404d;
-      flex-shrink: 0;
-    }
-
-    .lcd-status.active {
-      color: var(--master);
-      border-color: rgba(108, 135, 94, 0.35);
-    }
-
-    .lcd-status.active .led-dot {
-      background: var(--master);
-      box-shadow: 0 0 6px var(--master);
-      animation: blink 1.8s infinite steps(2, start);
-    }
-
-    .dsp-badge {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      border-left: 1px solid #1c2129;
-      padding-left: 8px;
-      white-space: nowrap;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.35; }
-    }
-
-    /* Hardware Transport Pad Buttons */
-    .transport-bar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
-    }
-
-    .hw-btn {
-      appearance: none;
-      background: linear-gradient(180deg, #14181f 0%, #0d1015 100%);
-      border: 1px solid var(--border-hi);
-      border-bottom: 2px solid #060709;
-      color: var(--text-main);
-      padding: 10px 12px;
-      border-radius: 5px;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.12s ease;
-      white-space: nowrap;
-      min-width: 0;
-      overflow: hidden;
-    }
-
-    .hw-btn span {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .hw-btn:hover {
-      background: #171c24;
-      border-color: #2c3340;
-    }
-
-    .hw-btn:active {
-      transform: translateY(1px);
-    }
-
-    .hw-btn.engage {
-      border-color: rgba(179, 131, 76, 0.45);
-      color: var(--amber);
-      background: linear-gradient(180deg, rgba(179, 131, 76, 0.14) 0%, #0d1015 100%);
-    }
-
-    .hw-btn.engage:hover {
-      background: linear-gradient(180deg, rgba(179, 131, 76, 0.22) 0%, #11151c 100%);
-    }
-
-    .hw-btn.kill {
-      border-color: rgba(158, 71, 71, 0.45);
-      color: var(--rust);
-      background: var(--rust-dim);
-    }
-
-    /* Jukebox Search & Mini-Player Rack */
-    .jukebox-rack {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--amber);
-      border-radius: 6px;
-      padding: 12px 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.65);
-      min-width: 0;
-    }
-
-    .jukebox-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--mono);
-      font-size: 0.74rem;
-      color: var(--text-sub);
-      min-width: 0;
-    }
-
-    .jukebox-top > span:first-child {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
-    }
-
-    #localTrackStatus {
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .jukebox-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      min-width: 0;
-    }
-
-    .jukebox-input {
-      flex: 1 1 200px;
-      min-width: 180px;
-      background: #040507;
-      border: 1px solid #1d222b;
-      color: var(--text-main);
-      font-family: var(--sans);
-      font-size: 0.82rem;
-      padding: 8px 12px;
-      border-radius: 4px;
-      outline: none;
-      user-select: text;
-    }
-
-    .jukebox-input:focus {
-      border-color: var(--amber);
-    }
-
-    .jukebox-btn {
-      background: #101319;
-      border: 1px solid var(--border-hi);
-      color: var(--text-main);
-      font-family: var(--mono);
-      font-size: 0.74rem;
-      padding: 8px 11px;
-      border-radius: 4px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.12s ease;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .jukebox-btn span {
-      white-space: nowrap;
-    }
-
-    .jukebox-btn:hover {
-      background: #171c25;
-      border-color: var(--amber);
-      color: var(--amber);
-    }
-
-    .jukebox-btn.sage:hover {
-      border-color: var(--sage);
-      color: var(--sage);
-    }
-
-    /* Main 3-Column DJ Console Grid */
-    .mixer-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(250px, 280px) minmax(0, 1fr);
-      gap: 12px;
-      min-width: 0;
-    }
-
-    @media (max-width: 920px) {
-      .mixer-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Deck Panels (CH-1 & CH-2) */
-    .deck-unit {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-      min-width: 0;
-      overflow: hidden;
-    }
-
-    .deck-a {
-      border-top: 2px solid var(--amber);
-    }
-
-    .deck-b {
-      border-top: 2px solid var(--sage);
-    }
-
-    .deck-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 8px;
-      gap: 6px;
-      min-width: 0;
-      flex-wrap: nowrap;
-    }
-
-    .deck-id {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-      min-width: 0;
-      flex-shrink: 1;
-    }
-
-    .deck-id .px-icon {
-      width: 15px;
-      height: 15px;
-      flex-shrink: 0;
-    }
-
-    .deck-name {
-      white-space: nowrap;
-    }
-
-    .deck-ch {
-      font-size: 0.68rem;
-      font-weight: 400;
-      opacity: 0.55;
-      white-space: nowrap;
-    }
-
-    @media (max-width: 420px) {
-      .deck-ch {
-        display: none;
-      }
-    }
-
-    .deck-a .deck-id { color: var(--amber); }
-    .deck-b .deck-id { color: var(--sage); }
-
-    .pad-group {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      flex-shrink: 0;
-      white-space: nowrap;
-    }
-
-    .pad-btn {
-      background: #0c0e12;
-      border: 1px solid var(--border-hi);
-      color: var(--text-sub);
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      padding: 4px 7px;
-      border-radius: 3px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-      flex-shrink: 0;
-      box-sizing: border-box;
-      line-height: 1.2;
-      transition: all 0.12s ease;
-    }
-
-    .pad-btn .px-icon {
-      width: 13px;
-      height: 13px;
-      flex-shrink: 0;
-    }
-
-    .pad-btn.solo-btn {
-      min-width: 44px;
-      justify-content: center;
-    }
-
-    .pad-btn.mute-btn {
-      min-width: 64px;
-      justify-content: center;
-    }
-
-    .pad-btn:hover {
-      border-color: #323946;
-      color: var(--text-main);
-    }
-
-    .pad-btn.muted {
-      background: var(--rust-dim);
-      border-color: var(--rust);
-      color: #c96969;
-    }
-
-    .pad-btn.soloed {
-      background: var(--amber-dim);
-      border-color: var(--amber);
-      color: var(--amber);
-    }
-
-    /* Platter Display */
-    .platter-wrap {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: var(--panel-recess);
-      border: 1px solid #13171d;
-      border-radius: 6px;
-      padding: 12px;
-      min-width: 0;
-    }
-
-    .jog-wheel {
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      background:
-        repeating-radial-gradient(circle at center, #0b0d10 0px, #0b0d10 3px, #12161c 4px, #0b0d10 5px);
-      border: 2px solid #1f242d;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .jog-wheel.spinning {
-      animation: spin 4.5s linear infinite;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .jog-marker {
-      position: absolute;
-      top: 5px;
-      width: 3px;
-      height: 8px;
-      border-radius: 1px;
-    }
-
-    .deck-a .jog-marker { background: var(--amber); }
-    .deck-b .jog-marker { background: var(--sage); }
-
-    .jog-center {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: #07080a;
-      border: 1px solid #262c36;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .deck-a .jog-center { color: var(--amber); }
-    .deck-b .jog-center { color: var(--sage); }
-
-    .platter-meta {
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .meta-label {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Sink Selector */
-    select.oled-select {
-      width: 100%;
-      background: #050608;
-      border: 1px solid #1c2129;
-      color: var(--text-main);
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      padding: 8px 10px;
-      border-radius: 4px;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .deck-a select.oled-select:focus { border-color: var(--amber); }
-    .deck-b select.oled-select:focus { border-color: var(--sage); }
-
-    /* Per-Deck Headphone Profile Selector */
-    .profile-box {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      margin-top: 4px;
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid #141922;
-      border-radius: 4px;
-      padding: 4px 6px;
-    }
-
-    .profile-head-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 4px;
-    }
-
-    .profile-label {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      color: var(--text-dim);
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      white-space: nowrap;
-    }
-
-    .profile-badge {
-      font-family: var(--mono);
-      font-size: 0.52rem;
-      padding: 1px 4px;
-      border-radius: 2px;
-      background: #0d1017;
-      border: 1px solid #1f2735;
-      color: #6d7b8e;
-      white-space: nowrap;
-      transition: all 0.15s ease;
-    }
-
-    .deck-a .profile-badge.active-pro {
-      border-color: rgba(179, 131, 76, 0.55);
-      color: var(--amber);
-      background: rgba(179, 131, 76, 0.12);
-    }
-
-    .deck-b .profile-badge.active-pro {
-      border-color: rgba(122, 148, 122, 0.55);
-      color: var(--sage);
-      background: rgba(122, 148, 122, 0.12);
-    }
-
-    select.profile-select {
-      width: 100%;
-      background: #06080b;
-      border: 1px solid #181f2a;
-      color: var(--text-sub);
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      padding: 3px 5px;
-      border-radius: 3px;
-      outline: none;
-      cursor: pointer;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    select.profile-select:focus {
-      border-color: var(--border-focus);
-      color: var(--text-main);
-    }
-
-    /* Auto-tune button in Enhancer header */
-    .fx-auto-tune-btn {
-      appearance: none;
-      background: #0a0d13;
-      border: 1px solid #242d3d;
-      border-radius: 3px;
-      color: var(--master);
-      font-family: var(--mono);
-      font-size: 0.56rem;
-      font-weight: 700;
-      padding: 2px 6px;
-      cursor: pointer;
-      letter-spacing: 0.04em;
-      transition: all 0.12s ease;
-      white-space: nowrap;
-      user-select: none;
-    }
-
-    .fx-auto-tune-btn:hover {
-      background: #121822;
-      border-color: var(--master);
-      box-shadow: 0 0 6px rgba(108, 135, 94, 0.35);
-    }
-
-    /* Fader Modules */
-    .fader-box {
-      background: var(--panel-recess);
-      border: 1px solid #13171c;
-      border-radius: 5px;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      min-width: 0;
-    }
-
-    .fader-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-    }
-
-    .fader-name {
-      color: var(--text-sub);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      letter-spacing: 0.03em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
-      flex: 1;
-    }
-
-    .fader-name span {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .lcd-val {
-      background: #040507;
-      border: 1px solid #171b22;
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-family: var(--mono);
-      font-size: 0.74rem;
-      color: var(--text-main);
-      min-width: 58px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    .deck-a .lcd-val { color: var(--amber); }
-    .deck-b .lcd-val { color: var(--sage); }
-
-    /* Custom Hardware Sliders */
-    .fader-track-wrap {
-      position: relative;
-      padding: 4px 0;
-    }
-
-    input[type="range"].dj-fader {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 6px;
-      background: #040506;
-      border: 1px solid #191d24;
-      border-radius: 2px;
-      outline: none;
-      cursor: pointer;
-    }
-
-    input[type="range"].dj-fader::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 16px;
-      height: 22px;
-      border-radius: 2px;
-      background: linear-gradient(180deg, #2a303b 0%, #15181f 50%, #252b35 100%);
-      border: 1px solid #454e5e;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
-      cursor: grab;
-    }
-
-    .deck-a input[type="range"].dj-fader::-webkit-slider-thumb {
-      border-top: 2px solid var(--amber);
-    }
-
-    .deck-b input[type="range"].dj-fader::-webkit-slider-thumb {
-      border-top: 2px solid var(--sage);
-    }
-
-    .scale-ticks {
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      color: var(--text-dim);
-      padding: 0 2px;
-      white-space: nowrap;
-    }
-
-    .nudge-row {
-      display: flex;
-      justify-content: flex-end;
-      gap: 5px;
-      margin-top: 2px;
-    }
-
-    .mini-btn {
-      background: #0c0e12;
-      border: 1px solid #1c2029;
-      color: var(--text-dim);
-      font-family: var(--mono);
-      font-size: 0.66rem;
-      padding: 2px 7px;
-      border-radius: 2px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .mini-btn:hover {
-      color: var(--text-main);
-      border-color: #2e3542;
-    }
-
-    /* Center Master Mixer Column */
-    .center-mixer {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-top: 2px solid var(--master);
-      border-radius: 6px;
-      padding: 15px 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-      min-width: 0;
-      overflow: hidden;
-    }
-
-    .mixer-title {
-      font-family: var(--mono);
-      font-size: 0.76rem;
-      letter-spacing: 0.08em;
-      color: var(--master);
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Spectrum & Dual VU Meter Display */
-    .crt-display {
-      background: #040507;
-      border: 1px solid #181c23;
-      border-radius: 4px;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.95);
-      min-width: 0;
-    }
-
-    .vu-meters {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .vu-row {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      white-space: nowrap;
-    }
-
-    .vu-bars {
-      flex: 1;
-      display: grid;
-      grid-template-columns: repeat(16, 1fr);
-      gap: 2px;
-      height: 8px;
-      background: #080a0d;
-      padding: 1px;
-    }
-
-    .vu-seg {
-      background: #12151b;
-      border-radius: 1px;
-      transition: background 0.05s linear;
-    }
-
-    .vu-seg.on-low { background: #4d7553; }
-    .vu-seg.on-mid { background: #a67c46; }
-    .vu-seg.on-hi  { background: #9e4747; }
-
-    canvas#visualizer {
-      width: 100%;
-      height: 62px;
-      background:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-        #040507;
-      background-size: 12px 12px;
-      border-top: 1px solid #12161c;
-      display: block;
-    }
-
-    /* Center Column Acoustic Enhancer Matrix */
-    .enhancer-rack {
-      background: var(--panel-recess);
-      border: 1px solid #13171c;
-      border-radius: 5px;
-      padding: 8px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      min-width: 0;
-    }
-
-    .enhancer-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-    }
-
-    .enhancer-head .px-icon {
-      width: 13px;
-      height: 13px;
-      color: var(--master);
-    }
-
-    .enhancer-dsp-tag {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      color: #434c5c;
-      letter-spacing: 0.06em;
-      font-weight: 600;
-    }
-
-    .enhancer-rows {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .fx-row {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid #11141a;
-      border-radius: 3px;
-      padding: 3px 6px 3px 4px;
-      transition: border-color 0.15s ease, background 0.15s ease;
-    }
-
-    .fx-row.active {
-      border-color: #1e2633;
-      background: rgba(8, 12, 18, 0.45);
-    }
-
-    .fx-toggle {
-      appearance: none;
-      background: #080a0e;
-      border: 1px solid var(--border-hi);
-      border-radius: 3px;
-      width: 72px;
-      height: 22px;
-      padding: 0 4px;
-      font-family: var(--mono);
-      font-size: 0.56rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      color: var(--text-sub);
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 5px;
-      cursor: pointer;
-      transition: all 0.12s ease;
-      white-space: nowrap;
-      user-select: none;
-      flex-shrink: 0;
-    }
-
-    .fx-led {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #1f2530;
-      flex-shrink: 0;
-      transition: all 0.12s ease;
-    }
-
-    .fx-toggle:hover {
-      border-color: #353c4a;
-      color: var(--text-main);
-    }
-
-    .fx-toggle.active {
-      background: #10141c;
-      color: var(--amber);
-      border-color: rgba(179, 131, 76, 0.45);
-    }
-
-    .fx-toggle.active .fx-led {
-      background: var(--amber);
-      box-shadow: 0 0 6px var(--amber);
-    }
-
-    .fx-toggle.crossfeed.active {
-      color: var(--master);
-      border-color: rgba(108, 135, 94, 0.45);
-    }
-
-    .fx-toggle.crossfeed.active .fx-led {
-      background: var(--master);
-      box-shadow: 0 0 6px var(--master);
-    }
-
-    .fx-toggle.spatial.active {
-      color: var(--steel);
-      border-color: rgba(94, 114, 135, 0.5);
-    }
-
-    .fx-toggle.spatial.active .fx-led {
-      background: var(--steel);
-      box-shadow: 0 0 6px var(--steel);
-    }
-
-    .fx-mode-badge {
-      appearance: none;
-      background: #090c10;
-      border: 1px solid #1f2633;
-      border-radius: 2px;
-      color: #637185;
-      font-family: var(--mono);
-      font-size: 0.50rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      padding: 0 4px;
-      height: 20px;
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.12s ease;
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .fx-mode-badge:hover {
-      border-color: #3b4657;
-      color: var(--text-main);
-      background: #121720;
-    }
-
-    .fx-row.active .surround-mode-3d {
-      border-color: rgba(108, 135, 94, 0.6);
-      color: var(--master);
-    }
-
-    .fx-row.active .spatial-mode-cinema {
-      border-color: rgba(94, 114, 135, 0.6);
-      color: var(--steel);
-    }
-
-    .fx-track-wrap {
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      align-items: center;
-    }
-
-    .fx-slider {
-      appearance: none;
-      -webkit-appearance: none;
-      width: 100%;
-      height: 4px;
-      background: #06080b;
-      border: 1px solid #151a22;
-      border-radius: 2px;
-      outline: none;
-      cursor: pointer;
-      opacity: 0.45;
-      transition: opacity 0.15s ease;
-    }
-
-    .fx-row.active .fx-slider {
-      opacity: 1;
-    }
-
-    .fx-slider::-webkit-slider-thumb {
-      appearance: none;
-      -webkit-appearance: none;
-      width: 10px;
-      height: 16px;
-      border-radius: 2px;
-      background: linear-gradient(180deg, #323a48 0%, #171b22 100%);
-      border: 1px solid #434c5c;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-      cursor: grab;
-      transition: transform 0.05s ease;
-    }
-
-    .fx-slider::-webkit-slider-thumb:hover {
-      transform: scale(1.08);
-    }
-
-    .fx-slider::-moz-range-thumb {
-      width: 10px;
-      height: 16px;
-      border-radius: 2px;
-      background: #252b36;
-      border: 1px solid #434c5c;
-      cursor: grab;
-    }
-
-    .tube-slider::-webkit-slider-thumb {
-      border-top: 2px solid var(--amber);
-    }
-
-    .cross-slider::-webkit-slider-thumb {
-      border-top: 2px solid var(--master);
-    }
-
-    .spatial-slider::-webkit-slider-thumb {
-      border-top: 2px solid var(--steel);
-    }
-
-    .fx-val {
-      width: 32px;
-      text-align: right;
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      flex-shrink: 0;
-      transition: color 0.15s ease;
-    }
-
-    .fx-row.active .tube-val {
-      color: var(--amber);
-    }
-
-    .fx-row.active .cross-val {
-      color: var(--master);
-    }
-
-    .fx-row.active .spatial-val {
-      color: var(--steel);
-    }
-
-    /* Footer Manual Rack */
-    .manual-rack {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 12px 16px;
-      font-size: 0.78rem;
-      color: var(--text-sub);
-      line-height: 1.6;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 0;
-    }
-
-    .manual-rack strong {
-      color: var(--text-main);
-      font-family: var(--mono);
-      font-weight: 600;
-    }
-
-    .manual-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 10px;
-      margin-top: 2px;
-    }
-
-    .step-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .step-tag {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      padding: 1px 6px;
-      background: #101318;
-      border: 1px solid var(--border-hi);
-      color: var(--amber);
-      border-radius: 3px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-  </style>
+  <link rel="stylesheet" href="css/app.css" />
 </head>
 <body>
   <!-- Inline Pixelarticons (24x24 grid, MIT License, 0 external network dependencies) -->
@@ -1401,6 +107,18 @@
     <symbol id="px-stop" viewBox="0 0 24 24">
       <path d="M6 6h12v12H6V6z"/>
     </symbol>
+    <symbol id="px-keyboard" viewBox="0 0 24 24">
+      <path d="M2 5h20v14H2V5zm2 2v10h16V7H4zm2 2h2v2H6V9zm4 0h2v2h-2V9zm4 0h2v2h-2V9zm-8 4h2v2H6v-2zm12 0h-8v2h8v-2z"/>
+    </symbol>
+    <symbol id="px-info" viewBox="0 0 24 24">
+      <path d="M6 3h12v2h2v2h2v10h-2v2h-2v2H6v-2H4v-2H2V7h2V5h2V3zm5 4h2v2h-2V7zm0 4h2v6h-2v-6z"/>
+    </symbol>
+    <symbol id="px-shield" viewBox="0 0 24 24">
+      <path d="M4 3h16v4h-2v8h-2v4h-4v2h-2v-2H6v-4H4V7H2V3h2zm2 2v8h2v4h4v2h2v-2h2v-4h2V5H6z"/>
+    </symbol>
+    <symbol id="px-check" viewBox="0 0 24 24">
+      <path d="M18 6h2v2h-2v2h-2v2h-2v2h-2v2h-2v-2H8v-2H6v-2h2v2h2v-2h2v-2h2V8h2V6h2z"/>
+    </symbol>
   </svg>
 
   <div class="console-chassis">
@@ -1409,6 +127,13 @@
       <div class="screw"></div>
       <span class="rack-model">PARALLEL // DUAL A2DP AUDIO MATRIX</span>
       <div class="screw"></div>
+    </div>
+
+    <!-- Incompatible Browser Notice Banner (Shown dynamically on Safari/Firefox/Mobile) -->
+    <div id="browserWarningBanner" class="browser-warning-banner" style="display: none;">
+      <span class="warning-tag">※ BROWSER NOTICE</span>
+      <span class="warning-text" data-i18n="browserWarnText">※ 當前瀏覽器受限於技術架構無法擷取分頁音訊。建議改用電腦版 Google Chrome、Microsoft Edge 或 Brave 開啟，即可免費享受雙耳機同步聆聽！</span>
+      <button id="btnOpenBrowserMatrix" class="warning-cta" data-i18n="btnBrowserList">檢視相容瀏覽器清單 ▾</button>
     </div>
 
     <!-- Header Rack -->
@@ -1439,48 +164,137 @@
       </div>
     </header>
 
-    <!-- Transport Pads -->
+    <!-- 3-Step Setup Guide with Inline Expandable Manual -->
+    <section class="wizard-rack" aria-label="Quick setup guide">
+      <div class="wizard-header">
+        <div class="wizard-header-left">
+          <span class="wizard-header-tag" data-i18n="wizardHeaderTag">【 GUIDE 】設定指引 // 請跟著以下 3 個步驟</span>
+          <span class="wizard-header-sub" data-i18n="wizardHeaderSub">依序完成以下步驟，雙耳機即可同步聆聽：</span>
+        </div>
+        <button id="btnToggleGuide" class="btn-guide-toggle" type="button" aria-expanded="false" aria-controls="guideDrawer">
+          <svg class="px-icon"><use href="#px-info" xlink:href="#px-info"/></svg>
+          <span data-i18n="btnToggleGuide">【 ? 】操作指南 &amp; 快捷鍵</span>
+        </button>
+      </div>
+
+      <!-- Collapsible Guide, Shortcuts & FAQ Drawer (Inline Expandable) -->
+      <div id="guideDrawer" class="guide-drawer" style="display: none;">
+        <div class="guide-drawer-header">
+          <strong class="guide-drawer-title" data-i18n="guideDrawerTitle">【 GUIDE &amp; FAQ 】// 混音台操作指南・疑難排解・鍵盤快捷鍵</strong>
+        </div>
+        <div class="guide-section-grid">
+          <div class="guide-box">
+            <div class="guide-box-header">
+              <svg class="px-icon"><use href="#px-clock" xlink:href="#px-clock"/></svg>
+              <span class="guide-box-title" data-i18n="guideSyncTitle">【 01 延遲校準 】※ 耳機時差補償 (0–300ms)</span>
+            </div>
+            <p class="guide-box-body" data-i18n="guideSyncDesc">若兩隻耳機出現回音或時差（例如 AirPods 搭配 Sony 耳機），請滑動 DECK A 或 DECK B 底下的「延遲推桿」，手動補償延遲至兩耳聲音完全重合。</p>
+          </div>
+          <div class="guide-box">
+            <div class="guide-box-header">
+              <svg class="px-icon"><use href="#px-shield" xlink:href="#px-shield"/></svg>
+              <span class="guide-box-title" data-i18n="guideDrmTitle">【 02 版權提示 】※ DRM 商業串流保護</span>
+            </div>
+            <p class="guide-box-body" data-i18n="drmDesc">提示：部分商業串流平台（如 Netflix、Disney+、Apple TV+）受硬體數位版權 (DRM) 保護，瀏覽器分頁音訊擷取時可能靜音或黑畫面。推薦使用 YouTube、Spotify 網頁版、SoundCloud、Bilibili、線上廣播或載入本地音訊檔案進行雙耳機共享！</p>
+          </div>
+          <div class="guide-box">
+            <div class="guide-box-header">
+              <svg class="px-icon"><use href="#px-info" xlink:href="#px-info"/></svg>
+              <span class="guide-box-title" data-i18n="guideMacTitle">【 03 系統權限 】※ macOS 錄製授權指引</span>
+            </div>
+            <p class="guide-box-body" data-i18n="tip3Desc">若以前從未在 Mac 瀏覽器分享過分頁，macOS 系統會跳出安全性要求。請至「系統設定 → 隱私權與安全性 → 螢幕與系統音訊錄製」勾選允許瀏覽器即可正常使用。</p>
+          </div>
+          <div class="guide-box full-width">
+            <div class="guide-box-header">
+              <svg class="px-icon"><use href="#px-keyboard" xlink:href="#px-keyboard"/></svg>
+              <span class="guide-box-title" data-i18n="guideKeyTitle">【 04 鍵盤設定 】※ 實體混音台快捷鍵一覽 (KEYBOARD SHORTCUTS)</span>
+            </div>
+            <div class="drawer-shortcuts-table">
+              <div class="shortcut-item"><kbd>Space</kbd> <span data-i18n="keyPlay">播放 / 暫停</span></div>
+              <div class="shortcut-item"><kbd>1</kbd> <span data-i18n="keyMuteA">DECK A 靜音</span></div>
+              <div class="shortcut-item"><kbd>2</kbd> <span data-i18n="keyMuteB">DECK B 靜音</span></div>
+              <div class="shortcut-item"><kbd>S</kbd> <span data-i18n="keySync">時脈緩衝重置</span></div>
+              <div class="shortcut-item"><kbd>M</kbd> <span data-i18n="keyMatrix">聲學矩陣自動優化</span></div>
+              <div class="shortcut-item"><kbd>[</kbd> / <kbd>]</kbd> <span data-i18n="keyFader">Crossfader 平移</span></div>
+              <div class="shortcut-item"><kbd>\</kbd> <span data-i18n="keyCenter">Crossfader 歸零置中</span></div>
+              <div class="shortcut-item"><kbd>↑</kbd> / <kbd>↓</kbd> <span data-i18n="keyGain">主音量增益調整</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-steps-grid">
+        <div class="wizard-card step-1">
+          <div class="wizard-num-badge">1</div>
+          <div class="wizard-content">
+            <strong class="wizard-step-title" data-i18n="wizard1Title">【步驟 1】連接耳機</strong>
+            <p class="wizard-step-desc" data-i18n="wizard1Desc">電腦藍牙先連妥兩隻耳機，點擊下方「讀取耳機裝置」，並在 DECK A / B 分別指定耳機。</p>
+          </div>
+        </div>
+        <div class="wizard-arrow" aria-hidden="true">→</div>
+        <div class="wizard-card step-2">
+          <div class="wizard-num-badge">2</div>
+          <div class="wizard-content">
+            <strong class="wizard-step-title" data-i18n="wizard2Title">【步驟 2】播放音樂</strong>
+            <p class="wizard-step-desc" data-i18n="wizard2Desc">在另一個分頁開啟音樂播放（YouTube / Spotify），或使用下方快捷點歌台。</p>
+          </div>
+        </div>
+        <div class="wizard-arrow" aria-hidden="true">→</div>
+        <div class="wizard-card step-3">
+          <div class="wizard-num-badge">3</div>
+          <div class="wizard-content">
+            <strong class="wizard-step-title" data-i18n="wizard3Title">【步驟 3】綁定音訊</strong>
+            <p class="wizard-step-desc" data-i18n="wizard3Desc">點擊下方「綁定分頁音訊」，選取該音樂分頁並勾選「一併分享分頁音訊」！</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transport Pads (Hardware Buttons) -->
     <div class="transport-bar">
-      <button id="btnRefreshDevices" class="hw-btn">
-        <svg class="px-icon"><use href="#px-headphones"/></svg>
-        <span data-i18n="btnScan">[1] 讀取耳機裝置</span>
+      <button id="btnRefreshDevices" class="hw-btn primary-step-1" aria-label="Step 1: Read connected audio devices">
+        <span class="step-indicator">STEP 1</span>
+        <svg class="px-icon"><use href="#px-headphones" xlink:href="#px-headphones"/></svg>
+        <span data-i18n="btnScan">讀取耳機裝置 (Scan Devices)</span>
       </button>
-      <button id="btnCaptureTab" class="hw-btn engage">
-        <svg class="px-icon"><use href="#px-signal"/></svg>
-        <span data-i18n="btnLinkTab">[2] 綁定分頁音訊</span>
+      <button id="btnCaptureTab" class="hw-btn primary-step-2 engage" aria-label="Step 2 & 3: Link Tab Audio Stream">
+        <span class="step-indicator">STEP 2 & 3</span>
+        <svg class="px-icon"><use href="#px-signal" xlink:href="#px-signal"/></svg>
+        <span data-i18n="btnLinkTab">綁定分頁音訊 (Link Audio)</span>
       </button>
-      <button id="btnSyncReset" class="hw-btn" style="display: none;">
-        <svg class="px-icon"><use href="#px-clock"/></svg>
-        <span data-i18n="btnFlush">[SYNC] 重置緩衝</span>
+      <button id="btnSyncReset" class="hw-btn util-btn" style="display: none;" aria-label="Synchronize buffer and flush">
+        <svg class="px-icon"><use href="#px-clock" xlink:href="#px-clock"/></svg>
+        <span data-i18n="btnFlush">[SYNC] 重置對齊</span>
       </button>
-      <button id="btnStop" class="hw-btn kill" style="display: none;">
-        <svg class="px-icon"><use href="#px-stop"/></svg>
+      <button id="btnStop" class="hw-btn kill-btn" style="display: none;" aria-label="Stop audio stream">
+        <svg class="px-icon"><use href="#px-stop" xlink:href="#px-stop"/></svg>
         <span data-i18n="btnStop">[STOP] 停止串流</span>
       </button>
     </div>
 
-    <!-- Jukebox Search & Side-by-Side Mini Player Controller -->
+    <!-- Quick Music Launcher & Player Section -->
     <section class="jukebox-rack">
       <div class="jukebox-top">
-        <span data-i18n="jukeboxTitle">JUKEBOX // 側邊點歌窗（綁定分頁後換歌免重新共享）</span>
+        <span data-i18n="jukeboxTitle">◆ 快捷音樂來源 // YouTube・Spotify・本地音樂（換歌免重新綁定）</span>
         <span id="localTrackStatus" style="color: var(--amber);"></span>
       </div>
+      <div class="jukebox-sub" data-i18n="jukeboxSub">※ 小技巧：在另一個分頁放音樂即可；亦可在此直接搜尋歌曲或載入本機 MP3 檔一起聽。</div>
       <div class="jukebox-row">
-        <input id="jukeboxQuery" class="jukebox-input" type="text" data-i18n-placeholder="jukeboxPlaceholder" placeholder="輸入歌名或歌手（按 Enter 搜尋 YouTube Music）..." />
+        <input id="jukeboxQuery" class="jukebox-input" type="text" data-i18n-placeholder="jukeboxPlaceholder" placeholder="搜尋歌名或歌手（按 Enter 快速前往 YouTube Music）..." />
         <button id="btnJukeboxYTM" class="jukebox-btn">
-          <svg class="px-icon"><use href="#px-disc"/></svg>
+          <svg class="px-icon"><use href="#px-disc" xlink:href="#px-disc"/></svg>
           <span data-i18n="btnYTM">YT Music</span>
         </button>
         <button id="btnJukeboxYT" class="jukebox-btn">
-          <svg class="px-icon"><use href="#px-signal"/></svg>
+          <svg class="px-icon"><use href="#px-signal" xlink:href="#px-signal"/></svg>
           <span data-i18n="btnYT">YouTube</span>
         </button>
         <button id="btnJukeboxSpotify" class="jukebox-btn sage">
-          <svg class="px-icon"><use href="#px-sliders"/></svg>
+          <svg class="px-icon"><use href="#px-sliders" xlink:href="#px-sliders"/></svg>
           <span data-i18n="btnSpotify">Spotify</span>
         </button>
         <label class="jukebox-btn sage">
-          <svg class="px-icon"><use href="#px-headphones"/></svg>
+          <svg class="px-icon"><use href="#px-headphones" xlink:href="#px-headphones"/></svg>
           <span data-i18n="btnLocalFile">載入本地音訊</span>
           <input id="localFileInput" type="file" accept="audio/*" style="display: none;" />
         </label>
@@ -1494,14 +308,14 @@
       <section class="deck-unit deck-a">
         <div class="deck-header">
           <div class="deck-id">
-            <svg class="px-icon"><use href="#px-headphones"/></svg>
+            <svg class="px-icon"><use href="#px-headphones" xlink:href="#px-headphones"/></svg>
             <span class="deck-name">DECK A</span>
             <span class="deck-ch">// CH-01</span>
           </div>
           <div class="pad-group">
             <button id="soloA" class="pad-btn solo-btn" title="CUE / SOLO">SOLO</button>
             <button id="muteA" class="pad-btn mute-btn" title="MUTE">
-              <svg id="muteIconA" class="px-icon"><use href="#px-vol-on"/></svg>
+              <svg id="muteIconA" class="px-icon"><use href="#px-vol-on" xlink:href="#px-vol-on"/></svg>
               <span id="muteTextA">MUTE</span>
             </button>
           </div>
@@ -1511,7 +325,7 @@
           <div id="wheelA" class="jog-wheel">
             <div class="jog-marker"></div>
             <div class="jog-center">
-              <svg class="px-icon"><use href="#px-disc"/></svg>
+              <svg class="px-icon"><use href="#px-disc" xlink:href="#px-disc"/></svg>
             </div>
           </div>
           <div class="platter-meta">
@@ -1521,16 +335,22 @@
             </select>
             <div class="profile-box">
               <div class="profile-head-row">
-                <span class="profile-label" data-i18n="profileLabelA">⚡ DSP PROFILE // 聲學校正</span>
+                <span class="profile-label" data-i18n="profileLabelA">〔DSP PROFILE〕// 聲學校正</span>
+              </div>
+              <div class="profile-badge-row">
                 <span id="profileBadgeA" class="profile-badge">FLAT</span>
               </div>
               <select id="profileA" class="profile-select" aria-label="Headphone Profile Deck A">
-                <option value="AUTO">⚡ AUTO (智能偵測自動配對)</option>
+                <option value="AUTO">◆ AUTO (智能偵測自動配對)</option>
                 <option value="SONY_1000X">Sony WH/WF-1000X (極簡減法/消腫通透)</option>
                 <option value="AIRPODS_PRO">AirPods Pro (入耳降噪/3D空氣感)</option>
+                <option value="AIRPODS_MAX">AirPods Max (監聽聲場/中頻回正)</option>
                 <option value="AIRPODS_OPEN">AirPods (半入耳漏音/低頻補償)</option>
-                <option value="SOUNDCORE">Soundcore Space One (撫平高頻刺耳)</option>
                 <option value="BOSE_QC">Bose QuietComfort (空間微動態)</option>
+                <option value="SENNHEISER_M4">Sennheiser Momentum 4 (清透微動態)</option>
+                <option value="BW_PX">B&W Px7 / Px8 (通透監聽/中頻回正)</option>
+                <option value="FOCAL_BATHYS">Focal Bathys (發燒級微動態空氣感)</option>
+                <option value="SOUNDCORE">Soundcore Space One (撫平高頻刺耳)</option>
                 <option value="FLAT">Flat / Monitor (原音直通無渲染)</option>
               </select>
             </div>
@@ -1541,7 +361,7 @@
         <div class="fader-box">
           <div class="fader-head">
             <span class="fader-name">
-              <svg class="px-icon"><use href="#px-sliders"/></svg>
+              <svg class="px-icon"><use href="#px-sliders" xlink:href="#px-sliders"/></svg>
               <span data-i18n="gainLabelA">GAIN // 音量 A</span>
             </span>
             <span id="volLabelA" class="lcd-val">100%</span>
@@ -1561,7 +381,7 @@
         <div class="fader-box">
           <div class="fader-head">
             <span class="fader-name">
-              <svg class="px-icon"><use href="#px-clock"/></svg>
+              <svg class="px-icon"><use href="#px-clock" xlink:href="#px-clock"/></svg>
               <span data-i18n="delayLabelTitleA">SYNC DELAY // 延遲 A</span>
             </span>
             <span id="delayLabelA" class="lcd-val">0 ms</span>
@@ -1581,7 +401,7 @@
       <section class="center-mixer">
         <div>
           <div class="mixer-title">
-            <svg class="px-icon"><use href="#px-signal"/></svg>
+            <svg class="px-icon"><use href="#px-signal" xlink:href="#px-signal"/></svg>
             <span data-i18n="masterMonitor">MASTER MONITOR</span>
           </div>
 
@@ -1603,11 +423,11 @@
         <!-- Center Acoustic Matrix Enhancer Rack -->
         <div class="enhancer-rack">
           <div class="enhancer-head">
-            <span style="display: flex; align-items: center; gap: 5px;">
-              <svg class="px-icon"><use href="#px-sliders"/></svg>
-              <span data-i18n="enhancerTitle">ACOUSTIC MATRIX // 聲學聽感矩陣</span>
+            <span class="enhancer-title-wrap">
+              <svg class="px-icon"><use href="#px-sliders" xlink:href="#px-sliders"/></svg>
+              <span class="enhancer-title-text" data-i18n="enhancerTitle">ACOUSTIC MATRIX // 聲學矩陣</span>
             </span>
-            <button id="btnAutoTuneMatrix" class="fx-auto-tune-btn" data-i18n="autoTuneBtn" title="根據兩副耳機型號，自動將中央聲學矩陣推至黃金調校參數">⚡ AUTO-OPTIMIZE</button>
+            <button id="btnAutoTuneMatrix" class="fx-auto-tune-btn" data-i18n="autoTuneBtn" title="根據兩副耳機型號，自動將中央聲學矩陣推至黃金調校參數">◆ AUTO-OPTIMIZE</button>
           </div>
           <div class="enhancer-rows" role="group" aria-label="Acoustic Enhancer Controls">
             <!-- Tube Warmth Row -->
@@ -1687,14 +507,14 @@
       <section class="deck-unit deck-b">
         <div class="deck-header">
           <div class="deck-id">
-            <svg class="px-icon"><use href="#px-headphones"/></svg>
+            <svg class="px-icon"><use href="#px-headphones" xlink:href="#px-headphones"/></svg>
             <span class="deck-name">DECK B</span>
             <span class="deck-ch">// CH-02</span>
           </div>
           <div class="pad-group">
             <button id="soloB" class="pad-btn solo-btn" title="CUE / SOLO">SOLO</button>
             <button id="muteB" class="pad-btn mute-btn" title="MUTE">
-              <svg id="muteIconB" class="px-icon"><use href="#px-vol-on"/></svg>
+              <svg id="muteIconB" class="px-icon"><use href="#px-vol-on" xlink:href="#px-vol-on"/></svg>
               <span id="muteTextB">MUTE</span>
             </button>
           </div>
@@ -1704,7 +524,7 @@
           <div id="wheelB" class="jog-wheel">
             <div class="jog-marker"></div>
             <div class="jog-center">
-              <svg class="px-icon"><use href="#px-disc"/></svg>
+              <svg class="px-icon"><use href="#px-disc" xlink:href="#px-disc"/></svg>
             </div>
           </div>
           <div class="platter-meta">
@@ -1714,16 +534,22 @@
             </select>
             <div class="profile-box">
               <div class="profile-head-row">
-                <span class="profile-label" data-i18n="profileLabelB">⚡ DSP PROFILE // 聲學校正</span>
+                <span class="profile-label" data-i18n="profileLabelB">〔DSP PROFILE〕// 聲學校正</span>
+              </div>
+              <div class="profile-badge-row">
                 <span id="profileBadgeB" class="profile-badge">FLAT</span>
               </div>
               <select id="profileB" class="profile-select" aria-label="Headphone Profile Deck B">
-                <option value="AUTO">⚡ AUTO (智能偵測自動配對)</option>
+                <option value="AUTO">◆ AUTO (智能偵測自動配對)</option>
                 <option value="SONY_1000X">Sony WH/WF-1000X (極簡減法/消腫通透)</option>
                 <option value="AIRPODS_PRO">AirPods Pro (入耳降噪/3D空氣感)</option>
+                <option value="AIRPODS_MAX">AirPods Max (監聽聲場/中頻回正)</option>
                 <option value="AIRPODS_OPEN">AirPods (半入耳漏音/低頻補償)</option>
-                <option value="SOUNDCORE">Soundcore Space One (撫平高頻刺耳)</option>
                 <option value="BOSE_QC">Bose QuietComfort (空間微動態)</option>
+                <option value="SENNHEISER_M4">Sennheiser Momentum 4 (清透微動態)</option>
+                <option value="BW_PX">B&W Px7 / Px8 (通透監聽/中頻回正)</option>
+                <option value="FOCAL_BATHYS">Focal Bathys (發燒級微動態空氣感)</option>
+                <option value="SOUNDCORE">Soundcore Space One (撫平高頻刺耳)</option>
                 <option value="FLAT">Flat / Monitor (原音直通無渲染)</option>
               </select>
             </div>
@@ -1734,7 +560,7 @@
         <div class="fader-box">
           <div class="fader-head">
             <span class="fader-name">
-              <svg class="px-icon"><use href="#px-sliders"/></svg>
+              <svg class="px-icon"><use href="#px-sliders" xlink:href="#px-sliders"/></svg>
               <span data-i18n="gainLabelB">GAIN // 音量 B</span>
             </span>
             <span id="volLabelB" class="lcd-val">100%</span>
@@ -1754,7 +580,7 @@
         <div class="fader-box">
           <div class="fader-head">
             <span class="fader-name">
-              <svg class="px-icon"><use href="#px-clock"/></svg>
+              <svg class="px-icon"><use href="#px-clock" xlink:href="#px-clock"/></svg>
               <span data-i18n="delayLabelTitleB">SYNC DELAY // 延遲 B</span>
             </span>
             <span id="delayLabelB" class="lcd-val">0 ms</span>
@@ -1771,18 +597,12 @@
       </section>
     </div>
 
-    <!-- Quick Operation Footer -->
+    <!-- Hardware Specification Nameplate Footer (Centered Mechanical Plate) -->
     <footer class="manual-rack">
-      <strong data-i18n="guideHeader">QUICK PATCH GUIDE // 訊號接入步驟 (macOS / Windows / Linux Chrome)</strong>
-      <div class="manual-steps">
-        <div class="step-item">
-          <span class="step-tag">STEP 01</span>
-          <span data-i18n="guideStep1">將兩隻耳機連上電腦，點擊 [1] 讀取雙耳機裝置，確認 DECK A 與 DECK B 已選妥兩隻耳機。</span>
-        </div>
-        <div class="step-item">
-          <span class="step-tag">STEP 02</span>
-          <span data-i18n="guideStep2">用 JUKEBOX 開啟側邊點歌窗，再點 [2] 綁定分頁音訊 選取該分頁並勾選「一併分享分頁音訊」。</span>
-        </div>
+      <div class="chassis-nameplate">
+        <span class="nameplate-screw"></span>
+        <span class="footer-spec-text">PARALLEL // DUAL A2DP AUDIO ROUTER // 0–300MS DSP DELAY SYNC // 24-BIT 48KHZ BUFFER</span>
+        <span class="nameplate-screw"></span>
       </div>
     </footer>
 
@@ -1798,1476 +618,131 @@
   <audio id="audioElA" autoplay playsinline></audio>
   <audio id="audioElB" autoplay playsinline></audio>
 
-  <script>
-    // =========================================================================
-    // 🌐 i18n Dictionary (繁體中文 / English / 日本語)
-    // =========================================================================
-    const I18N = {
-      zh: {
-        brandTitle: 'PARALLEL // 平行聲波',
-        brandSub: '平行雙軌・並肩聆聽 // 雙耳機延遲同步混音台',
-        btnScan: '[1] 讀取耳機裝置',
-        btnLinkTab: '[2] 綁定分頁音訊',
-        btnFlush: '[SYNC] 重置緩衝',
-        btnStop: '[STOP] 停止串流',
-        jukeboxTitle: 'JUKEBOX // 側邊點歌窗（綁定分頁後換歌免重新共享）',
-        jukeboxPlaceholder: '輸入歌名或歌手（按 Enter 搜尋 YouTube Music）...',
-        btnYTM: 'YT Music',
-        btnYT: 'YouTube',
-        btnSpotify: 'Spotify',
-        btnLocalFile: '載入本地音訊',
-        sinkLabelA: 'OUTPUT SINK // 耳機 A',
-        sinkLabelB: 'OUTPUT SINK // 耳機 B',
-        selectPrompt: '-- 請先點擊 [1] 讀取耳機 --',
-        gainLabelA: 'GAIN // 音量 A',
-        gainLabelB: 'GAIN // 音量 B',
-        delayLabelTitleA: 'SYNC DELAY // 延遲 A',
-        delayLabelTitleB: 'SYNC DELAY // 延遲 B',
-        masterMonitor: 'MASTER MONITOR',
-        masterLevel: 'MASTER // 總音量',
-        xfaderTitle: 'CROSSFADER // A/B 平衡',
-        guideHeader: 'QUICK PATCH GUIDE // 訊號接入步驟 (macOS / Windows / Linux Chrome)',
-        guideStep1: '將兩隻耳機連上電腦，點擊 [1] 讀取耳機裝置，確認 DECK A 與 DECK B 已選妥兩隻耳機。',
-        guideStep2: '用 JUKEBOX 開啟側邊點歌窗，再點 [2] 綁定分頁音訊 選取該分頁並勾選「一併分享分頁音訊」。',
-        statusStandby: 'STANDBY // 等待音訊接入',
-        statusTabActive: 'ON-AIR // 雙軌平行串流中',
-        statusFileActive: 'ON-AIR // 本地音訊直推中',
-        errNoOutputs: '找不到音訊輸出裝置！請確認使用 Google Chrome / Edge / Brave 開啟此頁面。',
-        errLoadFailed: '讀取裝置失敗：',
-        errNoSinkId: '此瀏覽器不支援 setSinkId 分流，請使用桌面版 Google Chrome / Edge / Brave 開啟！',
-        errNoTabAudio: '未偵測到分頁音訊！請在選擇分頁時勾選左下角的「一併分享分頁音訊 (Also share tab audio)」。',
-        errCaptureFailed: '啟動共享失敗：',
-        enhancerTitle: 'ACOUSTIC MATRIX // 聲學聽感矩陣',
-        fxTubeTitle: 'TUBE: 類比真空管偶次諧波增強，人聲溫潤厚實（可滑動微調 Drive 強度）',
-        fxSurroundTitle: 'SURROUND: 3D 空間立體環繞聲場外擴 / 點擊 [3D/XF] 可切換 Bauer 互饋監聽',
-        fxSpatialTitle: 'ROOM AIR: 3D 虛擬空間微環境 / 點擊 [CINEMA/STUDIO] 切換劇院或錄音室',
-        profileLabelA: '⚡ DSP PROFILE // 聲學校正',
-        profileLabelB: '⚡ DSP PROFILE // 聲學校正',
-        autoTuneBtn: '⚡ 智能優化'
-      },
-      en: {
-        brandTitle: 'PARALLEL // DUAL HEADPHONE DECK',
-        brandSub: 'Dual Bluetooth Splitter & Latency Sync Console',
-        btnScan: '[1] SCAN SINKS',
-        btnLinkTab: '[2] LINK TAB AUDIO',
-        btnFlush: '[SYNC] FLUSH BUFFER',
-        btnStop: '[STOP] CUT STREAM',
-        jukeboxTitle: 'JUKEBOX // Side-by-Side Player (No re-sharing needed)',
-        jukeboxPlaceholder: 'Search song or artist (Press Enter for YouTube Music)...',
-        btnYTM: 'YT Music',
-        btnYT: 'YouTube',
-        btnSpotify: 'Spotify',
-        btnLocalFile: 'Local Audio',
-        sinkLabelA: 'OUTPUT SINK // DECK A',
-        sinkLabelB: 'OUTPUT SINK // DECK B',
-        selectPrompt: '-- PRESS [1] TO SCAN SINKS --',
-        gainLabelA: 'GAIN // CH A',
-        gainLabelB: 'GAIN // CH B',
-        delayLabelTitleA: 'SYNC DELAY // A',
-        delayLabelTitleB: 'SYNC DELAY // B',
-        masterMonitor: 'MASTER MONITOR',
-        masterLevel: 'MASTER LEVEL',
-        xfaderTitle: 'CROSSFADER // A/B',
-        guideHeader: 'QUICK PATCH GUIDE // Setup Steps (macOS / Windows / Linux Chrome)',
-        guideStep1: 'Connect two headphones, click [1] SCAN SINKS, and verify Deck A & Deck B outputs.',
-        guideStep2: 'Open a Jukebox popup, click [2] LINK TAB AUDIO, select that tab, and check "Also share tab audio".',
-        statusStandby: 'STANDBY // NO AUDIO LINK',
-        statusTabActive: 'ON-AIR // DUAL STREAM ACTIVE',
-        statusFileActive: 'ON-AIR // LOCAL FILE DECK',
-        errNoOutputs: 'No audio output devices found! Please open this page in Google Chrome / Edge / Brave.',
-        errLoadFailed: 'Failed to enumerate devices: ',
-        errNoSinkId: 'Your browser does not support setSinkId routing. Please use desktop Google Chrome / Edge / Brave!',
-        errNoTabAudio: 'No tab audio detected! Please make sure to check "Also share tab audio" when selecting the tab.',
-        errCaptureFailed: 'Failed to start audio sharing: ',
-        enhancerTitle: 'ACOUSTIC MATRIX // DSP ENHANCER',
-        fxTubeTitle: 'TUBE: Analog vacuum tube 2nd-order harmonics for warm vocals (adjustable drive)',
-        fxSurroundTitle: 'SURROUND: 3D Binaural spatial soundstage expansion / Click [3D/XF] to toggle Crossfeed',
-        fxSpatialTitle: 'ROOM AIR: 3D Virtual acoustic ambience / Click [CINEMA/STUDIO] to toggle room size',
-        profileLabelA: '⚡ DSP PROFILE // CALIBRATION',
-        profileLabelB: '⚡ DSP PROFILE // CALIBRATION',
-        autoTuneBtn: '⚡ AUTO-OPTIMIZE'
-      },
-      ja: {
-        brandTitle: 'PARALLEL // 平行音響デッキ',
-        brandSub: 'デュアルBluetooth分配 & 遅延同期コンソール',
-        btnScan: '[1] 耳機を検出',
-        btnLinkTab: '[2] タブ音声接続',
-        btnFlush: '[SYNC] バッファ同期',
-        btnStop: '[STOP] 停止',
-        jukeboxTitle: 'JUKEBOX // ミニ選曲窓（曲変更時の再共有不要）',
-        jukeboxPlaceholder: '曲名・アーティストを入力（EnterでYouTube Music検索）...',
-        btnYTM: 'YT Music',
-        btnYT: 'YouTube',
-        btnSpotify: 'Spotify',
-        btnLocalFile: 'ローカル音源',
-        sinkLabelA: 'OUTPUT SINK // ヘッドホン A',
-        sinkLabelB: 'OUTPUT SINK // ヘッドホン B',
-        selectPrompt: '-- [1] を押して検出してください --',
-        gainLabelA: 'GAIN // 音量 A',
-        gainLabelB: 'GAIN // 音量 B',
-        delayLabelTitleA: 'SYNC DELAY // 補正 A',
-        delayLabelTitleB: 'SYNC DELAY // 補正 B',
-        masterMonitor: 'MASTER MONITOR',
-        masterLevel: 'MASTER // 全体音量',
-        xfaderTitle: 'CROSSFADER // A/B バランス',
-        guideHeader: 'QUICK PATCH GUIDE // 接続ステップ (macOS / Windows / Linux Chrome)',
-        guideStep1: '2台のヘッドホンをPCに接続し、[1] 耳機を検出 で DECK A / B の出力先を確認します。',
-        guideStep2: 'JUKEBOXで選曲窓を開き、[2] タブ音声接続 で対象タブを選び「タブの音声も共有」をONにします。',
-        statusStandby: 'STANDBY // 音声未接続',
-        statusTabActive: 'ON-AIR // デュアル配信中',
-        statusFileActive: 'ON-AIR // ローカル音源再生中',
-        errNoOutputs: '音声出力デバイスが見つかりません。Google Chrome / Edge / Brave で開いてください。',
-        errLoadFailed: 'デバイスの読み込みに失敗しました: ',
-        errNoSinkId: 'お使いのブラウザは setSinkId に対応していません。PC版 Google Chrome / Edge / Brave をご利用ください。',
-        errNoTabAudio: 'タブの音声が検出されませんでした！タブ選択時に左下の「タブの音声も共有」にチェックを入れてください。',
-        errCaptureFailed: '共有の開始に失敗しました: ',
-        enhancerTitle: 'ACOUSTIC MATRIX // 音響エンハンサー',
-        fxTubeTitle: 'TUBE: 真空管の偶数次高調波でボーカルを温かく豊かに（Drive調整可）',
-        fxSurroundTitle: 'SURROUND: 3D空間サラウンド音場拡張 / [3D/XF]クリックでバウアー互饋に切替',
-        fxSpatialTitle: 'ROOM AIR: 3D仮想音響空間 / [CINEMA/STUDIO]クリックで劇院・スタジオ切替',
-        profileLabelA: '⚡ DSP PROFILE // 音響補正',
-        profileLabelB: '⚡ DSP PROFILE // 音響補正',
-        autoTuneBtn: '⚡ 自動最適化'
-      }
-    };
-
-    let currentLang = 'zh';
-    try {
-      const saved = localStorage.getItem('parallel_lang');
-      if (saved && I18N[saved]) {
-        currentLang = saved;
-      } else {
-        const nav = (navigator.language || '').toLowerCase();
-        if (nav.startsWith('ja')) currentLang = 'ja';
-        else if (nav.startsWith('zh')) currentLang = 'zh';
-        else currentLang = 'en';
-      }
-    } catch (_) {}
-
-    function t(key) {
-      return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
-    }
-
-    const btnRefreshDevices = document.getElementById('btnRefreshDevices');
-    const btnCaptureTab = document.getElementById('btnCaptureTab');
-    const btnSyncReset = document.getElementById('btnSyncReset');
-    const btnStop = document.getElementById('btnStop');
-    const statusBadge = document.getElementById('statusBadge');
-    const statusText = document.getElementById('statusText');
-    const dspLatency = document.getElementById('dspLatency');
-
-    const selectA = document.getElementById('selectA');
-    const selectB = document.getElementById('selectB');
-    const volA = document.getElementById('volA');
-    const volB = document.getElementById('volB');
-    const masterVol = document.getElementById('masterVol');
-    const xfader = document.getElementById('xfader');
-    const xfaderReset = document.getElementById('xfaderReset');
-    const delayA = document.getElementById('delayA');
-    const delayB = document.getElementById('delayB');
-
-    const muteA = document.getElementById('muteA');
-    const muteB = document.getElementById('muteB');
-    const muteIconA = document.getElementById('muteIconA');
-    const muteIconB = document.getElementById('muteIconB');
-    const muteTextA = document.getElementById('muteTextA');
-    const muteTextB = document.getElementById('muteTextB');
-    const soloA = document.getElementById('soloA');
-    const soloB = document.getElementById('soloB');
-
-    const wheelA = document.getElementById('wheelA');
-    const wheelB = document.getElementById('wheelB');
-
-    const volLabelA = document.getElementById('volLabelA');
-    const volLabelB = document.getElementById('volLabelB');
-    const masterVolLabel = document.getElementById('masterVolLabel');
-    const xfaderLabel = document.getElementById('xfaderLabel');
-    const delayLabelA = document.getElementById('delayLabelA');
-    const delayLabelB = document.getElementById('delayLabelB');
-
-    const audioElA = document.getElementById('audioElA');
-    const audioElB = document.getElementById('audioElB');
-    const canvas = document.getElementById('visualizer');
-    const canvasCtx = canvas.getContext('2d');
-
-    // Build 16-segment VU meters safely using DOM APIs
-    const vuContainerA = document.getElementById('vuA');
-    const vuContainerB = document.getElementById('vuB');
-    const vuSegsA = [];
-    const vuSegsB = [];
-
-    for (let i = 0; i < 16; i++) {
-      const segA = document.createElement('div');
-      segA.className = 'vu-seg';
-      vuContainerA.appendChild(segA);
-      vuSegsA.push(segA);
-
-      const segB = document.createElement('div');
-      segB.className = 'vu-seg';
-      vuContainerB.appendChild(segB);
-      vuSegsB.push(segB);
-    }
-
-    let capturedStream = null;
-    let isLocalFileMode = false;
-    let localFileObjectUrl = null;
-    let audioCtx = null;
-    // Resilient Central Reservoir: 250ms buffer absorbs Bluetooth 2.4GHz TDM packet bursts
-    const RESERVOIR_BUFFER_SEC = 0.25;
-    let reservoirNode = null;
-    let gainNodeA = null;
-    let gainNodeB = null;
-    let delayNodeA = null;
-    let delayNodeB = null;
-    let analyserNode = null;
-    let isMutedA = false;
-    let isMutedB = false;
-    let isSoloA = false;
-    let isSoloB = false;
-    let animId = null;
-
-    // Acoustic Matrix Enhancer State & DOM Nodes
-    const btnFxTube = document.getElementById('btnFxTube');
-    const btnFxSurround = document.getElementById('btnFxSurround');
-    const btnFxCrossfeed = btnFxSurround; // Alias for backward compatibility
-    const btnFxSpatial = document.getElementById('btnFxSpatial');
-
-    const btnSurroundMode = document.getElementById('btnSurroundMode');
-    const btnSpatialMode = document.getElementById('btnSpatialMode');
-    const fxSurroundLabel = document.getElementById('fxSurroundLabel');
-
-    const fxTubeLevel = document.getElementById('fxTubeLevel');
-    const fxSurroundLevel = document.getElementById('fxSurroundLevel');
-    const fxCrossfeedLevel = fxSurroundLevel; // Alias
-    const fxSpatialLevel = document.getElementById('fxSpatialLevel');
-
-    const fxTubeVal = document.getElementById('fxTubeVal');
-    const fxSurroundVal = document.getElementById('fxSurroundVal');
-    const fxCrossfeedVal = fxSurroundVal; // Alias
-    const fxSpatialVal = document.getElementById('fxSpatialVal');
-
-    const fxRowTube = document.getElementById('fxRowTube');
-    const fxRowSurround = document.getElementById('fxRowSurround');
-    const fxRowCrossfeed = fxRowSurround; // Alias
-    const fxRowSpatial = document.getElementById('fxRowSpatial');
-
-    let isTubeActive = false;
-    let isSurroundActive = false;
-    let isCrossfeedActive = false;
-    let isSpatialActive = false;
-
-    let tubeIntensity = 40;
-    let surroundIntensity = 70;
-    let crossfeedIntensity = 70;
-    let spatialIntensity = 55;
-
-    let surroundMode = '3D';       // '3D' (Surround Expansion) or 'XF' (Bauer Crossfeed)
-    let spatialMode = 'CINEMA';    // 'CINEMA' (480ms 3D Theater) or 'STUDIO' (240ms Studio)
-
-    try {
-      isTubeActive = localStorage.getItem('parallel_fx_tube') === 'true';
-      isSurroundActive = (localStorage.getItem('parallel_fx_surround') || localStorage.getItem('parallel_fx_crossfeed')) === 'true';
-      isCrossfeedActive = isSurroundActive;
-      isSpatialActive = localStorage.getItem('parallel_fx_spatial') === 'true';
-
-      const savedTube = localStorage.getItem('parallel_fx_tube_level');
-      if (savedTube !== null) tubeIntensity = parseInt(savedTube, 10);
-
-      const savedSurround = localStorage.getItem('parallel_fx_surround_level') || localStorage.getItem('parallel_fx_crossfeed_level');
-      if (savedSurround !== null) {
-        surroundIntensity = parseInt(savedSurround, 10);
-        crossfeedIntensity = surroundIntensity;
-      }
-
-      const savedSpatial = localStorage.getItem('parallel_fx_spatial_level');
-      if (savedSpatial !== null) spatialIntensity = parseInt(savedSpatial, 10);
-
-      const savedSurroundMode = localStorage.getItem('parallel_fx_surround_mode');
-      if (savedSurroundMode === '3D' || savedSurroundMode === 'XF') surroundMode = savedSurroundMode;
-
-      const savedSpatialMode = localStorage.getItem('parallel_fx_spatial_mode');
-      if (savedSpatialMode === 'CINEMA' || savedSpatialMode === 'STUDIO') spatialMode = savedSpatialMode;
-    } catch (_) {}
-
-    let tubeNode = null;
-    let convolverNode = null;
-    let spatialDryNode = null;
-    let spatialWetNode = null;
-    let surroundWidthNode = null;
-    let surroundShelfNode = null;
-
-    // Headphone Acoustic Profiles & Hardware Calibration System
-    const profileA = document.getElementById('profileA');
-    const profileB = document.getElementById('profileB');
-    const profileBadgeA = document.getElementById('profileBadgeA');
-    const profileBadgeB = document.getElementById('profileBadgeB');
-    const btnAutoTuneMatrix = document.getElementById('btnAutoTuneMatrix');
-
-    let profileKeyA = 'AUTO';
-    let profileKeyB = 'AUTO';
-    try {
-      profileKeyA = localStorage.getItem('parallel_profile_a') || 'AUTO';
-      profileKeyB = localStorage.getItem('parallel_profile_b') || 'AUTO';
-    } catch (_) {}
-
-    if (profileA) profileA.value = profileKeyA;
-    if (profileB) profileB.value = profileKeyB;
-
-    let profileLowA = null, profileMidA = null, profileHighA = null;
-    let profileLowB = null, profileMidB = null, profileHighB = null;
-
-    const HEADPHONE_PROFILES = {
-      FLAT: {
-        badge: 'FLAT',
-        name: 'Flat / Monitor',
-        desc: '原音直通無渲染',
-        low:  { freq: 100, gain: 0 },
-        mid:  { freq: 2500, Q: 1.0, gain: 0 },
-        high: { freq: 10000, gain: 0 }
-      },
-      AIRPODS_PRO: {
-        badge: 'PRO 3D',
-        name: 'AirPods Pro (1/2)',
-        desc: '入耳密閉消除耳壓 + Air Band 通透空氣感 + 收斂悶音',
-        low:  { freq: 150, gain: -1.2 },
-        mid:  { freq: 2400, Q: 0.9, gain: 1.2 },
-        high: { freq: 9000, gain: 3.2 }
-      },
-      AIRPODS_OPEN: {
-        badge: 'AIRPODS',
-        name: 'AirPods (1/2/3)',
-        desc: '半入耳漏音補償：+4.5dB 澎湃低頻底層 + 撫平塑膠共振齒音',
-        low:  { freq: 110, gain: 4.5 },
-        mid:  { freq: 3200, Q: 1.2, gain: -1.8 },
-        high: { freq: 8500, gain: 1.0 }
-      },
-      SOUNDCORE: {
-        badge: 'SPACE ONE',
-        name: 'Soundcore Space One',
-        desc: '撫平 6.8kHz 金屬尖刺峰值 + 收束肥厚低頻 + 拓寬超高頻',
-        low:  { freq: 120, gain: -1.5 },
-        mid:  { freq: 6800, Q: 1.6, gain: -3.0 },
-        high: { freq: 11000, gain: 2.2 }
-      },
-      SONY_1000X: {
-        badge: 'PURIST // SONY',
-        name: 'Sony WH/WF-1000X (極簡減法/消腫)',
-        desc: '消解 220Hz 肥厚箱音泥濘 + 極簡微渲染，避免與 V1/QN1 晶片 DSP 撞車',
-        low:  { freq: 220, gain: -2.0 },
-        mid:  { freq: 3200, Q: 0.8, gain: 0.8 },
-        high: { freq: 10000, gain: 0.0 }
-      },
-      BOSE_QC: {
-        badge: 'BOSE QC',
-        name: 'Bose QuietComfort',
-        desc: '增強中頻人聲微動態與自然空間深度',
-        low:  { freq: 140, gain: 0.5 },
-        mid:  { freq: 3000, Q: 1.0, gain: 1.5 },
-        high: { freq: 9500, gain: 2.0 }
-      }
-    };
-
-    function detectHeadphoneProfile(deviceName) {
-      if (!deviceName) return 'FLAT';
-      const name = deviceName.toLowerCase();
-      if (name.includes('wh-1000') || name.includes('wf-1000') || name.includes('1000xm') || name.includes('wh1000') || name.includes('wf1000') || name.includes('sony')) return 'SONY_1000X';
-      if (name.includes('max') && (name.includes('airpod') || name.includes('air pod'))) return 'SONY_1000X';
-      if (name.includes('bose') || name.includes('quietcomfort') || name.includes('qc') || name.includes('ultra')) return 'BOSE_QC';
-      if (name.includes('pro') && (name.includes('airpod') || name.includes('air pod'))) return 'AIRPODS_PRO';
-      if (name.includes('airpod') || name.includes('air pod')) return 'AIRPODS_OPEN';
-      if (name.includes('space one') || name.includes('space q') || name.includes('life q') || name.includes('soundcore') || name.includes('anker') || name.includes('liberty')) return 'SOUNDCORE';
-      return 'FLAT';
-    }
-
-    function applyDeckProfile(deck, selectedProfileKey) {
-      const isA = deck === 'A';
-      const selectEl = isA ? selectA : selectB;
-      const badgeEl = isA ? profileBadgeA : profileBadgeB;
-      const lowNode = isA ? profileLowA : profileLowB;
-      const midNode = isA ? profileMidA : profileMidB;
-      const highNode = isA ? profileHighA : profileHighB;
-
-      let activeKey = selectedProfileKey;
-      let isAuto = false;
-      const devId = selectEl ? selectEl.value : '';
-
-      if (selectedProfileKey === 'AUTO') {
-        isAuto = true;
-        const savedDevProfile = devId ? localStorage.getItem('parallel_dev_profile_' + devId) : null;
-        if (savedDevProfile && HEADPHONE_PROFILES[savedDevProfile]) {
-          activeKey = savedDevProfile;
-        } else {
-          const currentDev = selectEl && selectEl.selectedOptions && selectEl.selectedOptions[0] ? selectEl.selectedOptions[0].text : '';
-          activeKey = detectHeadphoneProfile(currentDev);
-        }
-      } else {
-        if (devId) {
-          try { localStorage.setItem('parallel_dev_profile_' + devId, activeKey); } catch (_) {}
-        }
-      }
-
-      const cfg = HEADPHONE_PROFILES[activeKey] || HEADPHONE_PROFILES.FLAT;
-
-      if (badgeEl) {
-        badgeEl.textContent = isAuto ? `⚡ ${cfg.badge}` : cfg.badge;
-        badgeEl.classList.toggle('active-pro', activeKey !== 'FLAT');
-        badgeEl.title = `${cfg.name} // ${cfg.desc}`;
-      }
-
-      if (audioCtx && lowNode && midNode && highNode) {
-        const now = audioCtx.currentTime;
-        lowNode.frequency.setTargetAtTime(cfg.low.freq, now, 0.02);
-        lowNode.gain.setTargetAtTime(cfg.low.gain, now, 0.02);
-
-        midNode.frequency.setTargetAtTime(cfg.mid.freq, now, 0.02);
-        midNode.Q.setTargetAtTime(cfg.mid.Q, now, 0.02);
-        midNode.gain.setTargetAtTime(cfg.mid.gain, now, 0.02);
-
-        highNode.frequency.setTargetAtTime(cfg.high.freq, now, 0.02);
-        highNode.gain.setTargetAtTime(cfg.high.gain, now, 0.02);
-      }
-    }
-
-    // Auto-Optimize Master Acoustic Matrix based on both connected headphones
-    function autoOptimizeMatrix() {
-      const devA = selectA && selectA.selectedOptions && selectA.selectedOptions[0] ? selectA.selectedOptions[0].text : '';
-      const devB = selectB && selectB.selectedOptions && selectB.selectedOptions[0] ? selectB.selectedOptions[0].text : '';
-      const devIdA = selectA ? selectA.value : '';
-      const devIdB = selectB ? selectB.value : '';
-
-      const getActiveProfileKey = (key, devId, devText) => {
-        if (key !== 'AUTO') return key;
-        const saved = devId ? localStorage.getItem('parallel_dev_profile_' + devId) : null;
-        if (saved && HEADPHONE_PROFILES[saved]) return saved;
-        return detectHeadphoneProfile(devText);
-      };
-
-      const profA = getActiveProfileKey(profileKeyA, devIdA, devA);
-      const profB = getActiveProfileKey(profileKeyB, devIdB, devB);
-
-      let targetTube = 35;
-      let targetSurround = 65;
-      let targetSpatial = 45;
-      let targetSurroundMode = '3D';
-      let targetSpatialMode = 'CINEMA';
-      let statusLabel = '✓ OPTIMIZED!';
-
-      const isSonyA = profA === 'SONY_1000X';
-      const isSonyB = profB === 'SONY_1000X';
-
-      if (isSonyA && isSonyB) {
-        // Dual Flagship Purist Tuning: minimal coloration to avoid double-processing conflict with Sony V1/QN1
-        targetTube = 12;
-        targetSurround = 32;
-        targetSpatial = 18;
-        targetSurroundMode = 'XF';   // Bauer crossfeed avoids comb filtering on sealed ANC earcups
-        targetSpatialMode = 'STUDIO'; // Short studio room avoids echo chamber
-        statusLabel = '✓ PURIST SONY MODE';
-      } else if (isSonyA || isSonyB) {
-        // Mixed pairing (Sony XM5 + Space One or AirPods)
-        targetTube = 22;
-        targetSurround = 48;
-        targetSpatial = 30;
-        targetSurroundMode = '3D';
-        targetSpatialMode = 'STUDIO';
-        statusLabel = '✓ BALANCED CALIBRATED';
-      } else if (profA === 'SOUNDCORE' || profB === 'SOUNDCORE') {
-        targetTube = 45;
-        targetSurround = 85;
-        targetSpatial = 65;
-        targetSurroundMode = '3D';
-        targetSpatialMode = 'CINEMA';
-        statusLabel = '✓ CINEMA 3D MODE';
-      } else if (profA === 'AIRPODS_PRO' || profB === 'AIRPODS_PRO') {
-        targetTube = 38;
-        targetSurround = 80;
-        targetSpatial = 60;
-        targetSurroundMode = '3D';
-        targetSpatialMode = 'CINEMA';
-        statusLabel = '✓ AIRPODS PRO 3D';
-      } else if (profA === 'AIRPODS_OPEN' || profB === 'AIRPODS_OPEN') {
-        targetTube = 45;
-        targetSurround = 65;
-        targetSpatial = 50;
-        targetSurroundMode = '3D';
-        targetSpatialMode = 'STUDIO';
-        statusLabel = '✓ AIRPODS OPEN AIR';
-      }
-
-      isTubeActive = targetTube > 0;
-      isSurroundActive = true;
-      isCrossfeedActive = true;
-      surroundMode = targetSurroundMode;
-      isSpatialActive = true;
-      spatialMode = targetSpatialMode;
-
-      tubeIntensity = targetTube;
-      surroundIntensity = targetSurround;
-      crossfeedIntensity = targetSurround;
-      spatialIntensity = targetSpatial;
-
-      try {
-        localStorage.setItem('parallel_fx_tube', isTubeActive ? 'true' : 'false');
-        localStorage.setItem('parallel_fx_surround', 'true');
-        localStorage.setItem('parallel_fx_crossfeed', 'true');
-        localStorage.setItem('parallel_fx_surround_mode', surroundMode);
-        localStorage.setItem('parallel_fx_spatial', 'true');
-        localStorage.setItem('parallel_fx_spatial_mode', spatialMode);
-        localStorage.setItem('parallel_fx_tube_level', tubeIntensity);
-        localStorage.setItem('parallel_fx_surround_level', surroundIntensity);
-        localStorage.setItem('parallel_fx_crossfeed_level', surroundIntensity);
-        localStorage.setItem('parallel_fx_spatial_level', spatialIntensity);
-      } catch (_) {}
-
-      updateFxVisuals();
-      applyTubeCurve();
-      applySurroundParams();
-      applySpatialParams();
-
-      if (btnAutoTuneMatrix) {
-        const orig = btnAutoTuneMatrix.textContent;
-        btnAutoTuneMatrix.textContent = statusLabel;
-        setTimeout(() => { btnAutoTuneMatrix.textContent = orig; }, 2200);
-      }
-    }
-
-    // Smooth Asymmetric Soft Saturation Curve Generator:
-    // Produces pure 2nd-harmonic tube warmth without harsh zero-crossing glitch or digital clipping.
-    function makeTubeCurve(intensity = 0.4, samples = 2048) {
-      const curve = new Float32Array(samples);
-      if (intensity <= 0.01) {
-        for (let i = 0; i < samples; i++) {
-          curve[i] = (i * 2) / (samples - 1) - 1;
-        }
-        return curve;
-      }
-      const drive = 1.0 + intensity * 1.5;   // 1.0 ~ 2.5 drive
-      const asym = 0.22 * intensity;          // 0.0 ~ 0.22 even-harmonic asymmetry
-      let maxVal = 0;
-      const raw = new Float32Array(samples);
-      for (let i = 0; i < samples; i++) {
-        const x = (i * 2) / (samples - 1) - 1;
-        const u = x + asym * x * x;
-        const y = Math.tanh(drive * u);
-        raw[i] = y;
-        const absY = Math.abs(y);
-        if (absY > maxVal) maxVal = absY;
-      }
-      // Bounded normalization keeps maximum peak strictly <= 0.95 (0dBFS protection)
-      const norm = maxVal > 0 ? (0.95 / maxVal) : 1;
-      for (let i = 0; i < samples; i++) {
-        curve[i] = raw[i] * norm;
-      }
-      return curve;
-    }
-
-    function makeLinearCurve(samples = 2) {
-      const curve = new Float32Array(samples);
-      curve[0] = -1;
-      curve[1] = 1;
-      return curve;
-    }
-
-    // High-Fidelity 3D Spatial Theater / Studio Room Impulse Response Generator
-    function createStudioRoomIR(ctx, isCinema = true) {
-      const sampleRate = ctx.sampleRate;
-      const duration = isCinema ? 0.52 : 0.24;
-      const decay = isCinema ? 2.5 : 3.6;
-      const length = Math.max(1, Math.floor(sampleRate * duration));
-      const irBuffer = ctx.createBuffer(2, length, sampleRate);
-      const left = irBuffer.getChannelData(0);
-      const right = irBuffer.getChannelData(1);
-
-      const cinemaReflections = [
-        { t: 0.012, gL: 0.70, gR: 0.22 },
-        { t: 0.019, gL: 0.20, gR: 0.68 },
-        { t: 0.031, gL: 0.55, gR: 0.35 },
-        { t: 0.046, gL: 0.32, gR: 0.58 },
-        { t: 0.068, gL: 0.45, gR: 0.42 },
-        { t: 0.098, gL: 0.38, gR: 0.26 },
-        { t: 0.138, gL: 0.25, gR: 0.36 },
-        { t: 0.185, gL: 0.20, gR: 0.22 },
-        { t: 0.240, gL: 0.16, gR: 0.18 },
-        { t: 0.310, gL: 0.12, gR: 0.12 }
-      ];
-
-      const studioReflections = [
-        { t: 0.012, gL: 0.65, gR: 0.20 },
-        { t: 0.022, gL: 0.22, gR: 0.60 },
-        { t: 0.035, gL: 0.50, gR: 0.35 },
-        { t: 0.052, gL: 0.30, gR: 0.45 },
-        { t: 0.075, gL: 0.38, gR: 0.25 },
-        { t: 0.105, gL: 0.22, gR: 0.32 }
-      ];
-
-      const early = isCinema ? cinemaReflections : studioReflections;
-      early.forEach(r => {
-        const idx = Math.floor(r.t * sampleRate);
-        if (idx < length) {
-          left[idx] += r.gL * 0.85;
-          right[idx] += r.gR * 0.85;
-        }
-      });
-
-      let prevL = 0;
-      let prevR = 0;
-      const dampFactor = isCinema ? 0.55 : 0.70;
-      for (let i = 0; i < length; i++) {
-        const t = i / sampleRate;
-        const env = Math.exp(-decay * (t / duration));
-        const damping = Math.max(0.10, 1.0 - (t / duration) * dampFactor);
-        const rawL = (Math.random() * 2 - 1) * env * 0.42;
-        const rawR = (Math.random() * 2 - 1) * env * 0.42;
-        prevL = prevL * (1 - damping) + rawL * damping;
-        prevR = prevR * (1 - damping) + rawR * damping;
-        left[i] += prevL;
-        right[i] += prevR;
-      }
-
-      let max = 0;
-      for (let i = 0; i < length; i++) {
-        if (Math.abs(left[i]) > max) max = Math.abs(left[i]);
-        if (Math.abs(right[i]) > max) max = Math.abs(right[i]);
-      }
-      if (max > 0) {
-        for (let i = 0; i < length; i++) {
-          left[i] /= max;
-          right[i] /= max;
-        }
-      }
-      return irBuffer;
-    }
-
-    function updateFxVisuals() {
-      if (btnFxTube) btnFxTube.classList.toggle('active', isTubeActive);
-      if (fxRowTube) fxRowTube.classList.toggle('active', isTubeActive);
-      if (fxTubeLevel) fxTubeLevel.value = tubeIntensity;
-      if (fxTubeVal) fxTubeVal.textContent = tubeIntensity + '%';
-
-      if (btnFxSurround) btnFxSurround.classList.toggle('active', isSurroundActive);
-      if (fxRowSurround) fxRowSurround.classList.toggle('active', isSurroundActive);
-      if (fxSurroundLevel) fxSurroundLevel.value = surroundIntensity;
-      if (fxSurroundVal) fxSurroundVal.textContent = surroundIntensity + '%';
-
-      if (btnSurroundMode) {
-        btnSurroundMode.textContent = surroundMode;
-        btnSurroundMode.classList.toggle('surround-mode-3d', surroundMode === '3D');
-        btnSurroundMode.title = surroundMode === '3D'
-          ? '目前：3D WIDE (立體劇院環繞聲場外擴) - 點擊切換為 XF (Bauer 互饋監聽)'
-          : '目前：XF (Bauer 雙耳互饋監聽) - 點擊切換為 3D (劇院環繞外擴)';
-      }
-      if (fxSurroundLabel) {
-        fxSurroundLabel.textContent = surroundMode === '3D' ? 'SURROUND' : 'CROSS';
-      }
-
-      if (btnFxSpatial) btnFxSpatial.classList.toggle('active', isSpatialActive);
-      if (fxRowSpatial) fxRowSpatial.classList.toggle('active', isSpatialActive);
-      if (fxSpatialLevel) fxSpatialLevel.value = spatialIntensity;
-      if (fxSpatialVal) fxSpatialVal.textContent = spatialIntensity + '%';
-
-      if (btnSpatialMode) {
-        btnSpatialMode.textContent = spatialMode;
-        btnSpatialMode.classList.toggle('spatial-mode-cinema', spatialMode === 'CINEMA');
-        btnSpatialMode.title = spatialMode === 'CINEMA'
-          ? '目前：CINEMA (480ms 劇院巨幕環繞反射) - 點擊切換為 STUDIO'
-          : '目前：STUDIO (240ms 錄音室近場監聽) - 點擊切換為 CINEMA';
-      }
-    }
-
-    function applyTubeCurve() {
-      if (!tubeNode) return;
-      tubeNode.curve = isTubeActive ? makeTubeCurve(tubeIntensity / 100) : makeLinearCurve();
-    }
-
-    function applySurroundParams() {
-      if (!audioCtx || !surroundWidthNode) return;
-      const now = audioCtx.currentTime;
-      if (!isSurroundActive) {
-        surroundWidthNode.gain.setTargetAtTime(1.0, now, 0.02);
-        if (surroundShelfNode) surroundShelfNode.gain.setTargetAtTime(0, now, 0.02);
-        return;
-      }
-      const norm = surroundIntensity / 100;
-      if (surroundMode === '3D') {
-        const targetWidth = 1.0 + norm * 1.8; // 1.0 to 2.8x M/S expansion
-        const targetShelf = norm * 4.0;       // up to +4dB diffuse air
-        surroundWidthNode.gain.setTargetAtTime(targetWidth, now, 0.02);
-        if (surroundShelfNode) surroundShelfNode.gain.setTargetAtTime(targetShelf, now, 0.02);
-      } else {
-        const targetWidth = 1.0 - norm * 0.65; // Bauer side attenuation
-        const targetShelf = -norm * 3.0;
-        surroundWidthNode.gain.setTargetAtTime(targetWidth, now, 0.02);
-        if (surroundShelfNode) surroundShelfNode.gain.setTargetAtTime(targetShelf, now, 0.02);
-      }
-    }
-
-    function getSpatialWetGain() {
-      if (!isSpatialActive) return 0.0;
-      const maxWet = spatialMode === 'CINEMA' ? 0.65 : 0.45;
-      return (spatialIntensity / 100) * maxWet;
-    }
-
-    function applySpatialParams() {
-      if (!audioCtx || !spatialWetNode) return;
-      const now = audioCtx.currentTime;
-      const targetWet = getSpatialWetGain();
-      spatialWetNode.gain.setTargetAtTime(targetWet, now, 0.02);
-      if (spatialDryNode) {
-        const targetDry = 1.0 - (targetWet * 0.3);
-        spatialDryNode.gain.setTargetAtTime(targetDry, now, 0.02);
-      }
-    }
-
-    function toggleTube() {
-      isTubeActive = !isTubeActive;
-      try { localStorage.setItem('parallel_fx_tube', isTubeActive); } catch (_) {}
-      updateFxVisuals();
-      applyTubeCurve();
-    }
-
-    function toggleSurround() {
-      isSurroundActive = !isSurroundActive;
-      isCrossfeedActive = isSurroundActive;
-      try {
-        localStorage.setItem('parallel_fx_surround', isSurroundActive);
-        localStorage.setItem('parallel_fx_crossfeed', isSurroundActive);
-      } catch (_) {}
-      updateFxVisuals();
-      applySurroundParams();
-    }
-
-    function toggleSurroundMode() {
-      surroundMode = surroundMode === '3D' ? 'XF' : '3D';
-      try { localStorage.setItem('parallel_fx_surround_mode', surroundMode); } catch (_) {}
-      updateFxVisuals();
-      applySurroundParams();
-    }
-
-    function toggleSpatial() {
-      isSpatialActive = !isSpatialActive;
-      try { localStorage.setItem('parallel_fx_spatial', isSpatialActive); } catch (_) {}
-      updateFxVisuals();
-      applySpatialParams();
-    }
-
-    function toggleSpatialMode() {
-      spatialMode = spatialMode === 'CINEMA' ? 'STUDIO' : 'CINEMA';
-      try { localStorage.setItem('parallel_fx_spatial_mode', spatialMode); } catch (_) {}
-      if (convolverNode && audioCtx) {
-        convolverNode.buffer = createStudioRoomIR(audioCtx, spatialMode === 'CINEMA');
-      }
-      updateFxVisuals();
-      applySpatialParams();
-    }
-
-    updateFxVisuals();
-
-    function applyLanguage(lang) {
-      currentLang = lang;
-      try { localStorage.setItem('parallel_lang', lang); } catch (_) {}
-      document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : lang;
-
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-      });
-
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        el.textContent = t(key);
-      });
-
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        el.setAttribute('placeholder', t(key));
-      });
-
-      document.querySelectorAll('[data-i18n-title]').forEach(el => {
-        const key = el.getAttribute('data-i18n-title');
-        el.setAttribute('title', t(key));
-      });
-
-      if (!audioCtx) {
-        statusText.textContent = t('statusStandby');
-      } else if (isLocalFileMode) {
-        statusText.textContent = t('statusFileActive');
-      } else {
-        statusText.textContent = t('statusTabActive');
-      }
-    }
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
-    });
-
-    // 1. Enumerate audio output devices safely (no innerHTML with untrusted device labels)
-    async function loadAudioDevices(requestPermissionFirst = false) {
-      try {
-        if (requestPermissionFirst) {
-          const tempStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          tempStream.getTracks().forEach(t => t.stop());
-        }
-
-        let devices = await navigator.mediaDevices.enumerateDevices();
-        let outputs = devices.filter(d => d.kind === 'audiooutput');
-
-        // Auto-unlock audio device labels if user started Tab Link or Local File before clicking [1]
-        if (!requestPermissionFirst && outputs.every(d => !d.label)) {
-          try {
-            const tempStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            tempStream.getTracks().forEach(t => t.stop());
-            devices = await navigator.mediaDevices.enumerateDevices();
-            outputs = devices.filter(d => d.kind === 'audiooutput');
-          } catch (_) {
-            // Continue with default sink if mic permission was declined
-          }
-        }
-
-        if (outputs.length === 0) {
-          alert(t('errNoOutputs'));
-          return;
-        }
-
-        const prevA = selectA.value;
-        const prevB = selectB.value;
-
-        selectA.replaceChildren();
-        selectB.replaceChildren();
-
-        outputs.forEach((dev, idx) => {
-          const label = dev.label || `AUDIO SINK #${idx + 1}`;
-          selectA.add(new Option(label, dev.deviceId));
-          selectB.add(new Option(label, dev.deviceId));
-        });
-
-        // Generic auto-selection: prioritize external / Bluetooth headphones over built-in speakers or virtual devices
-        const externalSinks = outputs.filter(
-          d => d.deviceId !== 'default' &&
-               d.deviceId !== 'communications' &&
-               !/built-in|internal|內建|揚聲器|speakers|teams|zoom|blackhole|soundflower|virtual/i.test(d.label)
-        );
-
-        if (prevA && outputs.some(d => d.deviceId === prevA)) {
-          selectA.value = prevA;
-        } else if (externalSinks.length >= 1) {
-          selectA.value = externalSinks[0].deviceId;
-        }
-
-        if (prevB && outputs.some(d => d.deviceId === prevB)) {
-          selectB.value = prevB;
-        } else if (externalSinks.length >= 2) {
-          selectB.value = externalSinks[1].deviceId;
-        } else if (outputs.length > 1) {
-          selectB.selectedIndex = 1;
-        }
-
-        await routeDeckSink('A', selectA.value);
-        await routeDeckSink('B', selectB.value);
-
-        applyDeckProfile('A', profileKeyA);
-        applyDeckProfile('B', profileKeyB);
-      } catch (err) {
-        console.error(err);
-        alert(t('errLoadFailed') + err.message);
-      }
-    }
-
-    async function routeDeckSink(deck, deviceId) {
-      if (!deviceId) return;
-      const el = deck === 'A' ? audioElA : audioElB;
-
-      if (typeof el.setSinkId === 'function') {
-        try {
-          await el.setSinkId(deviceId);
-        } catch (err) {
-          console.warn('setSinkId failed:', err);
-        }
-      } else {
-        alert(t('errNoSinkId'));
-      }
-    }
-
-    // Build / Flush dual audio graph using resilient 'playback' clock
-    async function buildLowLatencyGraph() {
-      if (!isLocalFileMode && !capturedStream) return;
-
-      if (animId) cancelAnimationFrame(animId);
-      if (audioCtx) { await audioCtx.close().catch(() => {}); audioCtx = null; }
-      audioElA.pause();
-      audioElB.pause();
-      audioElA.srcObject = null;
-      audioElB.srcObject = null;
-
-      const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
-      // AudioContext configuration: 'playback' hint ensures OS allocates optimal ring buffer & thread scheduling
-      try {
-        audioCtx = new AudioCtxClass({ latencyHint: 'playback' });
-      } catch (_) {
-        audioCtx = new AudioCtxClass();
-      }
-
-      let source = null;
-      if (isLocalFileMode && localFileObjectUrl) {
-        // Clone audio element so a fresh MediaElementAudioSourceNode can bind cleanly without speaker bleed
-        const resumeTime = localFilePlayer.currentTime || 0;
-        const freshPlayer = localFilePlayer.cloneNode(false);
-        freshPlayer.src = localFileObjectUrl;
-        freshPlayer.style.display = 'block';
-        freshPlayer.currentTime = resumeTime;
-        localFilePlayer.replaceWith(freshPlayer);
-        localFilePlayer = freshPlayer;
-        source = audioCtx.createMediaElementSource(localFilePlayer);
-        await localFilePlayer.play();
-      } else {
-        const audioTracks = capturedStream.getAudioTracks();
-        if (audioTracks.length === 0) return;
-        const audioOnlyStream = new MediaStream([audioTracks[0]]);
-        source = audioCtx.createMediaStreamSource(audioOnlyStream);
-      }
-
-      // Central Deep Reservoir Node: absorbs 2.4GHz Bluetooth TDM packet jitter
-      reservoirNode = audioCtx.createDelay(1.0);
-      reservoirNode.delayTime.setValueAtTime(RESERVOIR_BUFFER_SEC, audioCtx.currentTime);
-      source.connect(reservoirNode);
-
-      // --- 1. TUBE WARMTH STAGE (WaveShaper with 2nd-order harmonics) ---
-      tubeNode = audioCtx.createWaveShaper();
-      tubeNode.oversample = '4x';
-      tubeNode.curve = isTubeActive ? makeTubeCurve(tubeIntensity / 100) : makeLinearCurve();
-      reservoirNode.connect(tubeNode);
-
-      // --- 2. SPATIAL AIR STAGE (Convolver room ambience dry/wet blend) ---
-      convolverNode = audioCtx.createConvolver();
-      convolverNode.buffer = createStudioRoomIR(audioCtx, spatialMode === 'CINEMA');
-
-      const initWet = getSpatialWetGain();
-      spatialDryNode = audioCtx.createGain();
-      spatialDryNode.gain.value = 1.0 - (initWet * 0.3);
-
-      spatialWetNode = audioCtx.createGain();
-      spatialWetNode.gain.value = initWet;
-
-      const spatialSumNode = audioCtx.createGain();
-      spatialSumNode.channelCount = 2;
-      spatialSumNode.channelCountMode = 'explicit';
-
-      tubeNode.connect(spatialDryNode);
-      spatialDryNode.connect(spatialSumNode);
-
-      tubeNode.connect(convolverNode);
-      convolverNode.connect(spatialWetNode);
-      spatialWetNode.connect(spatialSumNode);
-
-      // --- 3. 3D SPATIAL SURROUND & BINAURAL MATRIX STAGE ---
-      const spatialSplitter = audioCtx.createChannelSplitter(2);
-      const spatialMerger = audioCtx.createChannelMerger(2);
-
-      // Mid Channel (L + R) * 0.5
-      const midGainL = audioCtx.createGain(); midGainL.gain.value = 0.5;
-      const midGainR = audioCtx.createGain(); midGainR.gain.value = 0.5;
-      const midNode = audioCtx.createGain();
-      spatialSplitter.connect(midGainL, 0);
-      spatialSplitter.connect(midGainR, 1);
-      midGainL.connect(midNode);
-      midGainR.connect(midNode);
-      midNode.connect(spatialMerger, 0, 0);
-      midNode.connect(spatialMerger, 0, 1);
-
-      // Side Channel (L - R) * 0.5
-      const sideGainL = audioCtx.createGain(); sideGainL.gain.value = 0.5;
-      const sideGainR = audioCtx.createGain(); sideGainR.gain.value = -0.5;
-      const sideNode = audioCtx.createGain();
-      spatialSplitter.connect(sideGainL, 0);
-      spatialSplitter.connect(sideGainR, 1);
-      sideGainL.connect(sideNode);
-      sideGainR.connect(sideNode);
-
-      // Side High-Shelf Filter for diffuse 3D spatial air (>6.5kHz)
-      surroundShelfNode = audioCtx.createBiquadFilter();
-      surroundShelfNode.type = 'highshelf';
-      surroundShelfNode.frequency.value = 6500;
-      sideNode.connect(surroundShelfNode);
-
-      // Side Width Multiplier Node
-      surroundWidthNode = audioCtx.createGain();
-      surroundShelfNode.connect(surroundWidthNode);
-
-      // Inverted Side for Right Channel
-      const sideInvertNode = audioCtx.createGain();
-      sideInvertNode.gain.value = -1.0;
-      surroundWidthNode.connect(sideInvertNode);
-
-      // Connect to Merger: Left = Mid + Side, Right = Mid - Side
-      surroundWidthNode.connect(spatialMerger, 0, 0);
-      sideInvertNode.connect(spatialMerger, 0, 1);
-
-      spatialSumNode.connect(spatialSplitter);
-
-      // Apply initial dynamic parameters
-      applySurroundParams();
-      applySpatialParams();
-
-      const masterEnhancerNode = spatialMerger;
-
-      // Connect to Analyser for live visualizer
-      analyserNode = audioCtx.createAnalyser();
-      analyserNode.fftSize = 64;
-      analyserNode.smoothingTimeConstant = 0.78;
-      masterEnhancerNode.connect(analyserNode);
-
-      // Deck A DSP chain (with dedicated Headphone Hardware Profile Filter)
-      profileLowA = audioCtx.createBiquadFilter(); profileLowA.type = 'lowshelf';
-      profileMidA = audioCtx.createBiquadFilter(); profileMidA.type = 'peaking';
-      profileHighA = audioCtx.createBiquadFilter(); profileHighA.type = 'highshelf';
-
-      delayNodeA = audioCtx.createDelay(1.0);
-      gainNodeA = audioCtx.createGain();
-      const destA = audioCtx.createMediaStreamDestination();
-
-      masterEnhancerNode.connect(profileLowA);
-      profileLowA.connect(profileMidA);
-      profileMidA.connect(profileHighA);
-      profileHighA.connect(delayNodeA);
-      delayNodeA.connect(gainNodeA);
-      gainNodeA.connect(destA);
-      audioElA.srcObject = destA.stream;
-      await routeDeckSink('A', selectA.value);
-      applyDeckProfile('A', profileKeyA);
-      await audioElA.play();
-
-      // Deck B DSP chain (with dedicated Headphone Hardware Profile Filter)
-      profileLowB = audioCtx.createBiquadFilter(); profileLowB.type = 'lowshelf';
-      profileMidB = audioCtx.createBiquadFilter(); profileMidB.type = 'peaking';
-      profileHighB = audioCtx.createBiquadFilter(); profileHighB.type = 'highshelf';
-
-      delayNodeB = audioCtx.createDelay(1.0);
-      gainNodeB = audioCtx.createGain();
-      const destB = audioCtx.createMediaStreamDestination();
-
-      masterEnhancerNode.connect(profileLowB);
-      profileLowB.connect(profileMidB);
-      profileMidB.connect(profileHighB);
-      profileHighB.connect(delayNodeB);
-      delayNodeB.connect(gainNodeB);
-      gainNodeB.connect(destB);
-      audioElB.srcObject = destB.stream;
-      await routeDeckSink('B', selectB.value);
-      applyDeckProfile('B', profileKeyB);
-      await audioElB.play();
-
-      updateGains();
-      updateDelays();
-      drawMonitors();
-    }
-
-    // 2. Capture tab audio with minimal 1x1@1fps video overhead
-    async function startTabAudioSharing() {
-      try {
-        stopSharing();
-
-        capturedStream = await navigator.mediaDevices.getDisplayMedia({
-          video: { width: 1, height: 1, frameRate: 1 },
-          audio: {
-            echoCancellation: false,
-            noiseSuppression: false,
-            autoGainControl: false,
-            suppressLocalAudioPlayback: true
-          },
-          preferCurrentTab: false,
-          selfBrowserSurface: 'exclude',
-          surfaceSwitching: 'include'
-        });
-
-        const audioTracks = capturedStream.getAudioTracks();
-        if (audioTracks.length === 0) {
-          stopSharing();
-          alert(t('errNoTabAudio'));
-          return;
-        }
-
-        await loadAudioDevices(false);
-        await buildLowLatencyGraph();
-
-        statusText.textContent = t('statusTabActive');
-        statusBadge.classList.add('active');
-        wheelA.classList.add('spinning');
-        wheelB.classList.add('spinning');
-        btnSyncReset.style.display = 'inline-flex';
-        btnStop.style.display = 'inline-flex';
-
-        audioTracks[0].onended = () => stopSharing();
-      } catch (err) {
-        console.error(err);
-        if (err.name !== 'NotAllowedError') {
-          alert(t('errCaptureFailed') + err.message);
-        }
-      }
-    }
-
-    function stopSharing() {
-      if (animId) {
-        cancelAnimationFrame(animId);
-        animId = null;
-      }
-      if (capturedStream) {
-        capturedStream.getTracks().forEach(t => t.stop());
-        capturedStream = null;
-      }
-      if (localFilePlayer) {
-        localFilePlayer.pause();
-        localFilePlayer.removeAttribute('src');
-        localFilePlayer.load();
-        localFilePlayer.style.display = 'none';
-      }
-      if (localFileObjectUrl) {
-        URL.revokeObjectURL(localFileObjectUrl);
-        localFileObjectUrl = null;
-      }
-      isLocalFileMode = false;
-      localFileInput.value = '';
-      localTrackStatus.textContent = '';
-
-      if (audioCtx) {
-        audioCtx.close().catch(() => {});
-        audioCtx = null;
-      }
-      audioElA.pause();
-      audioElB.pause();
-      audioElA.srcObject = null;
-      audioElB.srcObject = null;
-      statusText.textContent = t('statusStandby');
-      dspLatency.textContent = 'RESERVOIR: STANDBY';
-      statusBadge.classList.remove('active');
-      wheelA.classList.remove('spinning');
-      wheelB.classList.remove('spinning');
-      btnSyncReset.style.display = 'none';
-      btnStop.style.display = 'none';
-      updateVuBar(vuSegsA, 0);
-      updateVuBar(vuSegsB, 0);
-      canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    function getEffectiveMultipliers() {
-      const m = Number(masterVol.value) / 100;
-      const xf = Number(xfader.value); // -100 to +100
-      const xfA = xf <= 0 ? 1 : (100 - xf) / 100;
-      const xfB = xf >= 0 ? 1 : (100 + xf) / 100;
-
-      const soloMuteA = isSoloB && !isSoloA;
-      const soloMuteB = isSoloA && !isSoloB;
-
-      const effA = (isMutedA || soloMuteA) ? 0 : (Number(volA.value) / 100) * m * xfA;
-      const effB = (isMutedB || soloMuteB) ? 0 : (Number(volB.value) / 100) * m * xfB;
-      return { effA, effB };
-    }
-
-    function updateGains() {
-      const { effA, effB } = getEffectiveMultipliers();
-      const xf = Number(xfader.value);
-
-      masterVolLabel.textContent = `${masterVol.value}%`;
-      volLabelA.textContent = isMutedA ? 'MUTED' : `${volA.value}%`;
-      volLabelB.textContent = isMutedB ? 'MUTED' : `${volB.value}%`;
-      xfaderLabel.textContent = xf === 0 ? 'CENTER' : (xf < 0 ? `A ${Math.abs(xf)}%` : `B ${xf}%`);
-
-      if (gainNodeA && audioCtx) {
-        gainNodeA.gain.setTargetAtTime(effA, audioCtx.currentTime, 0.015);
-      }
-      if (gainNodeB && audioCtx) {
-        gainNodeB.gain.setTargetAtTime(effB, audioCtx.currentTime, 0.015);
-      }
-    }
-
-    function updateDelays() {
-      const dA = Number(delayA.value) / 1000;
-      const dB = Number(delayB.value) / 1000;
-      delayLabelA.textContent = `${delayA.value} ms`;
-      delayLabelB.textContent = `${delayB.value} ms`;
-
-      if (delayNodeA && audioCtx) {
-        delayNodeA.delayTime.setTargetAtTime(dA, audioCtx.currentTime, 0.015);
-      }
-      if (delayNodeB && audioCtx) {
-        delayNodeB.delayTime.setTargetAtTime(dB, audioCtx.currentTime, 0.015);
-      }
-    }
-
-    function updateVuBar(segs, level0to1) {
-      const activeCount = Math.min(16, Math.round(level0to1 * 16));
-      for (let i = 0; i < 16; i++) {
-        segs[i].className = 'vu-seg';
-        if (i < activeCount) {
-          if (i < 10) segs[i].classList.add('on-low');
-          else if (i < 14) segs[i].classList.add('on-mid');
-          else segs[i].classList.add('on-hi');
-        }
-      }
-    }
-
-    function drawMonitors() {
-      if (!analyserNode) return;
-      const bufferLength = analyserNode.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-      let frameTick = 0;
-
-      function render() {
-        animId = requestAnimationFrame(render);
-        analyserNode.getByteFrequencyData(dataArray);
-
-        canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-
-        let sum = 0;
-        const barWidth = (canvas.width / bufferLength) * 1.15;
-        let x = 0;
-
-        for (let i = 0; i < bufferLength; i++) {
-          const v = dataArray[i] / 255;
-          sum += v;
-          const barHeight = v * (canvas.height - 6);
-          canvasCtx.fillStyle = i % 2 === 0 ? '#9c7344' : '#4a7870';
-          canvasCtx.fillRect(x, canvas.height - barHeight, Math.max(2, barWidth - 2), barHeight);
-          x += barWidth;
-        }
-
-        const avg = sum / bufferLength;
-        const { effA, effB } = getEffectiveMultipliers();
-        updateVuBar(vuSegsA, Math.min(1, avg * 1.45 * effA));
-        updateVuBar(vuSegsB, Math.min(1, avg * 1.45 * effB));
-
-        // Update live Web Audio hardware pipeline telemetry every 30 frames
-        if (++frameTick % 30 === 0 && audioCtx) {
-          const hwLatMs = ((audioCtx.baseLatency || 0) + (audioCtx.outputLatency || 0)) * 1000;
-          const totalMs = (hwLatMs > 0 ? hwLatMs : 25) + (RESERVOIR_BUFFER_SEC * 1000);
-          dspLatency.textContent = `RESERVOIR: ${totalMs.toFixed(0)}ms // STABLE`;
-        }
-      }
-      render();
-    }
-
-    // Anti-Pop Atomic Buffer Flush: ramps down gain 15ms -> drains reservoir -> restores reservoir & gain
-    function atomicBufferFlush() {
-      if (!audioCtx || !reservoirNode || !gainNodeA || !gainNodeB) return;
-      const now = audioCtx.currentTime;
-      // 1. 15ms smooth micro fade-out to prevent DC clicks
-      gainNodeA.gain.setTargetAtTime(0, now, 0.004);
-      gainNodeB.gain.setTargetAtTime(0, now, 0.004);
-
-      setTimeout(() => {
-        if (!audioCtx || !reservoirNode) return;
-        try {
-          const t = audioCtx.currentTime;
-          reservoirNode.delayTime.cancelScheduledValues(t);
-          reservoirNode.delayTime.setValueAtTime(0, t);
-          reservoirNode.delayTime.setTargetAtTime(RESERVOIR_BUFFER_SEC, t + 0.03, 0.02);
-        } catch (_) {}
-        // 2. Smoothly restore gain levels
-        updateGains();
-      }, 15);
-    }
-
-    // Event bindings
-    btnRefreshDevices.addEventListener('click', () => loadAudioDevices(true));
-    btnCaptureTab.addEventListener('click', startTabAudioSharing);
-    btnSyncReset.addEventListener('click', () => {
-      if (audioCtx && audioCtx.state === 'running') {
-        atomicBufferFlush();
-      } else {
-        buildLowLatencyGraph();
-      }
-    });
-    btnStop.addEventListener('click', stopSharing);
-
-    if (btnFxTube) btnFxTube.addEventListener('click', toggleTube);
-    if (btnFxSurround) btnFxSurround.addEventListener('click', toggleSurround);
-    if (btnSurroundMode) btnSurroundMode.addEventListener('click', toggleSurroundMode);
-    if (btnFxSpatial) btnFxSpatial.addEventListener('click', toggleSpatial);
-    if (btnSpatialMode) btnSpatialMode.addEventListener('click', toggleSpatialMode);
-
-    if (fxTubeLevel) {
-      fxTubeLevel.addEventListener('input', (e) => {
-        tubeIntensity = parseInt(e.target.value, 10);
-        if (fxTubeVal) fxTubeVal.textContent = tubeIntensity + '%';
-        try { localStorage.setItem('parallel_fx_tube_level', tubeIntensity); } catch (_) {}
-        applyTubeCurve();
-      });
-    }
-
-    if (fxSurroundLevel) {
-      fxSurroundLevel.addEventListener('input', (e) => {
-        surroundIntensity = parseInt(e.target.value, 10);
-        crossfeedIntensity = surroundIntensity;
-        if (fxSurroundVal) fxSurroundVal.textContent = surroundIntensity + '%';
-        try {
-          localStorage.setItem('parallel_fx_surround_level', surroundIntensity);
-          localStorage.setItem('parallel_fx_crossfeed_level', surroundIntensity);
-        } catch (_) {}
-        applySurroundParams();
-      });
-    }
-
-    if (fxSpatialLevel) {
-      fxSpatialLevel.addEventListener('input', (e) => {
-        spatialIntensity = parseInt(e.target.value, 10);
-        if (fxSpatialVal) fxSpatialVal.textContent = spatialIntensity + '%';
-        try { localStorage.setItem('parallel_fx_spatial_level', spatialIntensity); } catch (_) {}
-        applySpatialParams();
-      });
-    }
-
-    selectA.addEventListener('change', () => {
-      routeDeckSink('A', selectA.value);
-      applyDeckProfile('A', profileKeyA);
-    });
-    selectB.addEventListener('change', () => {
-      routeDeckSink('B', selectB.value);
-      applyDeckProfile('B', profileKeyB);
-    });
-
-    if (profileA) {
-      profileA.addEventListener('change', (e) => {
-        profileKeyA = e.target.value;
-        try { localStorage.setItem('parallel_profile_a', profileKeyA); } catch (_) {}
-        applyDeckProfile('A', profileKeyA);
-      });
-    }
-
-    if (profileB) {
-      profileB.addEventListener('change', (e) => {
-        profileKeyB = e.target.value;
-        try { localStorage.setItem('parallel_profile_b', profileKeyB); } catch (_) {}
-        applyDeckProfile('B', profileKeyB);
-      });
-    }
-
-    if (btnAutoTuneMatrix) {
-      btnAutoTuneMatrix.addEventListener('click', autoOptimizeMatrix);
-    }
-
-    applyDeckProfile('A', profileKeyA);
-    applyDeckProfile('B', profileKeyB);
-
-    masterVol.addEventListener('input', updateGains);
-    volA.addEventListener('input', updateGains);
-    volB.addEventListener('input', updateGains);
-    xfader.addEventListener('input', updateGains);
-    xfader.addEventListener('dblclick', () => { xfader.value = 0; updateGains(); });
-    xfaderReset.addEventListener('click', () => { xfader.value = 0; updateGains(); });
-
-    delayA.addEventListener('input', updateDelays);
-    delayB.addEventListener('input', updateDelays);
-
-    document.querySelectorAll('.mini-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = document.getElementById(btn.dataset.target);
-        const delta = Number(btn.dataset.delta);
-        if (delta === 0) {
-          target.value = 0;
-        } else {
-          target.value = Math.max(0, Math.min(300, Number(target.value) + delta));
-        }
-        updateDelays();
-      });
-    });
-
-    muteA.addEventListener('click', () => {
-      isMutedA = !isMutedA;
-      muteA.classList.toggle('muted', isMutedA);
-      muteIconA.firstElementChild.setAttribute('href', isMutedA ? '#px-vol-mute' : '#px-vol-on');
-      muteTextA.textContent = isMutedA ? 'MUTED' : 'MUTE';
-      updateGains();
-    });
-
-    muteB.addEventListener('click', () => {
-      isMutedB = !isMutedB;
-      muteB.classList.toggle('muted', isMutedB);
-      muteIconB.firstElementChild.setAttribute('href', isMutedB ? '#px-vol-mute' : '#px-vol-on');
-      muteTextB.textContent = isMutedB ? 'MUTED' : 'MUTE';
-      updateGains();
-    });
-
-    soloA.addEventListener('click', () => {
-      isSoloA = !isSoloA;
-      soloA.classList.toggle('soloed', isSoloA);
-      updateGains();
-    });
-
-    soloB.addEventListener('click', () => {
-      isSoloB = !isSoloB;
-      soloB.classList.toggle('soloed', isSoloB);
-      updateGains();
-    });
-
-    // Jukebox Side-by-Side Mini Popup Window Controller (reuses 'PARALLEL_JUKEBOX' so tab audio stays linked!)
-    const jukeboxQuery = document.getElementById('jukeboxQuery');
-    const btnJukeboxYTM = document.getElementById('btnJukeboxYTM');
-    const btnJukeboxYT = document.getElementById('btnJukeboxYT');
-    const btnJukeboxSpotify = document.getElementById('btnJukeboxSpotify');
-    const localFileInput = document.getElementById('localFileInput');
-    let localFilePlayer = document.getElementById('localFilePlayer');
-    const localTrackStatus = document.getElementById('localTrackStatus');
-
-    function openJukeboxPopup(platform) {
-      // Atomic anti-pop flush: clean transition when switching tracks
-      atomicBufferFlush();
-
-      const q = jukeboxQuery.value.trim();
-      let url = 'https://music.youtube.com';
-      if (platform === 'ytm') {
-        url = q ? `https://music.youtube.com/search?q=${encodeURIComponent(q)}` : 'https://music.youtube.com';
-      } else if (platform === 'yt') {
-        url = q ? `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}` : 'https://www.youtube.com';
-      } else if (platform === 'spotify') {
-        url = q ? `https://open.spotify.com/search/${encodeURIComponent(q)}` : 'https://open.spotify.com';
-      }
-
-      const w = 460;
-      const h = Math.min(720, window.screen.availHeight - 80);
-      const left = Math.max(0, window.screen.availWidth - w - 20);
-      const top = 60;
-      const win = window.open(
-        url,
-        'PARALLEL_JUKEBOX',
-        `width=${w},height=${h},left=${left},top=${top},menubar=no,toolbar=no,location=yes,status=no`
-      );
-      if (win) {
-        try { win.opener = null; } catch (_) {}
-      }
-    }
-
-    btnJukeboxYTM.addEventListener('click', () => openJukeboxPopup('ytm'));
-    btnJukeboxYT.addEventListener('click', () => openJukeboxPopup('yt'));
-    btnJukeboxSpotify.addEventListener('click', () => openJukeboxPopup('spotify'));
-    jukeboxQuery.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') openJukeboxPopup('ytm');
-    });
-
-    // Zero-Screen-Share Direct Local Audio File Routing
-    localFileInput.addEventListener('change', async (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-
-      stopSharing();
-      await loadAudioDevices(false);
-
-      isLocalFileMode = true;
-      localFileObjectUrl = URL.createObjectURL(file);
-      localTrackStatus.textContent = `FILE // ${file.name}`;
-
-      await buildLowLatencyGraph();
-
-      statusText.textContent = t('statusFileActive');
-      statusBadge.classList.add('active');
-      wheelA.classList.add('spinning');
-      wheelB.classList.add('spinning');
-      btnSyncReset.style.display = 'inline-flex';
-      btnStop.style.display = 'inline-flex';
-    });
-
-    if (navigator.mediaDevices) {
-      navigator.mediaDevices.addEventListener('devicechange', () => loadAudioDevices(false));
-    }
-
-    // Initialize i18n on startup
-    applyLanguage(currentLang);
-  </script>
+    <!-- Modal 1: Pre-Share Guidance & macOS Permission Modal -->
+  <div id="preShareModal" class="modal-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="preShareModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-step-tag">STEP 2 OF 3</span>
+          <h3 id="preShareModalTitle" class="modal-title" data-i18n="modalPreShareTitle">即將開始綁定分頁音訊 // 溫馨提示</h3>
+        </div>
+        <button id="modalPreShareClose" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-tip-card highlight">
+          <div class="tip-badge-icon">
+            <svg class="px-icon lg"><use href="#px-disc" xlink:href="#px-disc"/></svg>
+          </div>
+          <div class="tip-desc-block">
+            <strong class="tip-title" data-i18n="tip1Title">1. 請先開啟音樂分頁並播放</strong>
+            <p class="tip-text" data-i18n="tip1Desc">請確認您已經在另一個分頁打開 YouTube、Spotify 網頁版等，並處於正常播放狀態。</p>
+          </div>
+        </div>
+
+        <div class="modal-tip-card accent">
+          <div class="tip-badge-icon">
+            <svg class="px-icon lg"><use href="#px-check" xlink:href="#px-check"/></svg>
+          </div>
+          <div class="tip-desc-block">
+            <strong class="tip-title" data-i18n="tip2Title">2. 務必勾選「一併分享分頁音訊」</strong>
+            <p class="tip-text" data-i18n="tip2Desc">在接下來彈出的瀏覽器視窗中，請選取「Chrome / Edge 分頁」，並務必勾選左下角的「一併分享分頁音訊 (Also share tab audio)」！</p>
+          </div>
+        </div>
+
+        <div class="modal-tip-card warning">
+          <div class="tip-badge-icon">
+            <svg class="px-icon lg"><use href="#px-shield" xlink:href="#px-shield"/></svg>
+          </div>
+          <div class="tip-desc-block">
+            <strong class="tip-title" data-i18n="tip3Title">3. macOS 用戶首次使用權限說明</strong>
+            <p class="tip-text" data-i18n="tip3Desc">若以前從未在 Mac 瀏覽器分享過分頁，macOS 系統會跳出安全性要求。請至「系統設定 → 隱私權與安全性 → 螢幕與系統音訊錄製」勾選允許瀏覽器即可正常使用。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modalPreShareCancel" class="modal-btn secondary" data-i18n="modalBtnCancel">返回檢查</button>
+        <button id="modalPreShareProceed" class="modal-btn primary" data-i18n="modalBtnProceed">我知道了，選擇音樂分頁 ➔</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Full Browser Support Matrix Modal -->
+  <div id="browserMatrixModal" class="modal-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="matrixModalTitle">
+    <div class="modal-card matrix-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-step-tag matrix">BROWSER COMPATIBILITY</span>
+          <h3 id="matrixModalTitle" class="modal-title" data-i18n="matrixModalTitle">瀏覽器相容性完整支援清單</h3>
+        </div>
+        <button id="modalMatrixClose" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="matrix-summary-text" data-i18n="matrixSummary">
+          本免安裝網頁版需要支援 <code>setSinkId</code> 多音訊硬體分流與 <code>getDisplayMedia</code> 分頁音訊擷取 API：
+        </p>
+        <div class="matrix-table-wrap">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th data-i18n="thBrowser">瀏覽器</th>
+                <th data-i18n="thEngine">核心引擎</th>
+                <th data-i18n="thStatus">支援狀態</th>
+                <th data-i18n="thDesc">說明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-pass">
+                <td><strong>Google Chrome</strong> (電腦版)</td>
+                <td>Blink (Chromium)</td>
+                <td><span class="status-pill pass">◆ 完整支援 (推薦)</span></td>
+                <td data-i18n="tbChrome">多耳機硬體路由與分頁音訊擷取完全支援，音質與延遲最佳。</td>
+              </tr>
+              <tr class="row-pass">
+                <td><strong>Microsoft Edge</strong> (電腦版)</td>
+                <td>Blink (Chromium)</td>
+                <td><span class="status-pill pass">◆ 完整支援 (推薦)</span></td>
+                <td data-i18n="tbEdge">全面支援 Chromium 底層音訊分流與 Edge 分頁聲音共享。</td>
+              </tr>
+              <tr class="row-pass">
+                <td><strong>Brave / Arc / Opera / Vivaldi</strong></td>
+                <td>Blink (Chromium)</td>
+                <td><span class="status-pill pass">◆ 完整支援</span></td>
+                <td data-i18n="tbBrave">採用 Chromium 核心之電腦瀏覽器均可完整正常使用。</td>
+              </tr>
+              <tr class="row-fail">
+                <td><strong>Apple Safari</strong> (macOS / iOS)</td>
+                <td>WebKit</td>
+                <td><span class="status-pill fail">✕ 不支援</span></td>
+                <td data-i18n="tbSafari">WebKit 安全限制，無法擷取分頁音訊串流。請改用 Chrome 或 Edge。</td>
+              </tr>
+              <tr class="row-fail">
+                <td><strong>Mozilla Firefox</strong> (電腦版)</td>
+                <td>Gecko</td>
+                <td><span class="status-pill fail">✕ 不支援</span></td>
+                <td data-i18n="tbFirefox">Gecko 架構尚未實作分頁音訊分享 API。請改用 Chrome 或 Edge。</td>
+              </tr>
+              <tr class="row-fail">
+                <td><strong>手機 / 平板全部瀏覽器</strong></td>
+                <td>iOS / Android</td>
+                <td><span class="status-pill fail">✕ 不支援</span></td>
+                <td data-i18n="tbMobile">行動作業系統限制無法進行雙藍牙 A2DP 路由與分頁音訊擷取。請使用電腦開啟。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modalMatrixDismiss" class="modal-btn primary" data-i18n="modalBtnClose">關閉清單</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/headphone-profiles.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
