@@ -1,16 +1,20 @@
-# 🎛 PARALLEL // 平行聲波
+# ⟦ PARALLEL ⟧ // 平行聲波
 
 ![PARALLEL // 平行聲波 — Dual A2DP Audio Matrix](./og-image.png)
+
+<p align="center">
+  <b>繁體中文</b> | <a href="./README.en.md">English</a> | <a href="./README.ja.md">日本語</a>
+</p>
 
 > **Two independent audio paths—bridging headphone latency to share the same world side by side.**
 >
 > **兩條獨立的平行音軌，跨越耳機時差、並肩聽見同一個世界** —— 免安裝、單一 HTML 檔案的雙藍牙耳機音訊分流與毫秒級延遲同步混音台（支援 **繁體中文 / English / 日本語** 三語切換，適用於 macOS、Windows 與 Linux）。
 
-👉 **Live Console (GitHub Pages)：[https://lukas19990816.github.io/parallel/](https://lukas19990816.github.io/parallel/)**
+◆ **Live Console (GitHub Pages)：[https://lukas19990816.github.io/parallel/](https://lukas19990816.github.io/parallel/)**
 
 ---
 
-## 📖 為什麼要做這個專案？ (Why PARALLEL Exists)
+## ⟦ 01 ⟧ 為什麼要做這個專案？ (Why PARALLEL Exists)
 
 在 iPhone / iPad 上，Apple 原生的「共享音訊（Audio Sharing）」**只限定配備自家 H1 / H2 / W1 晶片的 AirPods 或 Beats 耳機**；只要其中一人戴的是 Sony、Soundcore、Bose、Sennheiser 等第三方藍牙耳機，就無法一起聽歌。
 
@@ -19,22 +23,22 @@
 2. **無法補償不同廠牌耳機的「藍牙解碼時間差（50ms–150ms）」**：macOS 內建的「漂移修正（Drift Correction）」只能對齊取樣時脈（Sample Clock），**無法針對快慢不同的兩隻耳機（例如延遲較低的 AirPods 搭配延遲較高的 Sony XM5）手動加入毫秒級延遲補償（Delay Offset）**。
 3. **點歌與調整音量需要不斷切換視窗**。
 
-**`PARALLEL // 平行聲波`** 透過瀏覽器原生的 **Web Audio API (`latencyHint: 'interactive'`) + `HTMLMediaElement.setSinkId()` + `getDisplayMedia()`**，用**單一靜態 HTML 檔案（0 安裝、0 後端、0 外部相依套件）**建構出雙軌平行混音與延遲補償控制台，一次解決上述所有問題。
+**`PARALLEL // 平行聲波`** 透過瀏覽器原生的 **Web Audio API (`latencyHint: 'playback'`) + `HTMLMediaElement.setSinkId()` + `getDisplayMedia()`**（採用 `playback` 原生排程以較大緩衝平滑吸收藍牙 2.4GHz 無線封包抖動，確保長效聆聽不爆音），用開源純前端架構建構出雙軌平行混音與毫秒級延遲補償控制台，一次解決上述所有問題。
 
 ---
 
-## 🔍 與現有開源專案 / 解決方案比較 (Comparison with Existing Solutions)
+## ⟦ 02 ⟧ 與現有開源專案 / 解決方案比較 (Comparison with Existing Solutions)
 
 | 方案 / 專案 | 類型 | 是否需安裝驅動 / App | 跨廠牌毫秒級延遲補償 (`0–300ms` Delay) | 獨立音量 + DJ Crossfader | 多語系 (繁/英/日) | 跨平台支援 |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| **PARALLEL (本專案)** | **單一 HTML 網頁 (Web Audio)** | ❌ **完全免安裝** (打開瀏覽器即用) | ✅ **支援** (`DelayNode` 1ms 精度微調) | ✅ **支援** (含 `SOLO` / `MUTE` / `150%` 增益) | ✅ **繁中 / EN / 日本語** | **macOS / Windows / Linux** (Chrome / Edge / Brave) |
+| **PARALLEL (本開源網頁版)** | **單一 HTML 網頁 (Web Audio)** | ❌ **完全免安裝** (打開瀏覽器即用) | ✅ **支援** (`DelayNode` 1ms 精度微調) | ✅ **支援** (含 `SOLO` / `MUTE` / `150%` 增益) | ✅ **繁中 / EN / 日本語** | **macOS / Windows / Linux** (Chrome / Edge / Brave) |
 | **macOS 內建 `音訊 MIDI 設定`** | 系統內建工具 | ❌ 免安裝 | ❌ 不支援 (僅支援時脈漂移修正) | ⚠️ 介面藏在深處，且會鎖死鍵盤音量鍵 | 依系統 | 僅 macOS |
 | **[PairPods](https://github.com/wozniakpawel/PairPods)** / **[Tutti](https://github.com/BarryBarrywu/tutti)** | 原生 macOS Menu Bar App (Swift) | ⚠️ 需安裝 App / Homebrew Cask | ❌ 不支援手動毫秒級延遲推桿 | ✅ 支援選單列獨立音量 | 僅英文 | 僅 macOS |
 | **[BlackHole](https://github.com/ExistentialAudio/BlackHole)** / **[BackgroundMusic](https://github.com/kyleneideck/BackgroundMusic)** | macOS 虛擬音效卡驅動 (HAL Driver) | ⚠️ 需安裝核心音訊驅動並重開機 | ❌ 不支援 | ⚠️ 需搭配 DAW 或額外設定 | 僅英文 | 僅 macOS |
 
 ---
 
-## 💻 支援的作業系統與瀏覽器 (Supported Systems & Browsers)
+## ⟦ 03 ⟧ 支援的作業系統與瀏覽器 (Supported Systems & Browsers)
 
 ### 1. 作業系統 (Operating Systems)
 * **主要設計目標：macOS**（Mac mini、MacBook Air、MacBook Pro、iMac、Mac Studio）。
@@ -49,17 +53,35 @@
 | **WebKit** | **Apple Safari** (macOS / iOS) | ❌ **不支援** (`setSinkId` 屬性未實作) | ❌ **不支援** (無法單獨抽離分頁音訊) | 🔴 **無法運作** |
 | **Gecko** | **Mozilla Firefox** | ⚠️ **預設關閉** (需進 `about:config` 開啟) | ❌ **不支援** (螢幕分享不支援 Tab Audio) | 🔴 **無法分頁串流** |
 
-> **💡 為什麼 Safari 與 Firefox 無法運作？**
+> **※ 為什麼 Safari 與 Firefox 無法運作？**
 > 1. **Apple Safari (WebKit)**：Apple 至今未在 WebKit 實作 `HTMLMediaElement.setSinkId()`，所有音訊強制輸出至系統預設端點，無法做到雙耳機硬體分流；此外商業策略上 Apple 將「音訊共享」作為其專屬 H1/H2 晶片（AirPods/Beats）的生態護城河。
 > 2. **Mozilla Firefox (Gecko)**：基於防範瀏覽器指紋追蹤（Anti-Fingerprinting）的隱私考量，Firefox 將音訊輸出端點 API 預設鎖定；且其 `getDisplayMedia` 尚未實作 Chromium 的單一分頁純音訊循環迴路。
 > 3. **結論**：請務必使用 **Google Chrome、Edge、Brave 或 Arc** 等 Chromium 核心瀏覽器開啟本專案。
 
 ---
 
-## 🎯 適用場景 (Use Cases)
+## ⟦ 04 ⟧ 重要技術限制與串流平台 DRM 邊界說明 (Technical Limitations & DRM Boundaries)
+
+使用本開源網頁版前，請詳閱以下關於串流版權（DRM）與硬體邊界的技術說明：
+
+### 1. 為什麼網頁版無法支援 Netflix / Disney+ / Apple TV+？（硬體級 DRM 防拷機制）
+
+* **瀏覽器硬體防拷管線（Widevine L1/L3 & Apple FairPlay DRM）**：
+  主流影視串流平台（包括 **Netflix、Disney+、Apple TV+、Amazon Prime Video** 等）均啟用了硬體級別的數位版權管理（DRM）。當受保護的視訊串流在 Chrome / Edge 中解碼播放時，系統會建立一條加密的硬體渲染通道（Protected Media Path / HDCP）。
+* **分頁擷取 API (`getDisplayMedia`) 的物理阻斷**：
+  網頁版的雙耳機分流依賴 Chromium 提供的 `navigator.mediaDevices.getDisplayMedia({ audio: true })` 進行純音訊循環迴路（Loopback）。然而，當瀏覽器檢測到使用者試圖擷取包含 DRM 授權內容的分頁時，底層的硬體解密管線（Hardware Decryption Engine）會**立即強制中斷視訊訊號傳輸，回傳全黑畫面**，或直接拋出解密阻斷錯誤（例如 Netflix 著名的 **`Error M7361-1253`**）。
+* **無法繞過的安全沙盒**：
+  這是作業系統核心與安全晶片（Apple T2 / Apple Silicon Secure Enclave / Intel SGX / AMD PSP）在物理層級實施的防側錄保護。**任何運行在標準瀏覽器沙盒內的純前端網頁，技術上 100% 無法突破此防拷限制**。
+* **推薦使用情境**：
+  強烈推薦搭配 **YouTube、YouTube Music、Spotify 網頁版、SoundCloud、Bilibili、線上廣播電台**，或直接將本地無損音樂檔（MP3 / FLAC / WAV）載入控制台，即可享有最極致順暢的雙耳機同步聆聽體驗！
+
+---
+
+## ⟦ 05 ⟧ 適用場景 (Use Cases)
 
 1. **情侶 / 室友 / 朋友在電腦前共用兩隻不同廠牌耳機聽歌或追劇**：
-   * 一人戴 Sony、一人戴 AirPods / Soundcore / Bose，一起聽 **YouTube Music、Spotify、YouTube、Netflix**，各自調整最舒適的音量。
+   * 一人戴 Sony、一人戴 AirPods / Soundcore / Bose，一起聽 **YouTube Music、Spotify 網頁版、YouTube、Bilibili** 或本地無損音檔，各自調整最舒適的音量。
+   * ※ 請注意：**Netflix、Disney+、Apple TV+** 等受硬體 DRM 保護的串流平台，受限於瀏覽器防拷機制會阻擋分頁音訊擷取。
 2. **深夜宿舍 / 圖書館 / 辦公室靜音共享**：
    * 不能開喇叭外放時，直接將電腦音訊分流給兩副耳機並各自控制音量。
 3. **「1 隻有線耳機 + 1 隻藍牙耳機」零時間差同步**：
@@ -69,7 +91,7 @@
 
 ---
 
-## ⚠️ 為什麼兩隻藍牙耳機有時會「一起延遲（Lag）」？怎麼看藍牙訊號強度？
+## ⟦ 06 ⟧ 為什麼兩隻藍牙耳機有時會「一起延遲（Lag）」？怎麼看藍牙訊號強度？ (Bluetooth Latency & Diagnostics)
 
 在 macOS 上同時連接兩隻非 Apple 藍牙耳機時，若偶爾遇到**兩邊一起頓一下或產生延遲**，這涉及藍牙底層物理機制與音訊緩衝設計：
 
@@ -157,7 +179,7 @@
 
 ### 3. 如何查看連到的藍牙耳機「訊號強度（RSSI dBm）」？
 * **為什麼網頁無法直接顯示藍牙 dBm？**：基於 Chrome 瀏覽器沙盒安全限制，網頁只能存取 CoreAudio 音訊路由層，無法讀取底層 `IOBluetooth` 無線電射頻強度（且 Web Bluetooth API 僅支援 BLE 低功耗感測器，不支援 A2DP 傳統音訊耳機）。
-* **💡 macOS 一鍵查看真實藍牙訊號強度（RSSI）秘訣**：
+* **※ macOS 一鍵查看真實藍牙訊號強度（RSSI）秘訣**：
   1. 按住鍵盤上的 **`Option (⌥)` 鍵**，同時用滑鼠點擊 Mac 右上角選單列的 **「藍牙圖示」**（或在終端機輸入 `system_profiler SPBluetoothDataType | grep -E "Name|RSSI"`）。
   2. 你會看到每隻已連線耳機下方出現 **`RSSI`** 數值：
      * **`-40 ~ -60 dBm`**：訊號極佳，雙耳機串流非常穩定。
@@ -166,27 +188,27 @@
 
 ### 4. 頭號殺手：請關閉耳機的「一對二多點連線（Multipoint）」！
 * 許多高階耳機（如 **Sony WH-1000XM5 / XM4**、**Bose QC Ultra**）支援同時連著手機與電腦。當耳機連著 Mac 進行雙耳機串流，**背景又同時連著手機時**，耳機晶片會不斷分心與手機輪詢，導致 Mac 端藍牙封包嚴重塞車。
-* **👉 解法**：雙耳機共享期間，**請先將手機藍牙關閉（或在手機上暫時斷開該耳機）**，讓耳機專心一對一連著 Mac，卡頓感會立刻消失 80% 以上。
+* **[ 解法 ]**：雙耳機共享期間，**請先將手機藍牙關閉（或在手機上暫時斷開該耳機）**，讓耳機專心一對一連著 Mac，卡頓感會立刻消失 80% 以上。
 
 ### 5. AirPods 與第三方耳機混搭時的「先天解碼速度差」
 * AirPods 在 macOS 上延遲通常比第三方主動降噪耳機（如 Sony XM5）快約 `80ms ~ 120ms`。
-* **👉 解法**：把**比較快的那隻耳機（例如 AirPods）的 `SYNC DELAY` 推桿往右調至 `80ms ~ 120ms`**（讓快的耳機等慢的耳機），兩個人聽到的節拍就會完全同步。
+* **[ 解法 ]**：把**比較快的那隻耳機（例如 AirPods）的 `SYNC DELAY` 推桿往右調至 `80ms ~ 120ms`**（讓快的耳機等慢的耳機），兩個人聽到的節拍就會完全同步。
 
 ### 6. 音質突然變得像「講電話」一樣悶？（macOS 麥克風輸入陷阱）
 * 如果 macOS 自動把其中一隻藍牙耳機選為「預設麥克風輸入（Input Device）」，該耳機會強制切換成「雙向通話模式（HFP，單聲道 `16kHz`）」，音質會嚴重劣化。
-* **👉 解法**：打開 Mac **「系統設定」➔「聲音」➔「輸入（Input）」**，將麥克風改選為 **Mac 內建麥克風** 或 **外接螢幕麥克風**，音質就會立刻恢復滿血雙聲道立體聲（`44.1kHz / 48kHz`）。
+* **[ 解法 ]**：打開 Mac **「系統設定」➔「聲音」➔「輸入（Input）」**，將麥克風改選為 **Mac 內建麥克風** 或 **外接螢幕麥克風**，音質就會立刻恢復滿血雙聲道立體聲（`44.1kHz / 48kHz`）。
 
 ### 7. Mac mini 用戶特別注意：`2.4GHz` 干擾
 * Mac mini 的藍牙天線位於機身底部圓蓋處，極易受到背後 USB-A 3.0 外接硬碟/Hub 以及 `2.4GHz` Wi-Fi 干擾。建議 Mac mini 用戶改連 **`5GHz` Wi-Fi**，並避免將未屏蔽的 USB 3.0 裝置緊貼機身底部。
 
 ---
 
-## 🚀 快速開始 (Quick Start)
+## ⟦ 07 ⟧ 快速開始 (Quick Start)
 
 ### 方式 A：直接透過 GitHub Pages 線上開啟（0 安裝、最推薦！）
 直接使用 **Google Chrome**（或 Edge / Brave / Arc）點開下方公開網址即可立即使用，**完全不需要安裝 Python 或啟動任何本地伺服器**（建議直接加入 Chrome 書籤）：
 
-👉 **Live Console (GitHub Pages)：[https://lukas19990816.github.io/parallel/](https://lukas19990816.github.io/parallel/)**
+◆ **Live Console (GitHub Pages)：[https://lukas19990816.github.io/parallel/](https://lukas19990816.github.io/parallel/)**
 
 ### 方式 B：在本地端執行 (Local Execution)
 由於 Chrome 的 `getDisplayMedia` 與 `setSinkId` 安全限制要求頁面必須在 `https://` 或 `http://localhost` 下執行（直接雙擊 `file://` 會被瀏覽器阻擋分頁擷取）：
@@ -201,23 +223,32 @@
 
 ---
 
-## 🎨 歡迎 Fork 並用你的 AI Agent 客製化專屬混音台配色！(Vibe-Coding & AI Agent Friendly)
+## ⟦ 08 ⟧ 歡迎 Fork 並用你的 AI Agent 客製化專屬混音台！(Vibe-Coding & AI Agent Friendly)
 
-整個專案刻意設計為 **單一、零外部相依的 `index.html` 檔案**，並在檔案開頭整理好所有的 `:root` CSS 主題變數。
+開源網頁版前端採用純粹、無打包工具相依的標準模組化結構（`index.html` + `css/app.css` + `js/`），所有主題變數整理於 `css/app.css` 開頭的 `:root`。
 
-非常歡迎你 **Fork** 這個專案，直接把 `index.html` 丟給你的 AI Coding Agent（例如 **Google Antigravity、Claude Code、Cursor、GitHub Copilot、Windsurf**），用自然語言改成你喜歡的硬體風格！
+非常歡迎你 **Fork** 這個專案，直接把專案丟給你的 AI Coding Agent（例如 **Google Antigravity、Claude Code、Cursor、GitHub Copilot、Windsurf**），用自然語言改成你喜歡的硬體風格或擴充功能！
 
-### 💡 可以直接複製給 AI Agent 的 Prompt 範例：
+### ※ 實體混音台鍵盤快捷鍵 (Global Keyboard Shortcuts)
+* <kbd>Space</kbd>：快速播放 / 暫停 / 啟動分頁音訊擷取
+* <kbd>1</kbd> / <kbd>2</kbd>：DECK A / DECK B 靜音 / 監聽切換
+* <kbd>S</kbd>：重置並排空音訊緩衝區（Resync Buffer）
+* <kbd>M</kbd>：一鍵智慧優化聲學聽感矩陣（Auto-Tune Matrix）
+* <kbd>[</kbd> / <kbd>]</kbd>：Crossfader 交叉推桿向左（Deck A）/ 向右（Deck B）微調
+* <kbd>\</kbd>：Crossfader 快速歸零置中
+* <kbd>↑</kbd> / <kbd>↓</kbd>：Master 總音量微調（±5%）
+
+### ※ 可以直接複製給 AI Agent 的 Prompt 範例：
 * **工業風白色合成器（Teenage Engineering OP-1 風格）**：
-  > *"請幫我修改 `index.html` 的 `:root` CSS 變數與樣式，把這台混音台改成 Teenage Engineering OP-1 的淺灰白工業設計風格，搭配橘色（`#ff5500`）與藍色（`#0066ff`）實體旋鈕推桿點綴。"*
+  > *"請幫我修改 `css/app.css` 的 `:root` CSS 變數與樣式，把這台混音台改成 Teenage Engineering OP-1 的淺灰白工業設計風格，搭配橘色（`#ff5500`）與藍色（`#0066ff`）實體旋鈕推桿點綴。"*
 * **80 年代復古 Synthwave / Cyberpunk 霓虹風**：
-  > *"請幫我把 `index.html` 改成 80 年代復古 Synthwave 風格，使用深紫黑背景、霓虹洋紅（Deck A）與電光青（Deck B）配色，並幫頻譜儀加上漸層發光效果。"*
+  > *"請幫我把 `css/app.css` 改成 80 年代復古 Synthwave 風格，使用深紫黑背景、霓虹洋紅（Deck A）與電光青（Deck B）配色，並幫頻譜儀加上漸層發光效果。"*
 * **新增 3 段式 EQ 等化器（Low / Mid / High）**：
-  > *"請在 `index.html` 的 Web Audio 圖（`buildLowLatencyGraph`）中，幫 Deck A 跟 Deck B 各自加上 `BiquadFilterNode` 的 BASS / TREBLE 旋鈕或推桿！"*
+  > *"請在 `js/app.js` 的 Web Audio 圖（`buildLowLatencyGraph`）中，幫 Deck A 跟 Deck B 各自加上 `BiquadFilterNode` 的 BASS / TREBLE 旋鈕或推桿！"*
 
 ---
 
-## 🛡 安全性與隱私設計 (Security & Privacy Design)
+## ⟦ 09 ⟧ 安全性與隱私設計 (Security & Privacy Design)
 
 為保障使用者裝置與隱私安全，本專案在架構上落實以下安全實踐：
 
@@ -229,6 +260,6 @@
 
 ---
 
-## 📄 授權條款 (License)
+## ⟦ 10 ⟧ 授權條款 (License)
 
 本專案採用 **[MIT License](./LICENSE)** 開源授權，歡迎自由使用、修改、Fork 與分享！
